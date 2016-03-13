@@ -28,8 +28,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `family` (
 `id_family` int(11) NOT NULL COMMENT 'Id',
-  `desc_family` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Description'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Family products';
+  `description` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Description'
+
 
 --
 -- Índices para tablas volcadas
