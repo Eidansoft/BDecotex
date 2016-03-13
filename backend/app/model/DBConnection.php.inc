@@ -50,5 +50,10 @@ class DBConnection
         }
         return $query;
     }
+    
+    protected function getModifiedIdExecutingQuery($sql) {
+        $this->executeQuery($sql);
+        return $this->get_db()->insert_id;
+    }
 } 
 ?>

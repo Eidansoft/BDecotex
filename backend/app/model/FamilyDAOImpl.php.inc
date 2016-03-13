@@ -8,11 +8,11 @@ class FamilyDAOImpl extends BDecotexDAOImpl {
     }
     
     public function create($description) {
-        return $this->executeQuery("INSERT INTO $this->table_name ("
-                                    . "description"
-                                 . ") VALUES ("
-                                    . "'$description'"
-                                 . ")");
+        return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
+                                                    . "description"
+                                                 . ") VALUES ("
+                                                    . "'$description'"
+                                                 . ")");
     }
 
     public function update($id, $description) {
