@@ -1,5 +1,5 @@
 <?php
-require_once "./IJSonable.php.inc";
+require_once (dirname(__FILE__).'/IJSonable.php.inc');
 
 class JSonable implements IJSonable{
     
