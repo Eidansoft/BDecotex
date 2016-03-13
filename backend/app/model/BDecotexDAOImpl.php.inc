@@ -13,6 +13,10 @@ class BDecotexDAOImpl extends DBConnection {
     public function delete($id) {
         return $this->executeQuery("DELETE FROM $this->table_name WHERE id_$this->table_name = $id");
     }
+
+    public function deleteAll() {
+        return $this->executeQuery("TRUNCATE $this->table_name");
+    }
     
     public function getAll() {
         $families = $this->getListResults("SELECT * FROM $this->table_name");
