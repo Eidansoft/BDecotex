@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-03-2016 a las 20:04:04
+-- Tiempo de generación: 13-03-2016 a las 05:28:02
 -- Versión del servidor: 5.5.46-0+deb8u1
 -- Versión de PHP: 5.6.14-0+deb8u1
 
@@ -29,9 +29,15 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `model` (
 `id_model` int(11) NOT NULL COMMENT 'Model ID',
   `description` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Model description',
-  `model_number` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Model number',
-  `tallaje` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sizes avaiable',
-  `patron_base` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Base pattern',
+  `front` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Front description',
+  `back` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Back information',
+  `neck` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Neck description',
+  `arm` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Arm description',
+  `observations` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Other observations',
+  `old_model_number` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Old model number reference',
+  `xid_model_parent` int(11) DEFAULT NULL COMMENT 'Base pattern',
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation date',
+  `variant` int(11) NOT NULL,
   `xid_family` int(11) NOT NULL COMMENT 'Family',
   `xid_line` int(11) NOT NULL COMMENT 'Line',
   `xid_sex` int(11) NOT NULL COMMENT 'Sex'
