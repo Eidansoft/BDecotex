@@ -1,2 +1,3 @@
 originales/
-/backend/app/nbproject/
+/backend/app/nbproject/*
+/backend/app/libs/*
