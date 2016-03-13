@@ -14,8 +14,8 @@ class FamilyController extends BDecotexController {
         if ($description == NULL || trim($description) == "") {
             throw new BDecotexException(4, 404, "The description is mandatory to create a new family");
         }
-        $res = $this->dao->create($description);
-        if (!$res) {
+        $newId = $this->dao->create($description);
+        if (!$newId) {
             throw new BDecotexException(5, 500, "Error creating the new family '$description'");
         }
     }
