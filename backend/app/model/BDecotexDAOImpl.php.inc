@@ -11,7 +11,7 @@ class BDecotexDAOImpl extends DBConnection {
     }
 
     public function delete($id) {
-        return $this->executeQuery("DELETE FROM $this->table_name WHERE id_$this->table_name = $id");
+        return $this->executeQuery("DELETE FROM $this->table_name WHERE id_$this->table_name = " . intval($id));
     }
 
     public function deleteAll() {
@@ -24,7 +24,7 @@ class BDecotexDAOImpl extends DBConnection {
     }
 
     public function getById($id) {
-        $family = $this->getSingleResult("SELECT * FROM $this->table_name WHERE id_$this->table_name = $id");
+        $family = $this->getSingleResult("SELECT * FROM $this->table_name WHERE id_$this->table_name = " . intval($id));
         return $family;
     }
     
