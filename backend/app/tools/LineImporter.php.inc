@@ -14,7 +14,7 @@ class LineImporter extends BDecotexImporter {
     }
 
     protected function processObject($object) {
-        $this->dao->create($object->Descripción);
+        $this->dao->create($object->Descripción, $object->Línea);
     }
 
 }

@@ -14,7 +14,8 @@ class FamilyImporter extends BDecotexImporter {
     }
 
     protected function processObject($object) {
-        $this->dao->create($object->Desc);
+        $this->dao->create($object->Desc,
+                           $object->Cod);
     }
 
 }

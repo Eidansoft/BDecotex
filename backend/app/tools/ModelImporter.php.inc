@@ -21,8 +21,8 @@ class ModelImporter extends BDecotexImporter {
         $lineDAO = new LineDAOImpl();
         $sexDAO = new SexDAOImpl();
         
-        $this->dao->create($familyDAO->getById($object->Tipo_prenda)['id_family'],
-                            $lineDAO->getById($object->Lineas)['id_line'],
+        $this->dao->create($familyDAO->getByCode($object->Tipo_prenda)['id_family'],
+                            $lineDAO->getByCode($object->Lineas)['id_line'],
                             $sexDAO->getByCode($object->Sexo)['id_sex'],
                             $object->var,
                             $object->D_basica,
