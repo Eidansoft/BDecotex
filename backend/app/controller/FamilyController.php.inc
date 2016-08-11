@@ -10,27 +10,37 @@ class FamilyController extends BDecotexController {
         parent::__construct(new FamilyDAOImpl());
     }
 
-    function createFamily($description) {
-        if ($description == NULL || trim($description) == "") {
-            throw new BDecotexException(4, 404, "The description is mandatory to create a new family");
-        }
-        $newId = $this->dao->create($description);
+    function createFamily($description, $code) {
+        $this->checkFamilyMandatoryFields($description, $code);
+        
+        $newId = $this->dao->create($description, $code);
         if (!$newId) {
             throw new BDecotexException(5, 500, "Error creating the new family '$description'");
         }
+        return $this->getById($newId);
     }
     
-    function updateFamily($id, $description) {
+    function updateFamily($id, $description, $code) {
+        $this->checkFamilyMandatoryFields($description, $code);
+        
         // Check the family with ID exists, if not it will raise exception
         $this->getById($id);
-        if ($description == NULL || trim($description) == "") {
-            throw new BDecotexException(4, 404, "The description is mandatory to update the family with ID: '$id'");
-        }
         
-        $res = $this->dao->update($id, $description);
+        $res = $this->dao->update($id, $description, $code);
         if (!$res) {
             throw new BDecotexException(5, 500, "Error updating the family with ID: '$id'");
         }
+        return $res;
+    }
+    
+    private function checkFamilyMandatoryFields($description, $code){
+        if ($description == NULL || trim($description) == "") {
+            throw new BDecotexException(4, 404, "The 'description' is mandatory");
+        }
+        if ($code == NULL || trim($code) == "") {
+            throw new BDecotexException(4, 404, "The 'code' is mandatory");
+        }
+        return true;
     }
 }
 ?>
