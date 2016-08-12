@@ -23,5 +23,10 @@ class SexDAOImpl extends BDecotexDAOImpl {
                                  . "code = '$code' "
                                  . "WHERE id_$this->table_name = $id");
     }
+    
+    public function getByCode($sexCode) {
+        $sex = $this->getSingleResult("SELECT * FROM $this->table_name WHERE code = '$sexCode'");
+        return $sex;
+    }
 }
 ?>

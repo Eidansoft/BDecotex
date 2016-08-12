@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-06-2016 a las 18:49:45
+-- Tiempo de generación: 11-08-2016 a las 20:04:51
 -- Versión del servidor: 5.5.49-0+deb8u1
 -- Versión de PHP: 5.6.22-0+deb8u1
 
@@ -28,7 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `line` (
 `id_line` int(11) NOT NULL COMMENT 'id line',
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'line name'
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'line name',
+  `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Code to identify the line and used to compose the model code'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Line table for each different line';
 
 --

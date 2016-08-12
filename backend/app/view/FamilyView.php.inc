@@ -26,9 +26,9 @@ class FamilyView extends BDecotexView{
             $r->addRoute('GET', '/bdecotex/family', FamilyView::GET_ALL_FAMILIES);
             // {id} must be a number (\d+)
             $r->addRoute('GET', '/bdecotex/family/{id:\d+}', FamilyView::GET_FAMILY);
-            $r->addRoute('POST', '/bdecotex/family/{name}', FamilyView::CREATE_FAMILY);
+            $r->addRoute('POST', '/bdecotex/family', FamilyView::CREATE_FAMILY);
             $r->addRoute('DELETE', '/bdecotex/family/{id:\d+}', FamilyView::DELETE_FAMILY);
-            $r->addRoute('PUT', '/bdecotex/family/{id:\d+}/{name}', FamilyView::UPDATE_FAMILY);
+            $r->addRoute('PUT', '/bdecotex/family/{id:\d+}', FamilyView::UPDATE_FAMILY);
         });
         parent::__construct($dispatcher);
     }
@@ -44,13 +44,15 @@ class FamilyView extends BDecotexView{
                     $res = $this->controller->getAll();
                     break;
                 case FamilyView::CREATE_FAMILY:
-                    $this->controller->createFamily($vars['name']);
+                    $data = json_decode(file_get_contents('php://input'), true);
+                    $res = $this->controller->createFamily($data['description'], $data['code']);
                     break;
                 case FamilyView::DELETE_FAMILY:
                     $this->controller->delete($vars['id']);
                     break;
                 case FamilyView::UPDATE_FAMILY:
-                    $this->controller->updateFamily($vars['id'], $vars['name']);
+                    $data = json_decode(file_get_contents('php://input'), true);
+                    $this->controller->updateFamily($vars['id'], $data['description'], $data['code']);
                     break;
             }
             parent::returnSuccess($res);

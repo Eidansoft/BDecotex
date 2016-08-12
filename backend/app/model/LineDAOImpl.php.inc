@@ -7,18 +7,25 @@ class LineDAOImpl extends BDecotexDAOImpl {
         parent::__construct('line');
     }
     
-    public function create($name) {
+    public function create($name, $code) {
         return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
-                                                    . "name "
+                                                    . "name, "
+                                                    . "code "
                                                  . ") VALUES ("
-                                                    . "'$name' "
+                                                    . "'$name', "
+                                                    . "'$code'"
                                                  . ")");
     }
 
-    public function update($id, $name) {
+    public function update($id, $name, $code) {
         return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET name = '$name, "
+                                 . "SET name = '$name', code = '$code' "
                                  . "WHERE id_$this->table_name = $id");
+    }
+    
+    public function getByCode($lineCode) {
+        $line = $this->getSingleResult("SELECT * FROM $this->table_name WHERE code = '$lineCode'");
+        return $line;
     }
 }
 ?>
