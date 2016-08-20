@@ -52,7 +52,7 @@ class FamilyView extends BDecotexView{
                     break;
                 case FamilyView::UPDATE_FAMILY:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $this->controller->updateFamily($vars['id'], $data['description'], $data['code']);
+                    $res = $this->controller->updateFamily($vars['id'], $data['description'], $data['code']);
                     break;
             }
             parent::returnSuccess($res);

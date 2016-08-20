@@ -34,7 +34,7 @@ class FamilyController extends BDecotexController {
         if (!$res) {
             throw new BDecotexException(5, 500, "Error updating the family with ID: '$id'");
         }
-        return $res;
+        return $this->getById($id);
     }
     
     private function checkFamilyMandatoryFields($description, $code){
