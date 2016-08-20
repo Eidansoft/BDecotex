@@ -31,6 +31,9 @@ class BDecotexException extends Exception implements IJSonable {
             case 404:
                 $httpMsg = ' 404 Not Found';
                 break;
+            case 409:
+                $httpMsg = ' 409 Conflict';
+                break;
             case 500:
             default :
                 $httpMsg = ' 500 Internal Server Error';
