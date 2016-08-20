@@ -18,6 +18,20 @@ Característica: Operaciones CRUD con las familias de productos
         |"null"             |"F1"  |404      |
         |"null"             |"null"|404      |
 
+    Escenario: Al crear una nueva familia el sistema notifica el nuevo id asignado
+        Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                        |
+            |id_family      |regex(%d)                    |
+            |description    |Prueba de familia            |
+            |code           |F1                           |
+
+    Escenario: Evitar codigos duplicados cuando se crea una nueva familia
+        Cuando el usuario crea la familia "Prueba de familia a duplicar" con codigo "F1"
+        Y el usuario crea la familia "Codigo ya existente" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "409"
+
     Esquema del escenario: Modificar familia de productos con parametros validos
         Cuando el usuario crea la familia <nombre> con codigo <cod>
         Y el usuario modifica la familia al nuevo nombre <nuevo nombre> con codigo <nuevo cod>
@@ -31,22 +45,43 @@ Característica: Operaciones CRUD con las familias de productos
         |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |404      |
         |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
 
+    Escenario: Al modificar una familia el sistema notifica el nuevo estado de la familia
+        Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
+        Y el usuario modifica la familia al nuevo nombre "Familia editada" con codigo "F2"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                        |
+            |id_family      |regex(%d)                    |
+            |description    |Familia editada              |
+            |code           |F2                           |
+
+    Escenario: Evitar codigos duplicados cuando se modifica una familia
+        Dado el usuario crea la familia "Prueba de familia a duplicar" con codigo "F1"
+        Y el usuario crea la familia "Prueba de familia a modificar" con codigo "F2"
+        Cuando el usuario modifica la familia al nuevo nombre "Familia editada" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "409"
+
+    Escenario: El usuario puede obtener una lista con todas las familias existentes en el sistema
+        Dado que en el sistema existen las familias:
+            |NOMBRE         |CODIGO |
+            |Familia 1      |1      |
+            |Familia 2      |2      |
+            |Familia 3      |3      |
+            |Familia 4      |4      |
+            |Familia 5      |5      |
+            |Familia 6      |6      |
+        Cuando el usuario solicita el listado de todas las familias
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye el listado con las familias:
+            |NOMBRE         |CODIGO |
+            |Familia 1      |1      |
+            |Familia 2      |2      |
+            |Familia 3      |3      |
+            |Familia 4      |4      |
+            |Familia 5      |5      |
+            |Familia 6      |6      |
+
     Escenario: Eliminar familia de productos existente
         Cuando el usuario crea la familia "Prueba de familia a borrar" con codigo "F1"
         Y el usuario elimina la familia creada
         Entonces el sistema devuelve un codigo http "200"
-
-    Escenario: Evitar codigos duplicados en las familias
-        Cuando el usuario crea la familia "Prueba de familia a duplicar" con codigo "F1"
-        Y el usuario crea la familia "Codigo ya existente" con codigo "F1"
-        Entonces el sistema devuelve un codigo http "409"
-
-
-    Escenario: Al crear una nueva familia el sistema notifica el nuevo id asignado
-        Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
-        Entonces el sistema devuelve un codigo http "200"
-        Y el sistema incluye en la respuesta los siguientes atributos:
-            |ATRIBUTO       |VALOR                        |
-            |id_family      |                             |
-            |description    |Prueba de familia            |
-            |code           |F1                           |

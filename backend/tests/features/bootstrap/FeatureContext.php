@@ -44,12 +44,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         $method = UrlApi::URL_METHOD_POST;
         $url = "http://localhost/bdecotex/family";
-        $this->familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
+        $familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
                              "code"         => ("null" == $arg2 ? "" : $arg2)];
-        $conection = new UrlApi($url, $method, json_encode($this->familyData));
-        $conection->call();
-        $this->responseCode = $conection->getHttpCode();
-        $this->responseJson = json_decode($conection->getResponse());
+        $this->callUrl($method, $url, $familyData);
     }
 
     /**
@@ -72,12 +69,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $familiaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_PUT;
         $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
-        $this->familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
-                             "code"         => ("null" == $arg2 ? "" : $arg2)];
-        $conection = new UrlApi($url, $method, json_encode($this->familyData));
-        $conection->call();
-        $this->responseCode = $conection->getHttpCode();
-        $this->responseJson = json_decode($conection->getResponse());
+        $familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
+                       "code"         => ("null" == $arg2 ? "" : $arg2)];
+        $this->callUrl($method, $url, $familyData);
     }
 
     /**
@@ -88,10 +82,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $familiaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_DELETE;
         $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
-        $conection = new UrlApi($url, $method);
-        $conection->call();
-        $this->responseCode = $conection->getHttpCode();
-        $this->responseJson = json_decode($conection->getResponse());
+        $this->callUrl($method, $url);
     }
     
     /**
@@ -105,11 +96,74 @@ class FeatureContext implements Context, SnippetAcceptingContext
                 throw new Exception("Missing mandatory atribute '" . $row['ATRIBUTO'] . "'");
             }
             if (array_key_exists("VALOR", $row) && $row['VALOR'] != ""){
-                if ($this->responseJson->$row['ATRIBUTO'] != $row['VALOR']){
-                    throw new Exception("Expected value for '" . $row['ATRIBUTO'] . "' attribute was '" . $row['VALOR'] . "', but '" . $this->responseJson->$row['ATRIBUTO'] . "' was found");
+                if (1 == preg_match("/^regex\((.+)\)$/", $row['VALOR'], $coincidencias)){
+                    PHPUnit_Framework_Assert::assertStringMatchesFormat(
+                    $coincidencias[1],
+                    $this->responseJson->id_family,
+                    "Expected value for '" . $row['ATRIBUTO'] . "' attribute was the regex expression '" . $coincidencias[1] . "', but the value '" . $this->responseJson->$row['ATRIBUTO'] . "' found at the response did not match the expression"
+                );
+                } else {
+                    PHPUnit_Framework_Assert::assertSame(
+                        $row['VALOR'],
+                        $this->responseJson->$row['ATRIBUTO'],
+                        "Expected value for '" . $row['ATRIBUTO'] . "' attribute was '" . $row['VALOR'] . "', but '" . $this->responseJson->$row['ATRIBUTO'] . "' was found"
+                    );
                 }
             }
         }
     }
+    
+    /**
+     * @Given que en el sistema existen las familias:
+     */
+    public function queEnElSistemaExistenLasFamilias(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            $this->elUsuarioCreaLaFamiliaConCodigo($row['NOMBRE'], $row['CODIGO']);
+        }
+    }
 
+    /**
+     * @When el usuario solicita el listado de todas las familias
+     */
+    public function elUsuarioSolicitaElListadoDeTodasLasFamilias()
+    {
+        $method = UrlApi::URL_METHOD_GET;
+        $url = "http://localhost/bdecotex/family";
+        $this->callUrl($method, $url);
+    }
+
+    /**
+     * @Then el sistema incluye el listado con las familias:
+     */
+    public function elSistemaIncluyeElListadoConLasFamilias(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            if ( ! $this->findFamilyIntoJsonResponse($row['NOMBRE'], $row['CODIGO']) ){
+                throw new Exception("Expected family '" . $row['NOMBRE'] . "' with code '" . $row['CODIGO'] . "' not found at server response");
+            }
+        }
+    }
+
+    private function callUrl($method, $url, $params = null) {
+        if (null == $params){
+            $conection = new UrlApi($url, $method);
+        } else {
+            $conection = new UrlApi($url, $method, json_encode($params));
+        }
+        $conection->call();
+        $this->responseCode = $conection->getHttpCode();
+        $this->responseJson = json_decode($conection->getResponse());
+    }
+    
+    private function findFamilyIntoJsonResponse($name, $code) {
+        foreach ($this->responseJson as $family) {
+            if ($family->description == $name && $family->code == $code){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
 }
