@@ -1,6 +1,7 @@
 <?php
 require_once (dirname(__FILE__).'/../../httpCallsAPI.php');
 require_once (dirname(__FILE__).'/../../phpunit-5.5.0.phar');
+require_once (dirname(__FILE__).'/../../../app/model/BDecotexDAOImpl.php.inc');
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
@@ -13,7 +14,6 @@ use Behat\Gherkin\Node\TableNode;
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
-    private $familyData;
     private $responseJson;
     private $responseCode;
 
@@ -27,14 +27,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
     }
-
+    
     /**
-     * @Given El servidor esta corriendo
+     * @Given que la tabla :arg1 esta vacia
      */
-    public function elServidorEstaCorriendo()
+    public function queLaTablaEstaVacia($arg1)
     {
-        // Metodo creado por claridad expresiva en los SAT
-        //throw new PendingException();
+        $dao = new BDecotexDAOImpl($arg1);
+        $dao->deleteAll();
     }
 
     /**
@@ -44,7 +44,8 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
         $method = UrlApi::URL_METHOD_POST;
         $url = "http://localhost/bdecotex/family";
-        $this->familyData = ["description"=>$arg1,"code"=>$arg2];
+        $this->familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
+                             "code"         => ("null" == $arg2 ? "" : $arg2)];
         $conection = new UrlApi($url, $method, json_encode($this->familyData));
         $conection->call();
         $this->responseCode = $conection->getHttpCode();
@@ -52,9 +53,9 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then el sistema responde un codigo http :arg1
+     * @Then el sistema devuelve un codigo http :arg1
      */
-    public function elSistemaRespondeUnCodigoHttp($arg1)
+    public function elSistemaDevuelveUnCodigoHttp($arg1)
     {
         PHPUnit_Framework_Assert::assertSame(
             intval($arg1),
@@ -64,43 +65,19 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then el sistema responde con la familia enviada
-     */
-    public function elSistemaRespondeConLaFamiliaEnviada()
-    {
-        PHPUnit_Framework_Assert::assertStringMatchesFormat(
-            "%d",
-            $this->responseJson->id_family,
-            "The family returned has no a valid ID"
-        );
-        
-        PHPUnit_Framework_Assert::assertSame(
-            $this->familyData["description"],
-            $this->responseJson->description,
-            "The family returned a wrong description"
-        );
-        
-        PHPUnit_Framework_Assert::assertSame(
-            $this->familyData['code'],
-            $this->responseJson->code,
-            "The family returned a wrong code"
-        );
-    }
-
-    /**
-     * @Given existe al menos una familia creada en el sistema
-     */
-    public function existeAlMenosUnaFamiliaCreadaEnElSistema()
-    {
-        elUsuarioCreaLaFamiliaConCodigo("Familia para editar", "002");
-        $this->familyData = $this->responseJson;
-    }
-
-    /**
      * @When el usuario modifica la familia al nuevo nombre :arg1 con codigo :arg2
      */
     public function elUsuarioModificaLaFamiliaAlNuevoNombreConCodigo($arg1, $arg2)
     {
-        throw new PendingException();
+        $familiaPreviamenteCreada = $this->responseJson;
+        $method = UrlApi::URL_METHOD_PUT;
+        $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
+        $this->familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
+                             "code"         => ("null" == $arg2 ? "" : $arg2)];
+        $conection = new UrlApi($url, $method, json_encode($this->familyData));
+        $conection->call();
+        $this->responseCode = $conection->getHttpCode();
+        $this->responseJson = json_decode($conection->getResponse());
     }
+
 }
