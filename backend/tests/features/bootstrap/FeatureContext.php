@@ -80,4 +80,36 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $this->responseJson = json_decode($conection->getResponse());
     }
 
+    /**
+     * @When el usuario elimina la familia creada
+     */
+    public function elUsuarioEliminaLaFamiliaCreada()
+    {
+        $familiaPreviamenteCreada = $this->responseJson;
+        $method = UrlApi::URL_METHOD_DELETE;
+        $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
+        $conection = new UrlApi($url, $method);
+        $conection->call();
+        $this->responseCode = $conection->getHttpCode();
+        $this->responseJson = json_decode($conection->getResponse());
+    }
+    
+    /**
+     * @Then el sistema incluye en la respuesta los siguientes atributos:
+     */
+    public function elSistemaIncluyeEnLaRespuestaLosSiguientesAtributos(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            if ( ! array_key_exists($row['ATRIBUTO'], $this->responseJson)){
+                throw new Exception("Missing mandatory atribute '" . $row['ATRIBUTO'] . "'");
+            }
+            if (array_key_exists("VALOR", $row) && $row['VALOR'] != ""){
+                if ($this->responseJson->$row['ATRIBUTO'] != $row['VALOR']){
+                    throw new Exception("Expected value for '" . $row['ATRIBUTO'] . "' attribute was '" . $row['VALOR'] . "', but '" . $this->responseJson->$row['ATRIBUTO'] . "' was found");
+                }
+            }
+        }
+    }
+
 }

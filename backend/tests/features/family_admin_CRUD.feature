@@ -30,3 +30,23 @@ Característica: Operaciones CRUD con las familias de productos
         |"cambia los dos"       |"FE3" |"cambia nombre y cod"   |"FE33"     |200      |
         |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |404      |
         |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
+
+    Escenario: Eliminar familia de productos existente
+        Cuando el usuario crea la familia "Prueba de familia a borrar" con codigo "F1"
+        Y el usuario elimina la familia creada
+        Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Evitar codigos duplicados en las familias
+        Cuando el usuario crea la familia "Prueba de familia a duplicar" con codigo "F1"
+        Y el usuario crea la familia "Codigo ya existente" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "409"
+
+
+    Escenario: Al crear una nueva familia el sistema notifica el nuevo id asignado
+        Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                        |
+            |id_family      |                             |
+            |description    |Prueba de familia            |
+            |code           |F1                           |
