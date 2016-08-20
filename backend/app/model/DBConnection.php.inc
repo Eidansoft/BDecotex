@@ -1,5 +1,5 @@
 <?php
-require_once "../config.php.inc";
+require_once (dirname(__FILE__).'/../config.php.inc');
 require_once (dirname(__FILE__).'/BDecotexException.php.inc');
 
 class DBConnection 

@@ -1,6 +1,6 @@
 <?php
-require_once "../view/IJSonable.php.inc";
-require_once "../view/JSonable.php.inc";
+require_once (dirname(__FILE__)."/../view/IJSonable.php.inc");
+require_once (dirname(__FILE__)."/../view/JSonable.php.inc");
 
 class BDecotexException extends Exception implements IJSonable {
     
