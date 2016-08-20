@@ -13,6 +13,8 @@ class FamilyController extends BDecotexController {
     function createFamily($description, $code) {
         $this->checkFamilyMandatoryFields($description, $code);
         
+        $this->checkCodeNotDuplicate($code);
+        
         $newId = $this->dao->create($description, $code);
         if (!$newId) {
             throw new BDecotexException(5, 500, "Error creating the new family '$description'");
@@ -22,6 +24,8 @@ class FamilyController extends BDecotexController {
     
     function updateFamily($id, $description, $code) {
         $this->checkFamilyMandatoryFields($description, $code);
+        
+        $this->checkCodeNotDuplicate($code, $id);
         
         // Check the family with ID exists, if not it will raise exception
         $this->getById($id);
@@ -39,6 +43,19 @@ class FamilyController extends BDecotexController {
         }
         if ($code == NULL || trim($code) == "") {
             throw new BDecotexException(4, 404, "The 'code' is mandatory");
+        }
+        return true;
+    }
+    
+    private function checkCodeNotDuplicate($code, $id = null){
+        $found = $this->dao->getByCode($code);
+        if ( $found ){
+            // dependiendo del ID, si es nulo, es que se intenta crear, en c.c. es una modificacion
+            if ($id == null){
+                throw new BDecotexException(4, 409, "The code '$code' already exists");
+            } else if ($id != $found['id_family']){
+                throw new BDecotexException(4, 409, "The code '$code' already exists");
+            }
         }
         return true;
     }
