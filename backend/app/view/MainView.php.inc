@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once "./FamilyView.php.inc";
 require_once (dirname(__FILE__)."/SexView.php.inc");
+require_once (dirname(__FILE__)."/LineView.php.inc");
 require_once "../libs/fastRoute/bootstrap.php";
 
 /**
@@ -12,6 +13,7 @@ require_once "../libs/fastRoute/bootstrap.php";
 class MainView extends BDecotexView{
     const VIEW_FAMILY = 0;
     const VIEW_SEX = 1;
+    const VIEW_LINE = 2;
     
     protected $httpMethod;
     protected $uri;
@@ -20,6 +22,7 @@ class MainView extends BDecotexView{
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
             $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/family[/{params:.+}]', MainView::VIEW_FAMILY);
             $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/sex[/{params:.+}]', MainView::VIEW_SEX);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/line[/{params:.+}]', MainView::VIEW_LINE);
         });
         parent::__construct($dispatcher);
     }
@@ -38,6 +41,10 @@ class MainView extends BDecotexView{
                 break;
             case MainView::VIEW_SEX:
                 $view = new SexView();
+                $view->processUri($this->httpMethod, $this->uri);
+                break;
+            case MainView::VIEW_LINE:
+                $view = new LineView();
                 $view->processUri($this->httpMethod, $this->uri);
                 break;
         }

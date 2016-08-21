@@ -9,3 +9,8 @@ default:
             contexts:
                 - SexContext
             paths:    [ %paths.base%/features/sex ]
+        Line:
+            contexts:
+                - LineContext
+            paths:    [ %paths.base%/features/line ]
+
