@@ -28,3 +28,7 @@ Característica: Operaciones CRUD con con el sexo de los productos
             |name           |Embarazada                   |
             |code           |E                            |
 
+    Escenario: Evitar codigos duplicados cuando se crea un nuevo sexo
+        Cuando el usuario crea el sexo "Embarazada" con codigo "E"
+        Y el usuario crea el sexo "Codigo duplicado" con codigo "E"
+        Entonces el sistema devuelve un codigo http "409"

@@ -5,3 +5,7 @@ default:
             contexts:
                 - FamilyContext
             paths:    [ %paths.base%/features/family ]
+        Sex:
+            contexts:
+                - SexContext
+            paths:    [ %paths.base%/features/sex ]

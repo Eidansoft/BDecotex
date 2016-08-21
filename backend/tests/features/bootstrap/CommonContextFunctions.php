@@ -63,7 +63,7 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
                 if (1 == preg_match("/^regex\((.+)\)$/", $row['VALOR'], $coincidencias)){
                     $this->assertStringMatchesFormat(
                     $coincidencias[1],
-                    $this->responseJson->id_family,
+                    $this->responseJson->$row['ATRIBUTO'],
                     "Expected value for '" . $row['ATRIBUTO'] . "' attribute was the regex expression '" . $coincidencias[1] . "', but the value '" . $this->responseJson->$row['ATRIBUTO'] . "' found at the response did not match the expression"
                 );
                 } else {
