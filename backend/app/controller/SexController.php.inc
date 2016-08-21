@@ -52,7 +52,7 @@ class SexController extends BDecotexController {
             // dependiendo del ID, si es nulo, es que se intenta crear, en c.c. es una modificacion
             if ($id == null){
                 throw new BDecotexException(4, 409, "The code '$code' already exists");
-            } else if ($id != $found['id_family']){
+            } else if ($id != $found['id_sex']){
                 throw new BDecotexException(4, 409, "The code '$code' already exists");
             }
         }

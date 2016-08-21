@@ -1,7 +1,6 @@
 <?php
 require_once (dirname(__FILE__).'/CommonContextFunctions.php');
 require_once (dirname(__FILE__).'/../../httpCallsAPI.php');
-//require_once (dirname(__FILE__).'/../../phpunit-5.5.0.phar');
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;

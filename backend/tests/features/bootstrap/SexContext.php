@@ -36,4 +36,70 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
         $this->callUrl($method, $url, $sexData);
     }
 
+    /**
+     * @When el usuario modifica el sexo al nuevo nombre :arg1 con codigo :arg2
+     */
+    public function elUsuarioModificaElSexoAlNuevoNombreConCodigo($arg1, $arg2)
+    {
+        $sexoPreviamenteCreado = $this->responseJson;
+        $method = UrlApi::URL_METHOD_PUT;
+        $url = "http://localhost/bdecotex/sex/" . $sexoPreviamenteCreado->id_sex;
+        $sexData = ["name"  => ("null" == $arg1 ? "" : $arg1),
+                    "code"  => ("null" == $arg2 ? "" : $arg2)];
+        $this->callUrl($method, $url, $sexData);
+    }
+    /**
+     * @Given que en el sistema existen los sexos:
+     */
+    public function queEnElSistemaExistenLosSexos(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            $this->elUsuarioCreaElSexoConCodigo($row['NOMBRE'], $row['CODIGO']);
+        }
+    }
+
+    /**
+     * @When el usuario solicita el listado de todos los sexos
+     */
+    public function elUsuarioSolicitaElListadoDeTodosLosSexos()
+    {
+        $method = UrlApi::URL_METHOD_GET;
+        $url = "http://localhost/bdecotex/sex";
+        $this->callUrl($method, $url);
+    }
+
+    /**
+     * @Then el sistema incluye el listado con los sexos:
+     */
+    public function elSistemaIncluyeElListadoConLosSexos(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            if ( ! $this->findSexIntoJsonResponse($row['NOMBRE'], $row['CODIGO']) ){
+                throw new Exception("Expected sex '" . $row['NOMBRE'] . "' with code '" . $row['CODIGO'] . "' not found at server response");
+            }
+        }
+    }
+    
+    /**
+     * @When el usuario elimina el sexo creado
+     */
+    public function elUsuarioEliminaElSexoCreado()
+    {
+        $sexoPreviamenteCreado = $this->responseJson;
+        $method = UrlApi::URL_METHOD_DELETE;
+        $url = "http://localhost/bdecotex/sex/" . $sexoPreviamenteCreado->id_sex;
+        $this->callUrl($method, $url);
+    }
+    
+    private function findSexIntoJsonResponse($name, $code) {
+        var_dump($this->responseJson);
+        foreach ($this->responseJson as $sex) {
+            if ($sex->name == $name && $sex->code == $code){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
 }
