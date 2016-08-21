@@ -1,4 +1,5 @@
 # language: es
+@backend @rest @family
 Característica: Operaciones CRUD con las familias de productos
     El usuario administrador necesita administrar las familias dadas de alta
     en el sistema, para ello tiene que poder crear, modificar, consultar y
@@ -11,19 +12,19 @@ Característica: Operaciones CRUD con las familias de productos
         Cuando el usuario crea la familia <nombre> con codigo <cod>
         Entonces el sistema devuelve un codigo http <http cod>
 
-        Ejemplos:
-        |nombre             |cod   |http cod |
-        |"familia prueba 1" |"F1"  |200      |
-        |"familia prueba 2" |"null"|404      |
-        |"null"             |"F1"  |404      |
-        |"null"             |"null"|404      |
+        Ejemplos: Tanto el nombre de la familia como el codigo son obligatorios
+            |nombre             |cod   |http cod |
+            |"familia prueba 1" |"F1"  |200      |
+            |"familia prueba 2" |"null"|404      |
+            |"null"             |"F1"  |404      |
+            |"null"             |"null"|404      |
 
     Escenario: Al crear una nueva familia el sistema notifica el nuevo id asignado
         Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
         Entonces el sistema devuelve un codigo http "200"
         Y el sistema incluye en la respuesta los siguientes atributos:
             |ATRIBUTO       |VALOR                        |
-            |id_family      |regex(%d)                    |
+            |id_family      |regex(\d+)                   |
             |description    |Prueba de familia            |
             |code           |F1                           |
 
@@ -37,13 +38,13 @@ Característica: Operaciones CRUD con las familias de productos
         Y el usuario modifica la familia al nuevo nombre <nuevo nombre> con codigo <nuevo cod>
         Entonces el sistema devuelve un codigo http <http cod>
 
-        Ejemplos:
-        |nombre                 |cod   |nuevo nombre            |nuevo cod  |http cod |
-        |"cambia nombre"        |"FE1" |"familia mod"           |"FE1"      |200      |
-        |"cambia codigo"        |"FE2" |"cambia codigo"         |"FE22"     |200      |
-        |"cambia los dos"       |"FE3" |"cambia nombre y cod"   |"FE33"     |200      |
-        |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |404      |
-        |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
+        Ejemplos: Tanto el nombre de la familia como el codigo son obligatorios
+            |nombre                 |cod   |nuevo nombre            |nuevo cod  |http cod |
+            |"cambia nombre"        |"FE1" |"familia mod"           |"FE1"      |200      |
+            |"cambia codigo"        |"FE2" |"cambia codigo"         |"FE22"     |200      |
+            |"cambia los dos"       |"FE3" |"cambia nombre y cod"   |"FE33"     |200      |
+            |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |404      |
+            |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
 
     Escenario: Al modificar una familia el sistema notifica el nuevo estado de la familia
         Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
@@ -51,7 +52,7 @@ Característica: Operaciones CRUD con las familias de productos
         Entonces el sistema devuelve un codigo http "200"
         Y el sistema incluye en la respuesta los siguientes atributos:
             |ATRIBUTO       |VALOR                        |
-            |id_family      |regex(%d)                    |
+            |id_family      |regex(\d+)                   |
             |description    |Familia editada              |
             |code           |F2                           |
 

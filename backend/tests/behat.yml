@@ -1,0 +1,7 @@
+#behat.yml
+default:
+    suites:
+        Family:
+            contexts:
+                - FamilyContext
+            paths:    [ %paths.base%/features/family ]
