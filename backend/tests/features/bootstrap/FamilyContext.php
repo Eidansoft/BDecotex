@@ -94,10 +94,12 @@ class FamilyContext extends CommonContextFunctions implements Context, SnippetAc
         }
     }
     
-    private function findFamilyIntoJsonResponse($name, $code) {
+    public function findFamilyIntoJsonResponse($name, $code = null) {
         foreach ($this->responseJson as $family) {
-            if ($family->description == $name && $family->code == $code){
-                return TRUE;
+            if ($family->description == $name){
+                if ($code == null || $family->code == $code){
+                    return $family->id_family;
+                }
             }
         }
         return FALSE;

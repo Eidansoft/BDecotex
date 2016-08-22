@@ -15,6 +15,17 @@ class ModelDAOImpl extends BDecotexDAOImpl {
         
         $datetime1 = new DateTime();
         
+        // I check that ther is no empty string, I prefer to store null
+        $description = ($description == '' ? "NULL" : "'$description'");
+        $front = ($front == '' ? "NULL" : "'$front'");
+        $back = ($back == '' ? "NULL" : "'$back'");
+        $neck = ($neck == '' ? "NULL" : "'$neck'");
+        $arm = ($arm == '' ? "NULL" : "'$arm'");
+        $client = ($client == '' ? "NULL" : "'$client'");
+        $idParent = ($idParent == '' ? "NULL" : "'$idParent'");
+        $oldRef = ($oldRef == '' ? "NULL" : "'$oldRef'");
+        $modelNumberParent = ($modelNumberParent == '' ? "NULL" : "'$modelNumberParent'");
+        
         return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
                                                     . "xid_family, "
                                                     . "xid_line, "
@@ -36,61 +47,33 @@ class ModelDAOImpl extends BDecotexDAOImpl {
                                                     . "$lineId, "
                                                     . "$sexId, "
                                                     . "$variant, "
-                                                    . "'$description', "
-                                                    . "'$front', "
-                                                    . "'$back', "
-                                                    . "'$neck', "
-                                                    . "'$arm', "
-                                                    . "'$observations', "
-                                                    . "'$modelNumberParent', "
-                                                    . ($idParent == '' ? 'NULL' : $idParent) . ", "
+                                                    . "$description, "
+                                                    . "$front, "
+                                                    . "$back, "
+                                                    . "$neck, "
+                                                    . "$arm, "
+                                                    . "$observations, "
+                                                    . "$modelNumberParent, "
+                                                    . "$idParent, "
                                                     . $datetime1->getTimestamp() . ", "
-                                                    . "'$client', "
-                                                    . "'$oldRef'  "
+                                                    . "$client, "
+                                                    . "$oldRef  "
                                                  . ")");
     }
-
-//    public function create2($id_model, $familyId, $lineId, $sexId, $variant,
-//            $description, $front, $back, $neck, $arm, $observations,
-//            $oldModelNumber, $parentModelId) {
-//        $datetime1 = new DateTime();
-//        return $this->getModifiedIdExecutingQuery("INSERT INTO model2 ("
-//                                                    . "id_model, "
-//                                                    . "xid_family, "
-//                                                    . "xid_line, "
-//                                                    . "xid_sex, "
-//                                                    . "variant, "
-//                                                    . "description, "
-//                                                    . "front, "
-//                                                    . "back, "
-//                                                    . "neck, "
-//                                                    . "arm, "
-//                                                    . "observations, "
-//                                                    . "old_model_number, "
-//                                                    . "xid_model_parent, "
-//                                                    . "creation_date "
-//                                                 . ") VALUES ("
-//                                                    . "'$id_model', "
-//                                                    . "'$familyId', "
-//                                                    . "'$lineId', "
-//                                                    . "'$sexId', "
-//                                                    . "'$variant', "
-//                                                    . "'$description', "
-//                                                    . "'$front', "
-//                                                    . "'$back', "
-//                                                    . "'$neck', "
-//                                                    . "'$arm', "
-//                                                    . "'$observations', "
-//                                                    . "'$oldModelNumber', "
-//                                                    . "'$parentModelId', "
-//                                                    . "'" . $datetime1->getTimestamp() . "'"
-//                                                 . ")");
-//    }
     
-    public function update($id, $description) {
+    public function update($id, $field, $value) {
         return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET description = '$description' "
+                                 . "SET $field = '$value' "
                                  . "WHERE id_$this->table_name = $id");
+    }
+    
+    public function getByCode($family, $line, $sex, $variant) {
+        return $this->getSingleResult("SELECT * "
+                                    . "FROM $this->table_name "
+                                    . "WHERE xid_family = $family "
+                                    . "AND xid_line = $line "
+                                    . "AND xid_sex = $sex "
+                                    . "AND variant = $variant");
     }
 }
 ?>

@@ -13,4 +13,8 @@ default:
             contexts:
                 - LineContext
             paths:    [ %paths.base%/features/line ]
+        Model:
+            contexts:
+                - ModelContext
+            paths:    [ %paths.base%/features/model ]
 

@@ -94,10 +94,12 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
         }
     }
     
-    private function findFamilyIntoJsonResponse($name, $code) {
+    public function findFamilyIntoJsonResponse($name, $code = null) {
         foreach ($this->responseJson as $line) {
-            if ($line->name == $name && $line->code == $code){
-                return TRUE;
+            if ($line->name == $name){
+                if ($code == null || $line->code == $code){
+                    return $line->id_line;
+                }
             }
         }
         return FALSE;

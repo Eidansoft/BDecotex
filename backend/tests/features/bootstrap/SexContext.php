@@ -93,11 +93,12 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
         $this->callUrl($method, $url);
     }
     
-    private function findSexIntoJsonResponse($name, $code) {
-        var_dump($this->responseJson);
+    public function findSexIntoJsonResponse($name, $code = null) {
         foreach ($this->responseJson as $sex) {
-            if ($sex->name == $name && $sex->code == $code){
-                return TRUE;
+            if ($sex->name == $name){
+                if ($code == null || $sex->code == $code){
+                    return $sex->id_sex;
+                }
             }
         }
         return FALSE;
