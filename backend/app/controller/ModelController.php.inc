@@ -8,6 +8,31 @@ require_once (dirname(__FILE__).'/BDecotexController.php.inc');
 
 class ModelController extends BDecotexController {
 
+    const ATTR_FAMILY = 0;
+    const ATTR_LINE = 1;
+    const ATTR_SEX = 2;
+    const ATTR_VARIANT = 3;
+    
+    public $mandatoryAttributes = array("xid_family" => ModelCo,
+                                 "xid_line",
+                                 "xid_sex",
+                                 "variant");
+    public $allAttributes = array("xid_family",
+                                 "xid_line",
+                                 "xid_sex",
+                                 "variant",
+                                 "description",
+                                 "front",
+                                 "back",
+                                 "neck",
+                                 "arm",
+                                 "observations",
+                                 "model_number_parent",
+                                 "xid_model_parent",
+                                 "creation_date",
+                                 "client",
+                                 "old_ref");
+    
     private $familyDao;
     private $lineDao;
     private $sexDao;
@@ -31,15 +56,23 @@ class ModelController extends BDecotexController {
         return $this->getById($newId);
     }
     
-    function updateModel($id, $name, $code) {
-        $this->checkModelMandatoryFields($name, $code);
-        
-        $this->checkCodeNotDuplicate($code, $id);
+    function updateModel($id, $attribute, $value) {
+        $this->checkModelUpdateMandatoryFields($attribute, $value);
         
         // Check the model with ID exists, if not it will raise exception
-        $this->getById($id);
+        $modelToUpdate = $this->getById($id);
         
-        $res = $this->dao->update($id, $name, $code);
+        if ($attribute == "xid_family"){
+            $this->checkCodeNotDuplicate($value, $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $modelToUpdate['variant'], $modelToUpdate['id_model']);
+        } else if ($attribute == "xid_line"){
+            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $value, $modelToUpdate['xid_sex'], $modelToUpdate['variant'], $modelToUpdate['id_model']);
+        } else if ($attribute == "xid_sex"){
+            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $value, $modelToUpdate['variant'], $modelToUpdate['id_model']);
+        } else if ($attribute == "variant"){
+            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $value, $modelToUpdate['id_model']);
+        }
+        
+        $res = $this->dao->update($id, $attribute, $value);
         if (!$res) {
             throw new BDecotexException(5, 500, "Error updating the model with ID: '$id'");
         }
@@ -71,10 +104,24 @@ class ModelController extends BDecotexController {
         return true;
     }
     
-    private function checkCodeNotDuplicate($family, $line, $sex, $variant){
+    private function checkModelUpdateMandatoryFields($attribute, $value){        
+        if ($attribute == NULL || trim($attribute) == "") {
+            throw new BDecotexException(4, 404, "The 'attribute' is mandatory");
+        } else if ( ! in_array($attribute, $this->allAttributes)){
+            throw new BDecotexException(4, 404, "The 'attribute' provided '$attribute' is not valid");
+        }
+        
+        if ($value == NULL || trim($value) == "") {
+            throw new BDecotexException(4, 404, "The 'value' is mandatory");
+        }
+    }
+    
+    private function checkCodeNotDuplicate($family, $line, $sex, $variant, $id = null){
         $found = $this->dao->getByCode($family, $line, $sex, $variant);
         if ( $found ){
-            throw new BDecotexException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+            if ($id == null || $id != $found['id_model']){ //checking for a creation
+                throw new BDecotexException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+            }
         }
         return true;
     }

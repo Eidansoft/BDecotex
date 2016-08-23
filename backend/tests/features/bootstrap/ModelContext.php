@@ -99,7 +99,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         
         if($family && $line && $sex){
             $method = UrlApi::URL_METHOD_POST;
-            $url = "http://localhost/bdecotex/model";
+            $url = "http://localhost/bdecotex/mod";
             $modelData = ["family"  => ($family=="null" ? "" : $family),
                           "line"    => ($line=="null" ? "" : $line),
                           "sex"     => ($sex=="null" ? "" : $sex),
@@ -108,6 +108,28 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         } else {
             throw new Exception("Error at Cucumber Feature Definition. One of provided data (family=$family, line=$line or sex=$sex) is not valid because was not previously created at the system.");
         }
+    }
+
+    /**
+     * @When el usuario modifica el campo :arg1 al valor :arg2
+     */
+    public function elUsuarioModificaElCampoAlValor($arg1, $arg2)
+    {
+        $modeloPreviamenteCreado = $this->responseJson;
+        $value = $arg2;
+        if ($arg1 == "xid_family"){
+            $value = $this->familyContext->findFamilyIntoJsonResponse($arg2);
+        } else if ($arg1 == "xid_line"){
+            $value = $this->lineContext->findFamilyIntoJsonResponse($arg2);
+        } else if ($arg1 == "xid_sex"){
+            $value = $this->sexContext->findSexIntoJsonResponse($arg2);
+        }
+        
+        $method = UrlApi::URL_METHOD_PUT;
+        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $modelData = ["attribute"  => ($arg1=="null" ? "" : $arg1),
+                      "value"      => ($arg2=="null" ? "" : $value)];
+        $this->callUrl($method, $url, $modelData);
     }
 
 }

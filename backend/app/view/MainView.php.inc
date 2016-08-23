@@ -25,7 +25,7 @@ class MainView extends BDecotexView{
             $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/family[/{params:.+}]', MainView::VIEW_FAMILY);
             $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/sex[/{params:.+}]', MainView::VIEW_SEX);
             $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/line[/{params:.+}]', MainView::VIEW_LINE);
-            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/model[/{params:.+}]', MainView::VIEW_MODEL);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/mod[/{params:.+}]', MainView::VIEW_MODEL);
         });
         parent::__construct($dispatcher);
     }

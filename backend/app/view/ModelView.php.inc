@@ -26,9 +26,9 @@ class ModelView extends BDecotexView{
 //            $r->addRoute('GET', '/bdecotex/model', ModelView::GET_ALL_MODEL);
             // {id} must be a number (\d+)
 //            $r->addRoute('GET', '/bdecotex/model/{id:\d+}', ModelView::GET_MODEL);
-            $r->addRoute('POST', '/bdecotex/model', ModelView::CREATE_MODEL);
+            $r->addRoute('POST', '/bdecotex/mod', ModelView::CREATE_MODEL);
 //            $r->addRoute('DELETE', '/bdecotex/model/{id:\d+}', ModelView::DELETE_MODEL);
-//            $r->addRoute('PUT', '/bdecotex/model/{id:\d+}', ModelView::UPDATE_MODEL);
+            $r->addRoute('PUT', '/bdecotex/mod/{id:\d+}', ModelView::UPDATE_MODEL);
         });
         parent::__construct($dispatcher);
     }
@@ -52,7 +52,7 @@ class ModelView extends BDecotexView{
                     break;
                 case ModelView::UPDATE_MODEL:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->updateModel($vars['id'], $data['name'], $data['code']);
+                    $res = $this->controller->updateModel($vars['id'], $data['attribute'], $data['value']);
                     break;
             }
             parent::returnSuccess($res);
