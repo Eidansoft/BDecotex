@@ -15,14 +15,15 @@ class ModelDAOImpl extends BDecotexDAOImpl {
         
         $datetime1 = new DateTime();
         
-        // I check that ther is no empty string, I prefer to store null
+        // I check that there is no empty string, I prefer to store null
         $description = ($description == '' ? "NULL" : "'$description'");
         $front = ($front == '' ? "NULL" : "'$front'");
         $back = ($back == '' ? "NULL" : "'$back'");
         $neck = ($neck == '' ? "NULL" : "'$neck'");
         $arm = ($arm == '' ? "NULL" : "'$arm'");
+        $observations = ($observations == '' ? "NULL" : "'$observations'");
         $client = ($client == '' ? "NULL" : "'$client'");
-        $idParent = ($idParent == '' ? "NULL" : "'$idParent'");
+        $idParent = ($idParent == '' ? NULL : "$idParent");
         $oldRef = ($oldRef == '' ? "NULL" : "'$oldRef'");
         $modelNumberParent = ($modelNumberParent == '' ? "NULL" : "'$modelNumberParent'");
         
@@ -63,7 +64,7 @@ class ModelDAOImpl extends BDecotexDAOImpl {
     
     public function update($id, $field, $value) {
         return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET $field = '$value' "
+                                 . "SET $field = " . (is_string($value) ? "'$value'" : "$value" ) . " "
                                  . "WHERE id_$this->table_name = $id");
     }
     

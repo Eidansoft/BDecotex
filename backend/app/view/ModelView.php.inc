@@ -27,7 +27,7 @@ class ModelView extends BDecotexView{
             // {id} must be a number (\d+)
 //            $r->addRoute('GET', '/bdecotex/model/{id:\d+}', ModelView::GET_MODEL);
             $r->addRoute('POST', '/bdecotex/mod', ModelView::CREATE_MODEL);
-//            $r->addRoute('DELETE', '/bdecotex/model/{id:\d+}', ModelView::DELETE_MODEL);
+            $r->addRoute('DELETE', '/bdecotex/mod/{id:\d+}', ModelView::DELETE_MODEL);
             $r->addRoute('PUT', '/bdecotex/mod/{id:\d+}', ModelView::UPDATE_MODEL);
         });
         parent::__construct($dispatcher);

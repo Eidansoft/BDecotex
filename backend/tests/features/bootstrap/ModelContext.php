@@ -132,4 +132,26 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         $this->callUrl($method, $url, $modelData);
     }
 
+    /**
+     * @When el usuario elimina el modelo creado
+     */
+    public function elUsuarioEliminaElModeloCreado()
+    {
+        $modeloPreviamenteCreado = $this->responseJson;
+        $method = UrlApi::URL_METHOD_DELETE;
+        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $this->callUrl($method, $url);
+    }
+    
+    /**
+     * @When el usuario modifica los siguientes campos:
+     */
+    public function elUsuarioModificaLosSiguientesCampos(TableNode $table)
+    {
+        $modeloPreviamenteCreado = $this->responseJson;
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            $this->elUsuarioModificaElCampoAlValor($row['ATRIBUTO'], $row['VALOR']);
+        }
+    }
 }

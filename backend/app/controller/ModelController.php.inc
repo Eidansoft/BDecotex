@@ -62,6 +62,7 @@ class ModelController extends BDecotexController {
         // Check the model with ID exists, if not it will raise exception
         $modelToUpdate = $this->getById($id);
         
+        // check mandatory fields
         if ($attribute == "xid_family"){
             $this->checkCodeNotDuplicate($value, $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $modelToUpdate['variant'], $modelToUpdate['id_model']);
         } else if ($attribute == "xid_line"){
@@ -70,6 +71,16 @@ class ModelController extends BDecotexController {
             $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $value, $modelToUpdate['variant'], $modelToUpdate['id_model']);
         } else if ($attribute == "variant"){
             $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $value, $modelToUpdate['id_model']);
+        }
+        
+        //check xid_model_parent must exist
+        if ($attribute == "xid_model_parent"){
+            // Check the model with ID exists, if not it will raise exception
+            try {
+                $this->getById($value);
+            } catch (BDecotexException $ex){
+                throw new Exception("The parent model referenced with ID '$value' does not exist", $ex->code, $ex);
+            }
         }
         
         $res = $this->dao->update($id, $attribute, $value);

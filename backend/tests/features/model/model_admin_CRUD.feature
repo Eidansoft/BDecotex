@@ -54,8 +54,20 @@ Característica: Operaciones CRUD con los modelos de productos
         Y el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
         Entonces el sistema devuelve un codigo http "409"
 
-    @current
-    Esquema del escenario: Al modificar los parametros obligatorios de un modelo, el sistema debe comprobar que el nuevo modelo no exista previamente
+    Esquema del escenario: Evitar codigos duplicados cuando se crea un nuevo modelo
+        Dado el usuario crea un modelo de la familia <FAMILIA>, linea <LINEA>, sexo <SEXO> y variante <VAR>
+        Cuando el usuario crea un modelo de la familia <FAMILIA2>, linea <LINEA2>, sexo <SEXO2> y variante <VAR2>
+        Entonces el sistema devuelve un codigo http <HTTP COD>
+
+        Ejemplos: La combinacion de campos obligatorios no puede existir previamente
+            |FAMILIA    |LINEA     |SEXO       |VAR   |FAMILIA2    |LINEA2    |SEXO2      |VAR2  |HTTP COD |
+            |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"   |"Linea 1" |"Mujer"    |"0"   |409      |
+            |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Pantalones"|"Linea 1" |"Mujer"    |"0"   |200      |
+            |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"   |"Linea 2" |"Mujer"    |"0"   |200      |
+            |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"   |"Linea 1" |"Hombre"   |"0"   |200      |
+            |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"   |"Linea 1" |"Mujer"    |"2"   |200      |
+
+    Esquema del escenario: Es posible modificar los atributos obligatorios de un modelo pero no se permiten codigos duplicados, por lo que el sistema comprobara que la combinacion de atributos identificadores no exista previamente
         Cuando el usuario crea un modelo de la familia <FAMILIA>, linea <LINEA>, sexo <SEXO> y variante <VAR>
         Y el usuario crea un modelo de la familia <FAMILIA2>, linea <LINEA2>, sexo <SEXO2> y variante <VAR2>
         Y el usuario modifica el campo <CAMPO> al valor <VALOR>
@@ -80,3 +92,76 @@ Característica: Operaciones CRUD con los modelos de productos
             |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"        |"Linea 1" |"Embarazada"|"0"   |"xid_sex"     |"Embarazada"|200      |
             |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"        |"Linea 1" |"Mujer"     |"1"   |"variant"     |"1"         |200      |
 
+    @none
+    Escenario: Al hacer un modelo hijo de otro, si el modelo padre no existe en el sistema, se devolvera un error
+        Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
+        Y el usuario modifica el campo "xid_model_parent" al valor "123"
+        Entonces el sistema devuelve un codigo http "400"
+
+    Escenario: Al hacer un modelo hijo de otro, el sistema comprueba que el modelo padre exista
+        Dado el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
+        Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Hombre" y variante "2"
+        Y el usuario modifica el campo "xid_model_parent" al valor "1"
+        Entonces el sistema devuelve un codigo http "200"
+
+    @none
+    Escenario: El usuario puede obtener una lista con todas las modelos existentes en el sistema
+        Dado que en el sistema existen las modelos:
+            |NOMBRE       |CODIGO |
+            |Linea 1      |LLL1   |
+            |Linea 2      |LL2    |
+            |Linea 3      |LL3    |
+            |Linea 4      |L4     |
+            |Linea 5      |L5     |
+            |Linea 6      |L6     |
+        Cuando el usuario solicita el listado de todas las modelos
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye el listado con las modelos:
+            |NOMBRE       |CODIGO |
+            |Linea 1      |LLL1   |
+            |Linea 2      |LL2    |
+            |Linea 3      |LL3    |
+            |Linea 4      |L4     |
+            |Linea 5      |L5     |
+            |Linea 6      |L6     |
+
+    Escenario: Eliminar modelo de productos existente
+        Dado el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
+        Y el usuario crea un modelo de la familia "Camisas", linea "Linea 2", sexo "Mujer" y variante "0"
+        Cuando el usuario elimina el modelo creado
+        Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Es posible modificar cualquiera de los atributos de un modelo
+        Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
+        Y el usuario modifica los siguientes campos:
+            |ATRIBUTO               |VALOR                        |
+            |description            |Pantalones de multiples usos |
+            |front                  |Parte delantera              |
+            |back                   |Parte trasera                |
+            |neck                   |Cuello                       |
+            |arm                    |Brazo                        |
+            |observations           |Las observaciones            |
+            |model_number_parent    |modelo ref                   |
+            |xid_model_parent       |1                            |
+            |creation_date          |12345678                     |
+            |client                 |Nombre del cliente           |
+            |old_ref                |Anterior referencia          |
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO               |VALOR                        |
+            |id_model               |regex(\d+)                   |
+            |xid_family             |regex(\d+)                   |
+            |xid_line               |regex(\d+)                   |
+            |xid_sex                |regex(\d+)                   |
+            |variant                |2                            |
+            |description            |Pantalones de multiples usos |
+            |front                  |Parte delantera              |
+            |back                   |Parte trasera                |
+            |neck                   |Cuello                       |
+            |arm                    |Brazo                        |
+            |observations           |Las observaciones            |
+            |model_number_parent    |modelo ref                   |
+            |xid_model_parent       |1                            |
+            |creation_date          |12345678                     |
+            |client                 |Nombre del cliente           |
+            |old_ref                |Anterior referencia          |
