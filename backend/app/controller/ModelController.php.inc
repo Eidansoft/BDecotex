@@ -13,7 +13,7 @@ class ModelController extends BDecotexController {
     const ATTR_SEX = 2;
     const ATTR_VARIANT = 3;
     
-    public $mandatoryAttributes = array("xid_family" => ModelCo,
+    public $mandatoryAttributes = array("xid_family",
                                  "xid_line",
                                  "xid_sex",
                                  "variant");
