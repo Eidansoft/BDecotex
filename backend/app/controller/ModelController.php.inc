@@ -1,9 +1,9 @@
 <?php
-require_once "../model/ModelDAOImpl.php.inc";
-require_once (dirname(__FILE__)."/../model/FamilyDAOImpl.php.inc");
-require_once (dirname(__FILE__)."/../model/LineDAOImpl.php.inc");
-require_once (dirname(__FILE__)."/../model/SexDAOImpl.php.inc");
-require_once "../model/BDecotexException.php.inc";
+require_once (dirname(__FILE__).'/../model/ModelDAOImpl.php.inc');
+require_once (dirname(__FILE__).'/../model/FamilyDAOImpl.php.inc');
+require_once (dirname(__FILE__).'/../model/LineDAOImpl.php.inc');
+require_once (dirname(__FILE__).'/../model/SexDAOImpl.php.inc');
+require_once (dirname(__FILE__).'/../model/BDecotexException.php.inc');
 require_once (dirname(__FILE__).'/BDecotexController.php.inc');
 
 class ModelController extends BDecotexController {

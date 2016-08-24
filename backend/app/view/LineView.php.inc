@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__).'/BDecotexView.php');
-require_once "../libs/fastRoute/bootstrap.php";
-require_once "../controller/LineController.php.inc";
+require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
+require_once (dirname(__FILE__).'/../controller/LineController.php.inc');
 
 /**
  * Description of LineView

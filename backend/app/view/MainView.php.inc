@@ -1,10 +1,10 @@
 <?php
 require_once (dirname(__FILE__).'/BDecotexView.php');
-require_once "./FamilyView.php.inc";
+require_once (dirname(__FILE__).'/FamilyView.php.inc');
 require_once (dirname(__FILE__)."/SexView.php.inc");
 require_once (dirname(__FILE__)."/LineView.php.inc");
 require_once (dirname(__FILE__)."/ModelView.php.inc");
-require_once "../libs/fastRoute/bootstrap.php";
+require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 
 /**
  * Description of FamilyView

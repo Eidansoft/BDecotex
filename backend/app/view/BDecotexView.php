@@ -1,6 +1,6 @@
 <?php
 require_once (dirname(__FILE__).'/../model/BDecotexException.php.inc');
-require_once "../libs/fastRoute/bootstrap.php";
+require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 
 /**
  * Description of BDecotexView
