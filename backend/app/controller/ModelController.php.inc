@@ -3,8 +3,9 @@ require_once (dirname(__FILE__).'/../model/ModelDAOImpl.php.inc');
 require_once (dirname(__FILE__).'/../model/FamilyDAOImpl.php.inc');
 require_once (dirname(__FILE__).'/../model/LineDAOImpl.php.inc');
 require_once (dirname(__FILE__).'/../model/SexDAOImpl.php.inc');
-require_once (dirname(__FILE__).'/../model/BDecotexException.php.inc');
+require_once (dirname(__FILE__).'/ControllerException.php.inc');
 require_once (dirname(__FILE__).'/BDecotexController.php.inc');
+require_once (dirname(__FILE__).'/../model/DAOException.php.inc');
 
 class ModelController extends BDecotexController {
 
@@ -51,7 +52,7 @@ class ModelController extends BDecotexController {
         
         $newId = $this->dao->create($family, $line, $sex, $variant);
         if (!$newId) {
-            throw new BDecotexException(5, 500, "Error creating the new model with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+            throw new ControllerException(5, 500, "Error creating the new model with family '$family', line '$line', sex '$sex' and variant '$variant'.");
         }
         return $this->getById($newId);
     }
@@ -78,52 +79,52 @@ class ModelController extends BDecotexController {
             // Check the model with ID exists, if not it will raise exception
             try {
                 $this->getById($value);
-            } catch (BDecotexException $ex){
-                throw new Exception("The parent model referenced with ID '$value' does not exist", $ex->code, $ex);
+            } catch (DAOException $ex){
+                throw new ControllerException($ex->getCode(), $ex->getHttpCode(), "The parent model referenced with ID '$value' does not exist");
             }
         }
         
         $res = $this->dao->update($id, $attribute, $value);
         if (!$res) {
-            throw new BDecotexException(5, 500, "Error updating the model with ID: '$id'");
+            throw new ControllerException(5, 500, "Error updating the model with ID: '$id'");
         }
         return $this->getById($id);
     }
     
     private function checkModelMandatoryFields($family, $line, $sex, $variant){
         if ($family == NULL || trim($family) == "") {
-            throw new BDecotexException(4, 404, "The 'family' is mandatory");
+            throw new ControllerException(4, 404, "The 'family' is mandatory");
         } else if ( ! $this->familyDao->getById($family)){
-            throw new BDecotexException(4, 404, "The 'family' id provided '$family' is not valid");
+            throw new ControllerException(4, 404, "The 'family' id provided '$family' is not valid");
         }
         
         if ($line == NULL || trim($line) == "") {
-            throw new BDecotexException(4, 404, "The 'line' is mandatory");
+            throw new ControllerException(4, 404, "The 'line' is mandatory");
         } else if ( ! $this->lineDao->getById($line)){
-            throw new BDecotexException(4, 404, "The 'line' id provided '$line' is not valid");
+            throw new ControllerException(4, 404, "The 'line' id provided '$line' is not valid");
         }
         
         if ($sex == NULL || trim($sex) == "") {
-            throw new BDecotexException(4, 404, "The 'sex' is mandatory");
+            throw new ControllerException(4, 404, "The 'sex' is mandatory");
         } else if ( ! $this->sexDao->getById($sex)){
-            throw new BDecotexException(4, 404, "The 'sex' id provided '$sex' is not valid");
+            throw new ControllerException(4, 404, "The 'sex' id provided '$sex' is not valid");
         }
         
         if ($variant == NULL || trim($variant) == "") {
-            throw new BDecotexException(4, 404, "The 'variant' is mandatory");
+            throw new ControllerException(4, 404, "The 'variant' is mandatory");
         }
         return true;
     }
     
     private function checkModelUpdateMandatoryFields($attribute, $value){        
         if ($attribute == NULL || trim($attribute) == "") {
-            throw new BDecotexException(4, 404, "The 'attribute' is mandatory");
+            throw new ControllerException(4, 404, "The 'attribute' is mandatory");
         } else if ( ! in_array($attribute, $this->allAttributes)){
-            throw new BDecotexException(4, 404, "The 'attribute' provided '$attribute' is not valid");
+            throw new ControllerException(4, 404, "The 'attribute' provided '$attribute' is not valid");
         }
         
         if ($value == NULL || trim($value) == "") {
-            throw new BDecotexException(4, 404, "The 'value' is mandatory");
+            throw new ControllerException(4, 404, "The 'value' is mandatory");
         }
     }
     
@@ -131,7 +132,7 @@ class ModelController extends BDecotexController {
         $found = $this->dao->getByCode($family, $line, $sex, $variant);
         if ( $found ){
             if ($id == null || $id != $found['id_model']){ //checking for a creation
-                throw new BDecotexException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+                throw new ControllerException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
             }
         }
         return true;

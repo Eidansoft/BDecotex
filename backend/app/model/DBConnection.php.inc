@@ -1,6 +1,6 @@
 <?php
 require_once (dirname(__FILE__).'/../config.php.inc');
-require_once (dirname(__FILE__).'/BDecotexException.php.inc');
+require_once (dirname(__FILE__).'/DAOException.php.inc');
 
 class DBConnection 
 { 
@@ -12,7 +12,7 @@ class DBConnection
 
         if ( $this->_db->connect_errno ) 
         { 
-            throw new BDecotexException(1, 500);
+            throw new DAOException(1, 500);
         } 
 
         $this->_db->set_charset(DB_CHARSET); 
@@ -25,7 +25,7 @@ class DBConnection
     protected function getListResults($sql){
         $query = $this->get_db()->query($sql);
         if (!$query) {
-            throw new BDecotexException(2, 500, "Error executing SQL to get a list of elements: $sql");
+            throw new DAOException(2, 500, "Error executing SQL to get a list of elements: $sql");
         }
         
         while ($row = $query->fetch_assoc()) {
@@ -38,7 +38,7 @@ class DBConnection
         $executableQuery = $sql . " LIMIT 1";
         $query = $this->get_db()->query($executableQuery);
         if (!$query) {
-            throw new BDecotexException(2, 500, "Error executing SQL to get a single element: $executableQuery");
+            throw new DAOException(2, 500, "Error executing SQL to get a single element: $executableQuery");
         }
         return $query->fetch_array(MYSQLI_ASSOC);
     }
@@ -46,7 +46,7 @@ class DBConnection
     protected function executeQuery($sql){
         $query = $this->get_db()->query($sql);
         if (!$query) {
-            throw new BDecotexException(2, 500, "Error executing SQL query: $sql");
+            throw new DAOException(2, 500, "Error executing SQL query: $sql");
         }
         return $query;
     }

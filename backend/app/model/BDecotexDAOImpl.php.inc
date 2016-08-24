@@ -24,8 +24,11 @@ class BDecotexDAOImpl extends DBConnection {
     }
 
     public function getById($id) {
-        $family = $this->getSingleResult("SELECT * FROM $this->table_name WHERE id_$this->table_name = " . intval($id));
-        return $family;
+        $obj = $this->getSingleResult("SELECT * FROM $this->table_name WHERE id_$this->table_name = " . intval($id));
+        if ($obj == NULL){
+            throw new DAOException(4, 404, "There is no ".$this->table_name." identified with ID $id");
+        }
+        return $obj;
     }
     
     public function getTable_name() {

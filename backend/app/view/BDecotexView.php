@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__).'/../model/BDecotexException.php.inc');
+require_once (dirname(__FILE__).'/ViewException.php.inc');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 
 /**
@@ -21,7 +21,7 @@ class BDecotexView {
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
             case FastRoute\Dispatcher::NOT_FOUND:
                 // ... 404 Not Found
-                $error = new BDecotexException(3, 404, "Invalid call to $httpMethod $uri");
+                $error = new ViewException(3, 404, "Invalid call to $httpMethod $uri");
                 $error->throwToClient();
                 break;
             case FastRoute\Dispatcher::FOUND:
@@ -33,7 +33,7 @@ class BDecotexView {
     }
     
     protected function processHandler($handler, $vars) {
-        $error = new BDecotexException(6, 403, "This process is still in development.");
+        $error = new ViewException(6, 403, "This process is still in development.");
         $error->throwToClient();
     }
     

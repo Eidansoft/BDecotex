@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 require_once (dirname(__FILE__).'/../controller/SexController.php.inc');
+require_once (dirname(__FILE__).'/../controller/ControllerException.php.inc');
 
 /**
  * Description of SexView
@@ -56,7 +57,7 @@ class SexView extends BDecotexView{
                     break;
             }
             parent::returnSuccess($res);
-        } catch (BDecotexException $e) {
+        } catch (ControllerException $e) {
             $e->throwToClient();
         }
     }

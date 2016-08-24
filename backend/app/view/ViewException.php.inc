@@ -1,9 +1,10 @@
 <?php
-require_once (dirname(__FILE__)."/../view/IJSonable.php.inc");
-require_once (dirname(__FILE__)."/../view/JSonable.php.inc");
+require_once (dirname(__FILE__)."/IJSonable.php.inc");
+require_once (dirname(__FILE__)."/JSonable.php.inc");
 
-class BDecotexException extends Exception implements IJSonable {
+class ViewException extends Exception implements IJSonable {
     
+    //This attributes need to be public in order the JSONizer be able to read it and create the JSon properly
     public $code;
     public $message;
     public $httpCode;
@@ -13,6 +14,10 @@ class BDecotexException extends Exception implements IJSonable {
         $this->httpCode = $httpCode;
         $this->message = $otherInfo;
         parent::__construct($otherInfo, $code, null);
+    }
+
+    public function getHttpCode() {
+        return $this->httpCode;
     }
 
     public function getJsonData() {
