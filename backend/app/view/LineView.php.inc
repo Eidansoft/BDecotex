@@ -20,7 +20,7 @@ class LineView extends BDecotexView{
     
     public function __construct() {
         
-        $this->controller = new LineController();
+        $this->controller = new LineController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/bdecotex/line', LineView::GET_ALL_LINE);

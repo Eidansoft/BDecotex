@@ -28,9 +28,9 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
      */
     public function __construct()
     {
-        $this->familyContext = new FamilyContext();
-        $this->lineContext = new LineContext();
-        $this->sexContext = new SexContext();
+        $this->familyContext = new FamilyContext;
+        $this->lineContext = new LineContext;
+        $this->sexContext = new SexContext;
     }
  
     /**

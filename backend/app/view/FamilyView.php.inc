@@ -20,7 +20,7 @@ class FamilyView extends BDecotexView{
     
     public function __construct() {
         
-        $this->controller = new FamilyController();
+        $this->controller = new FamilyController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/bdecotex/family', FamilyView::GET_ALL_FAMILIES);

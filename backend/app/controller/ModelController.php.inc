@@ -38,10 +38,10 @@ class ModelController extends BDecotexController {
     private $sexDao;
     
     function __construct() {
-        parent::__construct(new ModelDAOImpl());
-        $this->familyDao = new FamilyDAOImpl();
-        $this->lineDao = new LineDAOImpl();
-        $this->sexDao = new SexDAOImpl();
+        parent::__construct(new ModelDAOImpl);
+        $this->familyDao = new FamilyDAOImpl;
+        $this->lineDao = new LineDAOImpl;
+        $this->sexDao = new SexDAOImpl;
     }
 
     function createModel($family, $line, $sex, $variant) {

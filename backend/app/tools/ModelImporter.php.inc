@@ -17,9 +17,9 @@ class ModelImporter extends BDecotexImporter {
     }
 
     protected function processObject($object) {
-        $familyDAO = new FamilyDAOImpl();
-        $lineDAO = new LineDAOImpl();
-        $sexDAO = new SexDAOImpl();
+        $familyDAO = new FamilyDAOImpl;
+        $lineDAO = new LineDAOImpl;
+        $sexDAO = new SexDAOImpl;
         
         $this->dao->create($familyDAO->getByCode($object->Tipo_prenda)['id_family'],
                             $lineDAO->getByCode($object->Lineas)['id_line'],

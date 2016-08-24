@@ -39,19 +39,19 @@ class MainView extends BDecotexView{
     protected function processHandler($handler, $vars) {
         switch ($handler) {
             case MainView::VIEW_FAMILY:
-                $view = new FamilyView();
+                $view = new FamilyView;
                 $view->processUri($this->httpMethod, $this->uri);
                 break;
             case MainView::VIEW_SEX:
-                $view = new SexView();
+                $view = new SexView;
                 $view->processUri($this->httpMethod, $this->uri);
                 break;
             case MainView::VIEW_LINE:
-                $view = new LineView();
+                $view = new LineView;
                 $view->processUri($this->httpMethod, $this->uri);
                 break;
             case MainView::VIEW_MODEL:
-                $view = new ModelView();
+                $view = new ModelView;
                 $view->processUri($this->httpMethod, $this->uri);
                 break;
         }

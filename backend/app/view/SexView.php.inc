@@ -20,7 +20,7 @@ class SexView extends BDecotexView{
     
     public function __construct() {
         
-        $this->controller = new SexController();
+        $this->controller = new SexController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/bdecotex/sex', SexView::GET_ALL_SEX);

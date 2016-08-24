@@ -13,7 +13,7 @@ class ModelDAOImpl extends BDecotexDAOImpl {
             $client = 'NULL', $idParent = 'NULL',
             $oldRef = 'NULL', $modelNumberParent = 'NULL') {
         
-        $datetime1 = new DateTime();
+        $datetime1 = new DateTime;
         
         // I check that there is no empty string, I prefer to store null
         $description = ($description == '' ? "NULL" : "'$description'");

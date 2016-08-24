@@ -16,7 +16,7 @@ class BDecotexException extends Exception implements IJSonable {
     }
 
     public function getJsonData() {
-        $jsonizer = new JSonable();
+        $jsonizer = new JSonable;
         return $jsonizer->getJsonData($this);
     }
     

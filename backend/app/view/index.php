@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__).'/MainView.php.inc');
 
-$viewManager = new MainView();
+$viewManager = new MainView;
 
 // Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];

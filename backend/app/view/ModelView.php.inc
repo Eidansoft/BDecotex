@@ -20,7 +20,7 @@ class ModelView extends BDecotexView{
     
     public function __construct() {
         
-        $this->controller = new ModelController();
+        $this->controller = new ModelController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 //            $r->addRoute('GET', '/bdecotex/model', ModelView::GET_ALL_MODEL);
