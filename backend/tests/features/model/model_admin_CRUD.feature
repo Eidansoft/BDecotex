@@ -92,11 +92,11 @@ Característica: Operaciones CRUD con los modelos de productos
             |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"        |"Linea 1" |"Embarazada"|"0"   |"xid_sex"     |"Embarazada"|200      |
             |"Camisas"  |"Linea 1" |"Mujer"    |"0"   |"Camisas"        |"Linea 1" |"Mujer"     |"1"   |"variant"     |"1"         |200      |
 
-    @none
+    @current
     Escenario: Al hacer un modelo hijo de otro, si el modelo padre no existe en el sistema, se devolvera un error
         Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
         Y el usuario modifica el campo "xid_model_parent" al valor "123"
-        Entonces el sistema devuelve un codigo http "400"
+        Entonces el sistema devuelve un codigo http "404"
 
     Escenario: Al hacer un modelo hijo de otro, el sistema comprueba que el modelo padre exista
         Dado el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
