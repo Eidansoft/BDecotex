@@ -16,6 +16,7 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
 {
     protected $responseJson;
     protected $responseCode;
+    private $debug=FALSE;
 
     /**
      * Initializes context.
@@ -83,7 +84,17 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
         } else {
             $conection = new UrlApi($url, $method, json_encode($params));
         }
-        $conection->call();
+        $response = $conection->call();
+        
+        if($this->debug){
+            echo "========================================\n";
+            echo "Method: $method\n";
+            echo "PATH: $url\n";
+            echo "PARAMS: ";
+            var_dump($params);
+            echo "RESPONSE: $response\n";
+        }
+        
         $this->responseCode = $conection->getHttpCode();
         $this->responseJson = json_decode($conection->getResponse());
     }

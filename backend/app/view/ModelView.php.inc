@@ -24,9 +24,9 @@ class ModelView extends BDecotexView{
         $this->controller = new ModelController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-//            $r->addRoute('GET', '/bdecotex/model', ModelView::GET_ALL_MODEL);
+            $r->addRoute('GET', '/bdecotex/mod', ModelView::GET_ALL_MODEL);
             // {id} must be a number (\d+)
-//            $r->addRoute('GET', '/bdecotex/model/{id:\d+}', ModelView::GET_MODEL);
+            $r->addRoute('GET', '/bdecotex/mod/{id:\d+}', ModelView::GET_MODEL);
             $r->addRoute('POST', '/bdecotex/mod', ModelView::CREATE_MODEL);
             $r->addRoute('DELETE', '/bdecotex/mod/{id:\d+}', ModelView::DELETE_MODEL);
             $r->addRoute('PUT', '/bdecotex/mod/{id:\d+}', ModelView::UPDATE_MODEL);

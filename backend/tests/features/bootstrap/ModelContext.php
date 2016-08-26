@@ -148,10 +148,76 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
      */
     public function elUsuarioModificaLosSiguientesCampos(TableNode $table)
     {
-        $modeloPreviamenteCreado = $this->responseJson;
         $hash = $table->getHash();
         foreach ($hash as $row) {
             $this->elUsuarioModificaElCampoAlValor($row['ATRIBUTO'], $row['VALOR']);
         }
+    }
+    
+    /**
+     * @When el usuario solicita el modelo identificandolo por el id
+     */
+    public function elUsuarioSolicitaElModeloIdentificandoloPorElId()
+    {
+        $modeloPreviamenteCreado = $this->responseJson;
+        $method = UrlApi::URL_METHOD_GET;
+        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $this->callUrl($method, $url);
+    }
+    
+    /**
+     * @Given que en el sistema existen los modelos:
+     */
+    public function queEnElSistemaExistenLosModelos(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row){
+            $this->elUsuarioCreaUnModeloDeLaFamiliaLineaSexoYVariante($row['FAMILIA'], $row['LINEA'], $row['SEXO'], $row['VAR']);
+        }
+    }
+
+    /**
+     * @When el usuario solicita el listado de todos los modelos
+     */
+    public function elUsuarioSolicitaElListadoDeTodosLosModelos()
+    {
+        $method = UrlApi::URL_METHOD_GET;
+        $url = "http://localhost/bdecotex/mod";
+        $this->callUrl($method, $url);
+    }
+
+    /**
+     * @Then el sistema incluye el listado con los modelos:
+     */
+    public function elSistemaIncluyeElListadoConLosModelos(TableNode $table)
+    {
+        $allModelsResponse = $this->responseJson;
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            $this->familyContext->elUsuarioSolicitaElListadoDeTodasLasFamilias();
+            $family = $this->familyContext->findFamilyIntoJsonResponse($row['FAMILIA']);
+            
+            $this->lineContext->elUsuarioSolicitaElListadoDeTodasLasLineas();
+            $line = $this->lineContext->findFamilyIntoJsonResponse($row['LINEA']);
+            
+            $this->sexContext->elUsuarioSolicitaElListadoDeTodosLosSexos();
+            $sex = $this->sexContext->findSexIntoJsonResponse($row['SEXO']);
+            
+            //I have made HTTP calls between the 'getAllModel' method and the result evaluation below
+            //that's the reason I need to recover it here
+            $this->responseJson = $allModelsResponse;
+            if ( ! $this->findModelIntoJsonResponse($family, $line, $sex, $row['VAR'])){
+                throw new Exception("Expected model with family '" . $row['FAMILIA'] . "' (id:$family), line '" . $row['LINEA'] . "'(id:$line), sex '" . $row['SEXO'] . "(id:$sex)' and variant '" . $row['VAR'] . "'; but missing at system response'");
+            }
+        }
+    }
+    
+    public function findModelIntoJsonResponse($arg1, $arg2, $arg3, $arg4) {
+        foreach ($this->responseJson as $model) {
+            if ($model->xid_family == $arg1 && $model->xid_line == $arg2 && $model->xid_sex == $arg3 && $model->variant == $arg4){
+                return $model->id_model;
+            }
+        }
+        return FALSE;
     }
 }

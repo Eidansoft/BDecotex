@@ -103,32 +103,71 @@ Característica: Operaciones CRUD con los modelos de productos
         Y el usuario modifica el campo "xid_model_parent" al valor "1"
         Entonces el sistema devuelve un codigo http "200"
 
-    @none
-    Escenario: El usuario puede obtener una lista con todas las modelos existentes en el sistema
-        Dado que en el sistema existen las modelos:
-            |NOMBRE       |CODIGO |
-            |Linea 1      |LLL1   |
-            |Linea 2      |LL2    |
-            |Linea 3      |LL3    |
-            |Linea 4      |L4     |
-            |Linea 5      |L5     |
-            |Linea 6      |L6     |
-        Cuando el usuario solicita el listado de todas las modelos
+    Escenario: El usuario puede obtener una lista con todos los modelos existentes en el sistema
+        Dado que en el sistema existen los modelos:
+            |FAMILIA         |LINEA     |SEXO        |VAR   |
+            |Pantalones      |Linea 1   |Mujer       |0     |
+            |Camisas         |Linea 2   |Mujer       |0     |
+            |Abrigos         |Linea 2   |Mujer       |0     |
+            |Camisas         |Linea 1   |Mujer       |0     |
+            |Camisas         |Linea 2   |Hombre      |0     |
+            |Camisas         |Linea 1   |Hombre      |0     |
+            |Pantalones      |Linea 2   |Hombre      |0     |
+            |Pantalones      |Linea 1   |Hombre      |0     |
+        Cuando el usuario solicita el listado de todos los modelos
         Entonces el sistema devuelve un codigo http "200"
-        Y el sistema incluye el listado con las modelos:
-            |NOMBRE       |CODIGO |
-            |Linea 1      |LLL1   |
-            |Linea 2      |LL2    |
-            |Linea 3      |LL3    |
-            |Linea 4      |L4     |
-            |Linea 5      |L5     |
-            |Linea 6      |L6     |
+        Y el sistema incluye el listado con los modelos:
+            |FAMILIA         |LINEA     |SEXO        |VAR   |
+            |Pantalones      |Linea 1   |Mujer       |0     |
+            |Camisas         |Linea 2   |Mujer       |0     |
+            |Abrigos         |Linea 2   |Mujer       |0     |
+            |Camisas         |Linea 1   |Mujer       |0     |
+            |Camisas         |Linea 2   |Hombre      |0     |
+            |Camisas         |Linea 1   |Hombre      |0     |
+            |Pantalones      |Linea 2   |Hombre      |0     |
+            |Pantalones      |Linea 1   |Hombre      |0     |
 
     Escenario: Eliminar modelo de productos existente
         Dado el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
         Y el usuario crea un modelo de la familia "Camisas", linea "Linea 2", sexo "Mujer" y variante "0"
         Cuando el usuario elimina el modelo creado
         Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Es posible obtener los datos de un modelo por identificandolo por su ID
+        Dado el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
+        Y el usuario modifica los siguientes campos:
+            |ATRIBUTO               |VALOR                        |
+            |description            |Pantalones de multiples usos |
+            |front                  |Parte delantera              |
+            |back                   |Parte trasera                |
+            |neck                   |Cuello                       |
+            |arm                    |El brazo                     |
+            |observations           |Las observaciones            |
+            |model_number_parent    |modelo de referencia         |
+            |xid_model_parent       |1                            |
+            |creation_date          |12345678                     |
+            |client                 |Nombre del cliente           |
+            |old_ref                |Anterior referencia          |
+        Cuando el usuario solicita el modelo identificandolo por el id
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO               |VALOR                        |
+            |id_model               |regex(\d+)                   |
+            |xid_family             |regex(\d+)                   |
+            |xid_line               |regex(\d+)                   |
+            |xid_sex                |regex(\d+)                   |
+            |variant                |2                            |
+            |description            |Pantalones de multiples usos |
+            |front                  |Parte delantera              |
+            |back                   |Parte trasera                |
+            |neck                   |Cuello                       |
+            |arm                    |El brazo                     |
+            |observations           |Las observaciones            |
+            |model_number_parent    |modelo de referencia         |
+            |xid_model_parent       |1                            |
+            |creation_date          |12345678                     |
+            |client                 |Nombre del cliente           |
+            |old_ref                |Anterior referencia          |
 
     Escenario: Es posible modificar cualquiera de los atributos de un modelo
         Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
