@@ -1,0 +1,45 @@
+{
+    "name": "Wecotex",
+    "description": "Web client for BDecotex application. This app let you manage and use a database for textil companies.",
+    "version": "1.0.0",
+    "keywords": ["util", "client", "web", "BDecotex", "browser"],
+    "author": "Alejandro Lorente <eidansoft@gmail.com> (http://www.eidansoft.com)", 
+    
+    "dependencies": {
+        "angular2": "2.0.0-beta.14",
+        "systemjs": "0.19.25",
+        "es6-shim": "^0.35.0",
+        "reflect-metadata": "0.1.2",
+        "rxjs": "5.0.0-beta.2",
+        "zone.js": "0.6.6"
+      },
+      
+    "devDependencies": {
+        "concurrently": "^2.0.0",
+        "lite-server": "^2.2.0",
+        "typescript": "^1.8.9",
+        "typings":"^0.7.12"
+    },
+    
+    "license": "GPL-3.0",
+    
+    "scripts": {
+        "start": "npm run compile && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+        "cleancode": "rm -rf js",
+        "precompile": "npm run cleancode",
+        "compile": "npm run tsc",
+        "createJsFolder": "[ ! -d \"js\" ] && mkdir js",
+        "pretsc": "npm run createJsFolder",
+        "tsc": "tsc --outDir js",
+        "tsc:w": "tsc --outDir js -w",
+        "lite": "lite-server",
+        "typings": "typings",
+        "postinstall": "typings install",
+        "clean": "rm -rf node_modules; rm -rf typings; npm run cleancode"
+    },
+    
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/Eidansoft/BDecotex"
+    }
+}

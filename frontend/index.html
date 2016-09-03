@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 1. Cargar librerías -->
+        <!-- IE required polyfills, in this exact order -->
+        <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+        <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+        <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>   
+
+        <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+        <script src="node_modules/systemjs/dist/system.src.js"></script>
+        <script src="node_modules/rxjs/bundles/Rx.js"></script>
+        <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+
+        <!-- 2. Configurar SystemJS -->
+        <script>
+          System.config({
+            packages: {        
+              js: {
+                format: 'register',
+                defaultExtension: 'js'
+              }
+            }
+          });
+          System.import('js/main')
+                .then(null, console.error.bind(console));
+        </script>
+    </head>
+    <body>
+        <hola-mundo>Loading...</hola-mundo>
+    </body>
+</html>
