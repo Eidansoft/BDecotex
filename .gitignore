@@ -1,3 +1,8 @@
 originales/
 /backend/app/nbproject/*
+/backend/nbproject/*
 /backend/app/libs/*
+/frontend/typings/*
+/frontend/nbproject/
+/frontend/node_modules/
+/frontend/js/
