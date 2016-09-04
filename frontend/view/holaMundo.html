@@ -1,3 +1,7 @@
 <h1>Hola mundo en Angular2 !!!</h1>
-<p>Bienvenido <strong>{{nombre}}</strong>.
+<p *ngIf="mostrarTexto">Bienvenido <strong>{{nombre}}</strong>.
 Esto que ves, es de una template.</p>
+<button (click)="onClickBtn1()"><p *ngIf="! mostrarTexto">Mostrar</p><p *ngIf="mostrarTexto">Ocultar texto</p></button>
+<p>
+    Mi nombre: <input type="text" [(ngModel)]="nombre"/>
+</p>
