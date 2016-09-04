@@ -1,4 +1,4 @@
 import {bootstrap}    from 'angular2/platform/browser';
-import {HolaMundo} from './app.holaMundo';
+import {WecotexApp} from './controller/wecotexApp';
  
-bootstrap(HolaMundo);
+bootstrap(WecotexApp);
