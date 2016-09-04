@@ -1,13 +1,35 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 03-Sep-2016, 22:42:43
-    Author     : alex
-*/
+#wctx-container {
+    margin: 0px;
+}
 
-strong {
-    color: red;
+.wctx-footer, .wctx-header{
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9)!important;
+    z-index: 20;
+    box-shadow: 0px 0px 10px grey;
+}
+
+.wctx-header {
+    top: 0px;
+    height: 70px; /* Este valor esta tambien en la altura del margen del wctx-content y wctx-menu */
+}
+
+.wctx-content {
+    margin-top: 90px; /* Este valor esta tambien en el ancho del wctx-header pero aqui 20px mas por la sombra */
+}
+
+.wctx-footer {
+    bottom: 0px;
+    height: 30px;
+}
+
+.wctx-menu {
+    position: fixed;
+    width: 125px; /* Ancho relacionado en wctx-window */
+}
+
+.wctx-window {
+    margin-left: 125px; /* Ancho relacionado en wctx-menu */
 }
