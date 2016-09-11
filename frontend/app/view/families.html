@@ -1,4 +1,4 @@
 <h1>Listado de familias</h1>
 <ul>
-    <li *ngFor="#family of familiesList">Codigo: {{family.code}}, nombre: {{family.name}}</li>
+    <li *ngFor="#family of familiesList"><a [routerLink]="['Family']">Codigo: {{family.code}}, nombre: {{family.name}}</a></li>
 </ul>

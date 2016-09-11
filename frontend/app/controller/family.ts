@@ -6,11 +6,19 @@ import {Component} from 'angular2/core';
     })
 
 export class WecotexFamily {
-    private name:string;
-    private code:string;
+    private name: string;
+    private code: string;
+    private id: number;
     
-    public constructor(name:string, code:string) {
+    public setName(name: string) {
         this.name = name;
+    }
+    
+    public setCode(code: string) {
         this.code = code;
+    }
+    
+    public setId(id: number) {
+        this.id = id;
     }
 }
