@@ -1,10 +1,10 @@
 import {Component} from 'angular2/core';
-import {WecotexFamily} from './family'
+import {WecotexFamilies} from './families';
 
 @Component({ 
     selector: 'wecotex-window',
     templateUrl: 'app/view/window.html',
-    directives: [WecotexFamily]
+    directives: [WecotexFamilies]
     })
 
 export class WecotexWindow {}
