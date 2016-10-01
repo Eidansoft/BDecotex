@@ -20,18 +20,18 @@ class ModelView extends BDecotexView{
     protected $controller;
     
     public function __construct() {
-        
+        parent::__construct();
         $this->controller = new ModelController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/bdecotex/mod', ModelView::GET_ALL_MODEL);
+            $r->addRoute('GET', $this->model_url, ModelView::GET_ALL_MODEL);
             // {id} must be a number (\d+)
-            $r->addRoute('GET', '/bdecotex/mod/{id:\d+}', ModelView::GET_MODEL);
-            $r->addRoute('POST', '/bdecotex/mod', ModelView::CREATE_MODEL);
-            $r->addRoute('DELETE', '/bdecotex/mod/{id:\d+}', ModelView::DELETE_MODEL);
-            $r->addRoute('PUT', '/bdecotex/mod/{id:\d+}', ModelView::UPDATE_MODEL);
+            $r->addRoute('GET', $this->model_url.'/{id:\d+}', ModelView::GET_MODEL);
+            $r->addRoute('POST', $this->model_url, ModelView::CREATE_MODEL);
+            $r->addRoute('DELETE', $this->model_url.'/{id:\d+}', ModelView::DELETE_MODEL);
+            $r->addRoute('PUT', $this->model_url.'/{id:\d+}', ModelView::UPDATE_MODEL);
         });
-        parent::__construct($dispatcher);
+        parent::setDispatcher($dispatcher);
     }
     
     protected function processHandler($handler, $vars) {

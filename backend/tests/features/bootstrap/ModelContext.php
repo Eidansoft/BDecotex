@@ -19,15 +19,12 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
     private $familyContext;
     private $lineContext;
     private $sexContext;
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
+    protected $url;
+    
     public function __construct()
     {
+        $this->url = "http://".BDECOTEX_SERVER.BDECOTEX_MAIN_URL."/model";
+        
         $this->familyContext = new FamilyContext;
         $this->lineContext = new LineContext;
         $this->sexContext = new SexContext;
@@ -99,7 +96,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         
         if($family && $line && $sex){
             $method = UrlApi::URL_METHOD_POST;
-            $url = "http://localhost/bdecotex/mod";
+            $url = $this->url;
             $modelData = ["family"  => ($family=="null" ? "" : $family),
                           "line"    => ($line=="null" ? "" : $line),
                           "sex"     => ($sex=="null" ? "" : $sex),
@@ -126,7 +123,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         }
         
         $method = UrlApi::URL_METHOD_PUT;
-        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
         $modelData = ["attribute"  => ($arg1=="null" ? "" : $arg1),
                       "value"      => ($arg2=="null" ? "" : $value)];
         $this->callUrl($method, $url, $modelData);
@@ -139,7 +136,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
     {
         $modeloPreviamenteCreado = $this->responseJson;
         $method = UrlApi::URL_METHOD_DELETE;
-        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
         $this->callUrl($method, $url);
     }
     
@@ -161,7 +158,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
     {
         $modeloPreviamenteCreado = $this->responseJson;
         $method = UrlApi::URL_METHOD_GET;
-        $url = "http://localhost/bdecotex/mod/" . $modeloPreviamenteCreado->id_model;
+        $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
         $this->callUrl($method, $url);
     }
     
@@ -182,7 +179,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
     public function elUsuarioSolicitaElListadoDeTodosLosModelos()
     {
         $method = UrlApi::URL_METHOD_GET;
-        $url = "http://localhost/bdecotex/mod";
+        $url = $this->url;
         $this->callUrl($method, $url);
     }
 
