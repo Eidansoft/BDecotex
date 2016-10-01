@@ -28,6 +28,7 @@ class DBConnection
             throw new DAOException(2, 500, "Error executing SQL to get a list of elements: $sql");
         }
         
+        $list = array();
         while ($row = $query->fetch_assoc()) {
             $list[] = $row;
         }
