@@ -9,4 +9,6 @@
     // URL path definition
     define('BDECOTEX_SERVER','localhost');
     define('BDECOTEX_MAIN_URL','/bdecotex/backend/app');
+    
+    date_default_timezone_set('Europe/Madrid');
 ?>
