@@ -1,4 +1,5 @@
 <?php
+require_once (dirname(__FILE__).'/../../../app/config.php.inc');
 require_once (dirname(__FILE__).'/CommonContextFunctions.php');
 require_once (dirname(__FILE__).'/../../httpCallsAPI.php');
 
@@ -13,15 +14,11 @@ use Behat\Gherkin\Node\TableNode;
  */
 class FamilyContext extends CommonContextFunctions implements Context, SnippetAcceptingContext
 {
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
+    protected $url;
+    
     public function __construct()
     {
+        $this->url = "http://".BDECOTEX_SERVER.BDECOTEX_MAIN_URL."/family";
     }
 
     /**
@@ -30,7 +27,7 @@ class FamilyContext extends CommonContextFunctions implements Context, SnippetAc
     public function elUsuarioCreaLaFamiliaConCodigo($arg1, $arg2)
     {
         $method = UrlApi::URL_METHOD_POST;
-        $url = "http://localhost/bdecotex/family";
+        $url = $this->url;
         $familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
                        "code"         => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $familyData);
@@ -43,7 +40,7 @@ class FamilyContext extends CommonContextFunctions implements Context, SnippetAc
     {
         $familiaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_PUT;
-        $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
+        $url = $this->url . "/" . $familiaPreviamenteCreada->id_family;
         $familyData = ["description"  => ("null" == $arg1 ? "" : $arg1),
                        "code"         => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $familyData);
@@ -56,7 +53,7 @@ class FamilyContext extends CommonContextFunctions implements Context, SnippetAc
     {
         $familiaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_DELETE;
-        $url = "http://localhost/bdecotex/family/" . $familiaPreviamenteCreada->id_family;
+        $url = $this->url . "/" . $familiaPreviamenteCreada->id_family;
         $this->callUrl($method, $url);
     }
 
@@ -77,7 +74,7 @@ class FamilyContext extends CommonContextFunctions implements Context, SnippetAc
     public function elUsuarioSolicitaElListadoDeTodasLasFamilias()
     {
         $method = UrlApi::URL_METHOD_GET;
-        $url = "http://localhost/bdecotex/family";
+        $url = $this->url;
         $this->callUrl($method, $url);
     }
 

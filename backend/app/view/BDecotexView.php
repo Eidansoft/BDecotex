@@ -1,4 +1,5 @@
 <?php
+require_once (dirname(__FILE__).'/../config.php.inc');
 require_once (dirname(__FILE__).'/ViewException.php.inc');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 
@@ -10,8 +11,19 @@ require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 class BDecotexView {
     
     protected $dispatcher;
+    protected $family_url;
+    protected $line_url;
+    protected $sex_url;
+    protected $model_url;
     
-    public function __construct($dispatcher) {
+    public function __construct() {
+        $this->family_url = BDECOTEX_MAIN_URL . "/family";
+        $this->line_url = BDECOTEX_MAIN_URL . "/line";
+        $this->sex_url = BDECOTEX_MAIN_URL . "/sex";
+        $this->model_url = BDECOTEX_MAIN_URL . "/model";
+    }
+    
+    public function setDispatcher($dispatcher) {
         $this->dispatcher = $dispatcher;
     }
     

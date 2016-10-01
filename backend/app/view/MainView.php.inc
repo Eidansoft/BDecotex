@@ -21,13 +21,14 @@ class MainView extends BDecotexView{
     protected $uri;
 
     public function __construct() {
+        parent::__construct();
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/family[/{params:.+}]', MainView::VIEW_FAMILY);
-            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/sex[/{params:.+}]', MainView::VIEW_SEX);
-            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/line[/{params:.+}]', MainView::VIEW_LINE);
-            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], '/bdecotex/mod[/{params:.+}]', MainView::VIEW_MODEL);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], $this->family_url.'[/{params:.+}]', MainView::VIEW_FAMILY);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], $this->sex_url.'[/{params:.+}]', MainView::VIEW_SEX);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], $this->line_url.'[/{params:.+}]', MainView::VIEW_LINE);
+            $r->addRoute(['GET', 'POST', 'DELETE', 'PUT'], $this->model_url.'[/{params:.+}]', MainView::VIEW_MODEL);
         });
-        parent::__construct($dispatcher);
+        parent::setDispatcher($dispatcher);
     }
     
     public function processUri($httpMethod, $uri) {

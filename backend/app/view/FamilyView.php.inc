@@ -20,18 +20,18 @@ class FamilyView extends BDecotexView{
     protected $controller;
     
     public function __construct() {
-        
+        parent::__construct();
         $this->controller = new FamilyController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/bdecotex/family', FamilyView::GET_ALL_FAMILIES);
+            $r->addRoute('GET', $this->family_url, FamilyView::GET_ALL_FAMILIES);
             // {id} must be a number (\d+)
-            $r->addRoute('GET', '/bdecotex/family/{id:\d+}', FamilyView::GET_FAMILY);
-            $r->addRoute('POST', '/bdecotex/family', FamilyView::CREATE_FAMILY);
-            $r->addRoute('DELETE', '/bdecotex/family/{id:\d+}', FamilyView::DELETE_FAMILY);
-            $r->addRoute('PUT', '/bdecotex/family/{id:\d+}', FamilyView::UPDATE_FAMILY);
+            $r->addRoute('GET', $this->family_url.'/{id:\d+}', FamilyView::GET_FAMILY);
+            $r->addRoute('POST', $this->family_url, FamilyView::CREATE_FAMILY);
+            $r->addRoute('DELETE', $this->family_url.'/{id:\d+}', FamilyView::DELETE_FAMILY);
+            $r->addRoute('PUT', $this->family_url.'/{id:\d+}', FamilyView::UPDATE_FAMILY);
         });
-        parent::__construct($dispatcher);
+        parent::setDispatcher($dispatcher);
     }
     
     protected function processHandler($handler, $vars) {

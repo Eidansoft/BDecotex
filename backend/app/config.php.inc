@@ -5,4 +5,8 @@
     define('DB_PASS',''); 
     define('DB_NAME',''); 
     define('DB_CHARSET','utf8');
+    
+    // URL path definition
+    define('BDECOTEX_SERVER','localhost');
+    define('BDECOTEX_MAIN_URL','/bdecotex/backend/app');
 ?>
