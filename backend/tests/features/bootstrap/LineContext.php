@@ -13,15 +13,11 @@ use Behat\Gherkin\Node\TableNode;
  */
 class LineContext extends CommonContextFunctions implements Context, SnippetAcceptingContext
 {
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
+    protected $url;
+    
     public function __construct()
     {
+        $this->url = "http://".BDECOTEX_SERVER.BDECOTEX_MAIN_URL."/line";
     }
 
     /**
@@ -30,7 +26,7 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
     public function elUsuarioCreaLaLineaConCodigo($arg1, $arg2)
     {
         $method = UrlApi::URL_METHOD_POST;
-        $url = "http://localhost/bdecotex/line";
+        $url = $this->url;
         $lineData = ["name"  => ("null" == $arg1 ? "" : $arg1),
                        "code"         => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $lineData);
@@ -43,7 +39,7 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
     {
         $lineaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_PUT;
-        $url = "http://localhost/bdecotex/line/" . $lineaPreviamenteCreada->id_line;
+        $url = $this->url . "/" . $lineaPreviamenteCreada->id_line;
         $lineData = ["name"  => ("null" == $arg1 ? "" : $arg1),
                      "code"         => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $lineData);
@@ -56,7 +52,7 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
     {
         $lineaPreviamenteCreada = $this->responseJson;
         $method = UrlApi::URL_METHOD_DELETE;
-        $url = "http://localhost/bdecotex/line/" . $lineaPreviamenteCreada->id_line;
+        $url = $this->url . "/" . $lineaPreviamenteCreada->id_line;
         $this->callUrl($method, $url);
     }
 
@@ -77,7 +73,7 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
     public function elUsuarioSolicitaElListadoDeTodasLasLineas()
     {
         $method = UrlApi::URL_METHOD_GET;
-        $url = "http://localhost/bdecotex/line";
+        $url = $this->url;
         $this->callUrl($method, $url);
     }
 

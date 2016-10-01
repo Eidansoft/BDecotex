@@ -20,18 +20,18 @@ class LineView extends BDecotexView{
     protected $controller;
     
     public function __construct() {
-        
+        parent::__construct();
         $this->controller = new LineController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/bdecotex/line', LineView::GET_ALL_LINE);
+            $r->addRoute('GET', $this->line_url, LineView::GET_ALL_LINE);
             // {id} must be a number (\d+)
-            $r->addRoute('GET', '/bdecotex/line/{id:\d+}', LineView::GET_LINE);
-            $r->addRoute('POST', '/bdecotex/line', LineView::CREATE_LINE);
-            $r->addRoute('DELETE', '/bdecotex/line/{id:\d+}', LineView::DELETE_LINE);
-            $r->addRoute('PUT', '/bdecotex/line/{id:\d+}', LineView::UPDATE_LINE);
+            $r->addRoute('GET', $this->line_url.'/{id:\d+}', LineView::GET_LINE);
+            $r->addRoute('POST', $this->line_url, LineView::CREATE_LINE);
+            $r->addRoute('DELETE', $this->line_url.'/{id:\d+}', LineView::DELETE_LINE);
+            $r->addRoute('PUT', $this->line_url.'/{id:\d+}', LineView::UPDATE_LINE);
         });
-        parent::__construct($dispatcher);
+        parent::setDispatcher($dispatcher);
     }
     
     protected function processHandler($handler, $vars) {
