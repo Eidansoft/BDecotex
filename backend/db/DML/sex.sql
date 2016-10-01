@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `sex` (
 `id_sex` int(11) NOT NULL COMMENT 'Sex id',
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name: Hombre, Mujer, Embarazada, ...',
-  `code` varchar(2) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Code to represent the sex, H for Hombre, M for Mujer, E for Embarazada'
+  `code` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Code to represent the sex, H for Hombre, M for Mujer, E for Embarazada'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Sex codes table';
 
 --

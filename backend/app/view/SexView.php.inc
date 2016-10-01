@@ -20,18 +20,18 @@ class SexView extends BDecotexView{
     protected $controller;
     
     public function __construct() {
-        
+        parent::__construct();
         $this->controller = new SexController;
         
         $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/bdecotex/sex', SexView::GET_ALL_SEX);
+            $r->addRoute('GET', $this->sex_url, SexView::GET_ALL_SEX);
             // {id} must be a number (\d+)
-            $r->addRoute('GET', '/bdecotex/sex/{id:\d+}', SexView::GET_SEX);
-            $r->addRoute('POST', '/bdecotex/sex', SexView::CREATE_SEX);
-            $r->addRoute('DELETE', '/bdecotex/sex/{id:\d+}', SexView::DELETE_SEX);
-            $r->addRoute('PUT', '/bdecotex/sex/{id:\d+}', SexView::UPDATE_SEX);
+            $r->addRoute('GET', $this->sex_url.'/{id:\d+}', SexView::GET_SEX);
+            $r->addRoute('POST', $this->sex_url, SexView::CREATE_SEX);
+            $r->addRoute('DELETE', $this->sex_url.'/{id:\d+}', SexView::DELETE_SEX);
+            $r->addRoute('PUT', $this->sex_url.'/{id:\d+}', SexView::UPDATE_SEX);
         });
-        parent::__construct($dispatcher);
+        parent::setDispatcher($dispatcher);
     }
     
     protected function processHandler($handler, $vars) {

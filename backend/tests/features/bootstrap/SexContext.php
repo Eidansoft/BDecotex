@@ -13,15 +13,11 @@ use Behat\Gherkin\Node\TableNode;
  */
 class SexContext extends CommonContextFunctions implements Context, SnippetAcceptingContext
 {
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
+    protected $url;
+    
     public function __construct()
     {
+        $this->url = "http://".BDECOTEX_SERVER.BDECOTEX_MAIN_URL."/sex";
     }
     
     /**
@@ -30,7 +26,7 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
     public function elUsuarioCreaElSexoConCodigo($arg1, $arg2)
     {
         $method = UrlApi::URL_METHOD_POST;
-        $url = "http://localhost/bdecotex/sex";
+        $url = $this->url;
         $sexData = ["name"  => ("null" == $arg1 ? "" : $arg1),
                     "code"         => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $sexData);
@@ -43,7 +39,7 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
     {
         $sexoPreviamenteCreado = $this->responseJson;
         $method = UrlApi::URL_METHOD_PUT;
-        $url = "http://localhost/bdecotex/sex/" . $sexoPreviamenteCreado->id_sex;
+        $url = $this->url . "/" . $sexoPreviamenteCreado->id_sex;
         $sexData = ["name"  => ("null" == $arg1 ? "" : $arg1),
                     "code"  => ("null" == $arg2 ? "" : $arg2)];
         $this->callUrl($method, $url, $sexData);
@@ -65,7 +61,7 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
     public function elUsuarioSolicitaElListadoDeTodosLosSexos()
     {
         $method = UrlApi::URL_METHOD_GET;
-        $url = "http://localhost/bdecotex/sex";
+        $url = $this->url;
         $this->callUrl($method, $url);
     }
 
@@ -89,7 +85,7 @@ class SexContext extends CommonContextFunctions implements Context, SnippetAccep
     {
         $sexoPreviamenteCreado = $this->responseJson;
         $method = UrlApi::URL_METHOD_DELETE;
-        $url = "http://localhost/bdecotex/sex/" . $sexoPreviamenteCreado->id_sex;
+        $url = $this->url . "/" . $sexoPreviamenteCreado->id_sex;
         $this->callUrl($method, $url);
     }
     
