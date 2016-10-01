@@ -2,4 +2,5 @@
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ view/index.php [QSA,L]
+    DirectorySlash Off
 </IfModule>
