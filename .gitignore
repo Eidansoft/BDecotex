@@ -1,3 +1,4 @@
 originales/
-/backend/app/nbproject/*
-/backend/app/libs/*
+/backend/nbproject
+/backend/app/libs
+phpinfo.php
