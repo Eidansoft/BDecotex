@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BDecotex</title>
+        <meta charset="UTF-8">
+    </head>
+    <body data-ng-app="bdecotex" data-ng-controller="BDecotexController as data">
+        <p>Name: <input type="text" data-ng-model="data.name" /></p>
+        <input type="button" data-ng-click="data.add(data.name)" value="Add"/>
+        <p>Bienvenido {{data.name}}</p>
+        <p>Quizas debas saber <span data-ng-bind="data.name"></span> que la suma de 5 + 3 es {{5+3}}</p>
+        <ul>
+            <li data-ng-repeat="elem in data.nombres track by $index">{{elem}}</li>
+        </ul>
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="app/controller/BDecotexController.js"></script>
+    </body>
+</html>

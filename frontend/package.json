@@ -1,0 +1,34 @@
+{
+  "name": "bdecotex",
+  "version": "1.0.0",
+  "description": "A web application for BDecotex REST service",
+  "main": "index.htm",
+  "scripts": {
+    "test": "test",
+    "clean": "rm -rf node_modules && rm -rf js",
+    "precompile": "npm run clean && mkdir js",
+    "compile": "tsc --outDir js",
+    "watch": "tsc --outDir js -w"
+  },
+  "dependencies": {
+    "angular": "1.5.8"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eidansoft/BDecotex.git"
+  },
+  "keywords": [
+    "bdecotex",
+    "web",
+    "frontend",
+    "db"
+  ],
+  "author": "Alejandro Lorente",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Eidansoft/BDecotex/issues"
+  },
+  "homepage": "https://github.com/Eidansoft/BDecotex#readme"
+}
