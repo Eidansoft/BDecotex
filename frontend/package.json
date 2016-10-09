@@ -5,10 +5,10 @@
   "main": "index.htm",
   "scripts": {
     "test": "test",
-    "clean": "rm -rf node_modules && rm -rf js",
-    "precompile": "npm run clean && mkdir js",
-    "compile": "tsc --outDir js",
-    "watch": "tsc --outDir js -w"
+    "preinstall": "tsd install angular",
+    "clean": "rm -rf node_modules && rm -rf typings && rm -rf target",
+    "precompile": "rm -rf target",
+    "compile": "tsc"
   },
   "dependencies": {
     "angular": "1.5.8"
