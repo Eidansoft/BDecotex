@@ -2,9 +2,11 @@
 class BackendService
 {
     private descargasRealizadas;
+    protected httpService;
     
-    constructor(){
+    constructor($http: ng.IHttpService){
         this.descargasRealizadas = ["Esta es la", "Prueba con", "Typescript"];
+        this.httpService = $http;
     }
 
     public nuevaDescarga(descarga): void
@@ -14,8 +16,9 @@ class BackendService
     
     public getDescargas()
     {
-        return this.descargasRealizadas;
+        return this.httpService.get('/bdecotex/backend/app/family');
+        //return this.descargasRealizadas;
     }
 }
 
-angular.module('bdecotex').factory('BackendService', [() => new BackendService()]);
+angular.module('bdecotex').service('BackendService', BackendService);

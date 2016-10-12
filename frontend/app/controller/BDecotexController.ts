@@ -10,7 +10,16 @@ class BDecotexController
     {
         this.backendApi = BackendService;
         this.name = "Nombre de prueba";
-        this.nombres = BackendService.getDescargas();
+        BackendService.getDescargas().then(
+            result => {
+                //console.log(result);
+                this.nombres = result.data;
+            },
+            result => {
+                console.log(result);
+                alert("Error code: " + result.data.code + ": " + result.data.message + " (HTTP response " + result.data.httpCode + ")")
+            }
+        );
     }
 
     public add(nombre)

@@ -10,7 +10,7 @@
         <p>Bienvenido {{data.name}}</p>
         <p>Quizas debas saber <span data-ng-bind="data.name"></span> que la suma de 5 + 3 es {{5+3}}</p>
         <ul>
-            <li data-ng-repeat="elem in data.nombres track by $index">{{elem}}</li>
+            <li data-ng-repeat="elem in data.nombres track by $index">{{elem.id_family}}: {{elem.description}}</li>
         </ul>
 	<script src="node_modules/angular/angular.min.js"></script>
 	<script src="target/controller/BDecotexController.js"></script>
