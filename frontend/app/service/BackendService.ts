@@ -1,6 +1,7 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 class BackendService
 {
+    static dependencies = [];
     private descargasRealizadas;
     protected httpService;
     
@@ -14,11 +15,10 @@ class BackendService
         this.descargasRealizadas.push(descarga);
     }
     
-    public getDescargas()
+    public getDescargas(): ng.IHttpPromise<BackendResponseData>
     {
         return this.httpService.get('/bdecotex/backend/app/family');
-        //return this.descargasRealizadas;
     }
 }
 
-angular.module('bdecotex').service('BackendService', BackendService);
+bdecotexApp.service('BackendService', BackendService);

@@ -2,32 +2,29 @@
 class BDecotexController
 {
     static dependencies = ['BackendService', BDecotexController];
-    private backendApi;
-    public name;
+    private backendHandler;
     public nombres;
 
     constructor(BackendService)
     {
-        this.backendApi = BackendService;
-        this.name = "Nombre de prueba";
-        BackendService.getDescargas().then(
+        this.backendHandler = BackendService;
+        this.backendHandler.getDescargas().then(
             result => {
                 //console.log(result);
                 this.nombres = result.data;
             },
             result => {
                 console.log(result);
-                alert("Error code: " + result.data.code + ": " + result.data.message + " (HTTP response " + result.data.httpCode + ")")
             }
         );
     }
 
     public add(nombre)
     {
-        this.backendApi.nuevaDescarga(nombre);
+        this.backendHandler.nuevaDescarga(nombre);
     }; 
 }
 
 // Register the controller with Angular
-angular.module('bdecotex', []).controller(
+bdecotexApp.controller(
 	'BDecotexController', BDecotexController.dependencies);
