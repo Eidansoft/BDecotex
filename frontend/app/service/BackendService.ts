@@ -1,18 +1,16 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 class BackendService
 {
-    static dependencies = [];
-    private descargasRealizadas;
-    protected httpService;
+    static dependencies = ['$http', BackendService];
+    protected httpService: ng.IHttpService;
     
     constructor($http: ng.IHttpService){
-        this.descargasRealizadas = ["Esta es la", "Prueba con", "Typescript"];
         this.httpService = $http;
     }
 
     public nuevaDescarga(descarga): void
     {
-        this.descargasRealizadas.push(descarga);
+        alert("NOT yet implemented");
     }
     
     public getDescargas(): ng.IHttpPromise<BackendResponseData>
@@ -21,4 +19,4 @@ class BackendService
     }
 }
 
-bdecotexApp.service('BackendService', BackendService);
+bdecotexApp.service('BackendService', BackendService.dependencies);
