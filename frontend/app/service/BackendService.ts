@@ -13,7 +13,7 @@ class BackendService
         alert("NOT yet implemented");
     }
     
-    public getDescargas(): ng.IHttpPromise<BackendResponseData>
+    public getFamilies(): ng.IHttpPromise<BackendResponseData>
     {
         return this.httpService.get('/bdecotex/backend/app/family');
     }

@@ -8,7 +8,7 @@ class BDecotexController
     constructor(BackendService)
     {
         this.backendHandler = BackendService;
-        this.backendHandler.getDescargas().then(
+        this.backendHandler.getFamilies().then(
             result => {
                 //console.log(result);
                 this.nombres = result.data;
