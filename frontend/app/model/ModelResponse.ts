@@ -1,7 +1,6 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
-class BackendResponseData
+class ModelResponse
 {
-    static dependencies = [BackendResponseData];
     private code: number;
     private messsage: string;
     private httpCode: number;
@@ -20,5 +19,3 @@ class BackendResponseData
         return this.httpCode;
     }
 }
-
-bdecotexApp.service('BackendResponseData', BackendResponseData.dependencies);

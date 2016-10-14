@@ -7,15 +7,15 @@ class BackendService
     constructor($http: ng.IHttpService){
         this.httpService = $http;
     }
-
-    public nuevaDescarga(descarga): void
-    {
-        alert("NOT yet implemented");
-    }
     
-    public getFamilies(): ng.IHttpPromise<BackendResponseData>
+    public getFamilies(): ng.IHttpPromise<ModelResponse>
     {
         return this.httpService.get('/bdecotex/backend/app/family');
+    }
+    
+    public addFamily(family: ModelFamily): ng.IHttpPromise<ModelResponse>
+    {
+        return this.httpService.post('/bdecotex/backend/app/family', family);
     }
 }
 

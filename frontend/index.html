@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
     </head>
     <body data-ng-app="bdecotex" data-ng-controller="BDecotexController as data">
-        <p>Name: <input type="text" data-ng-model="data.name" /></p>
-        <input type="button" data-ng-click="data.add(data.name)" value="Add"/>
+        <p>Name: <input type="text" data-ng-model="data.txt" />
+        <input type="button" data-ng-click="data.add()" value="Add"/></p>
         <p>Bienvenido {{data.name}}</p>
         <p>Quizas debas saber <span data-ng-bind="data.name"></span> que la suma de 5 + 3 es {{5+3}}</p>
         <ul>
@@ -16,6 +16,8 @@
 	<script src="target/BDecotexApp.js"></script>
 	<script src="target/controller/BDecotexController.js"></script>
 	<script src="target/service/BackendService.js"></script>
-	<script src="target/model/BackendResponseData.js"></script>
+	<script src="target/service/ManageBackendErrorService.js"></script>
+	<script src="target/model/ModelResponse.js"></script>
+	<script src="target/model/ModelFamily.js"></script>
     </body>
 </html>
