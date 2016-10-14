@@ -1,0 +1,14 @@
+<div id="bdtx-model" data-ng-controller="ModelController as data">
+    <div id="bdtx-model-list">
+        <ul>
+            <li data-ng-repeat="model in data.modelList">{{model.id_model}}: {{model.description}}</li>
+        </ul>
+    </div>
+    <div id="bdtx-model-edit">
+        <input type="text" data-ng-bind="data.modelSelected.id_model"/>
+        <input type="text" data-ng-bind="data.modelSelected.description"/>
+        <input type="text" data-ng-bind="data.modelSelected.code"/>
+        <input type="button" value="Guardar"/>
+        <input type="button" value="Cancelar"/>
+    </div>
+</div>
