@@ -8,14 +8,21 @@ class BackendService
         this.httpService = $http;
     }
     
-    public getFamilies(): ng.IHttpPromise<ModelResponse>
+    public getFamilies(): ng.IHttpPromise<any>
     {
+        console.log('GET /bdecotex/backend/app/family');
         return this.httpService.get('/bdecotex/backend/app/family');
     }
     
-    public addFamily(family: ModelFamily): ng.IHttpPromise<ModelResponse>
+    public addFamily(family: ModelFamily): ng.IHttpPromise<any>
     {
+        console.log('POST /bdecotex/backend/app/family');
         return this.httpService.post('/bdecotex/backend/app/family', family);
+    }
+    
+    public deleteFamily(id_family:number): ng.IHttpPromise<any>{
+        console.log('DELETE /bdecotex/backend/app/family');
+        return this.httpService.delete('/bdecotex/backend/app/family/' + id_family);
     }
 }
 

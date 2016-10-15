@@ -10,13 +10,18 @@
         <p>Bienvenido {{data.name}}</p>
         <p>Quizas debas saber <span data-ng-bind="data.name"></span> que la suma de 5 + 3 es {{5+3}}</p>
         <ul>
-            <li data-ng-repeat="elem in data.nombres">{{elem.id_family}}: {{elem.description}}</li>
+            <li data-ng-repeat="elem in data.nombres" data-ng-click="data.delete(elem.id_family)">{{elem.description}}</li>
         </ul>
+        
+        <input type="button" data-ng-click="data.togleWaiting()" value="TogleWaiting"/>
+        <input type="button" data-ng-click="data.togleMessage()" value="TogleMessage"/>
+        
+        <div data-my-customer></div>
 	<script src="node_modules/angular/angular.min.js"></script>
 	<script src="target/BDecotexApp.js"></script>
+	<script src="target/directives/ScreenDirective.js"></script>
 	<script src="target/controller/BDecotexController.js"></script>
 	<script src="target/service/BackendService.js"></script>
-	<script src="target/service/ManageBackendErrorService.js"></script>
 	<script src="target/model/ModelResponse.js"></script>
 	<script src="target/model/ModelFamily.js"></script>
     </body>
