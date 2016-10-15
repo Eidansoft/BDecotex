@@ -4,23 +4,31 @@
         <title>BDecotex</title>
         <meta charset="UTF-8">
     </head>
-    <body data-ng-app="bdecotex" data-ng-controller="BDecotexController as data">
-        <p>Name: <input type="text" data-ng-model="data.txt" />
-        <input type="button" data-ng-click="data.add()" value="Add"/></p>
-        <p>Bienvenido {{data.name}}</p>
-        <p>Quizas debas saber <span data-ng-bind="data.name"></span> que la suma de 5 + 3 es {{5+3}}</p>
-        <ul>
-            <li data-ng-repeat="elem in data.nombres" data-ng-click="data.delete(elem.id_family)">{{elem.description}}</li>
-        </ul>
+    <body data-ng-app="bdecotex">
+        <div data-ng-controller="ControllerBDecotex">
+            <ul>
+                <li><a href="#family">Familia</a></li>
+                <li><a href="#line">L&iacute;nea</a></li>
+                <li><a href="#sex">Sexo</a></li>
+                <li><a href="#model">Modelo</a></li>
+            </ul>
+        </div>
+        
+        <div data-ng-view></div>
         
         <input type="button" data-ng-click="data.togleWaiting()" value="TogleWaiting"/>
         <input type="button" data-ng-click="data.togleMessage()" value="TogleMessage"/>
         
         <div data-my-customer></div>
-	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/angular/angular.js"></script>
+        <script src="node_modules/angular-route/angular-route.js"></script>
 	<script src="target/BDecotexApp.js"></script>
+	<script src="target/controller/ControllerBDecotex.js"></script>
+	<script src="target/controller/ControllerLine.js"></script>
+	<script src="target/controller/ControllerFamily.js"></script>
+	<script src="target/controller/ControllerSex.js"></script>
+	<script src="target/controller/ControllerModel.js"></script>
 	<script src="target/directives/ScreenDirective.js"></script>
-	<script src="target/controller/BDecotexController.js"></script>
 	<script src="target/service/BackendService.js"></script>
 	<script src="target/model/ModelFamily.js"></script>
     </body>

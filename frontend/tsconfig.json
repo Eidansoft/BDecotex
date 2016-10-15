@@ -6,8 +6,13 @@
     },
     "files": [
         "typings/angularjs/angular.d.ts",
+        "typings/angularjs/angular-route.d.ts",
         "app/BDecotexApp.ts",
-        "app/controller/BDecotexController.ts",
+        "app/controller/ControllerBDecotex.ts",
+        "app/controller/ControllerFamily.ts",
+        "app/controller/ControllerLine.ts",
+        "app/controller/ControllerSex.ts",
+        "app/controller/ControllerModel.ts",
         "app/service/BackendService.ts",
         "app/model/ModelFamily.ts",
         "app/directives/ScreenDirective.ts"

@@ -5,13 +5,14 @@
   "main": "index.htm",
   "scripts": {
     "test": "test",
-    "preinstall": "tsd install angular",
+    "preinstall": "tsd install angular && tsd install angular-route",
     "clean": "rm -rf node_modules && rm -rf typings && rm -rf target",
     "precompile": "rm -rf target",
     "compile": "tsc"
   },
   "dependencies": {
-    "angular": "1.5.8"
+    "angular": "1.5.8",
+    "angular-route": "1.5.8"
   },
   "devDependencies": {
   },
