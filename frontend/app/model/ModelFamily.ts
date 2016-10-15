@@ -1,4 +1,3 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
 class ModelFamily
 {
     protected id_family: number;

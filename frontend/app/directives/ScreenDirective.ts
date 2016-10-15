@@ -1,5 +1,3 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
-
 class ScreenDirective implements ng.IDirective {
     restrict = 'A';
 //    require = 'ngModel';

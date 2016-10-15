@@ -3,5 +3,13 @@
         "target": "ES5",
         "watch": true,
         "outDir": "target/"
-    }
+    },
+    "files": [
+        "typings/angularjs/angular.d.ts",
+        "app/BDecotexApp.ts",
+        "app/controller/BDecotexController.ts",
+        "app/service/BackendService.ts",
+        "app/model/ModelFamily.ts",
+        "app/directives/ScreenDirective.ts"
+    ]
 }

@@ -1,4 +1,3 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
 class BackendService
 {
     static dependencies = ['$http', BackendService];

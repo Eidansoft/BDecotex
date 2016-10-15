@@ -1,4 +1,3 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
 class BDecotexController
 {
     static dependencies = ['$scope', 'BackendService', BDecotexController];
