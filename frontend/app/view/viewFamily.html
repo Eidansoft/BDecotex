@@ -2,14 +2,16 @@
     <h1>Familia</h1>
     <div id="bdtx-family-list">
         <ul>
-            <li data-ng-repeat="family in data.familyList">{{family.id_family}}: {{family.description}}</li>
+            <li data-ng-repeat="family in data.familyList" data-ng-click="data.selectFamily(family)">{{family.id_family}}: {{family.description}}</li>
         </ul>
     </div>
-    <div id="bdtx-family-edit">
-        <div><label for="id">ID</label><input id="id" type="text" data-ng-bind="data.familySelected.id_family"/></div>
-        <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-bind="data.familySelected.description"/></div>
-        <div><label for="code">C&oacute;digo</label><input id="code" type="text" data-ng-bind="data.familySelected.code"/></div>
-        <input type="button" value="Guardar"/>
-        <input type="button" value="Cancelar"/>
+    <div id="bdtx-family-edit" data-ng-show="data.familySelected != undefined">
+        <div><label for="id">ID</label><input id="id" type="text" data-ng-model="data.familySelected.id_family"/></div>
+        <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-model="data.familySelected.description"/></div>
+        <div><label for="code">C&oacute;digo</label><input id="code" type="text" data-ng-model="data.familySelected.code"/></div>
+        <input type="button" value="Guardar" data-ng-click="data.saveFamily()"/>
+        <input type="button" value="Eliminar" data-ng-click="data.deleteFamily()" data-ng-show="data.familySelected.id_family != undefined"/>
     </div>
+        <input type="button" value="Nueva familia" data-ng-click="data.createNewFamily()"/>
+        <input type="button" value="Cancelar" data-ng-click="data.familySelected = undefined" data-ng-show="data.familySelected != undefined"/>
 </div>

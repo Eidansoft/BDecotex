@@ -13,7 +13,7 @@
         "app/controller/ControllerLine.ts",
         "app/controller/ControllerSex.ts",
         "app/controller/ControllerModel.ts",
-        "app/service/BackendService.ts",
+        "app/service/ServiceBackend.ts",
         "app/model/ModelFamily.ts",
         "app/directives/ScreenDirective.ts"
     ]
