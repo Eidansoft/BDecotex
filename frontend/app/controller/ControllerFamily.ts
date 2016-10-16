@@ -38,21 +38,24 @@ class ControllerFamily
                         }
                         return res;
                     });
+                    this.familySelected = undefined;
                     console.log("Familia salvada")
                 },
                 errorResponse => {
                     console.log("ERROR " + errorResponse.data.code + ": " + errorResponse.data.message);
+                    this.familySelected = undefined;
                 }
             );
         } else {
             this.backendHandler.createNewFamily(this.familySelected).then(
                 successResponse => {
                     this.familyList.push(<ModelFamily>successResponse.data);
+                    console.log("Familia nueva creada");
                     this.familySelected = undefined;
-                    console.log("Familia nueva creada")
                 },
                 errorResponse => {
                     console.log("ERROR " + errorResponse.data.code + ": " + errorResponse.data.message);
+                    this.familySelected = undefined;
                 }
             );
         }
@@ -68,10 +71,12 @@ class ControllerFamily
                     }
                     return res;
                 });
-                console.log("Familia eliminada")
+                console.log("Familia eliminada");
+                this.familySelected = undefined;
             },
             errorResponse => {
                 console.log("ERROR " + errorResponse.data.code + ": " + errorResponse.data.message);
+                this.familySelected = undefined;
             }
         );
     }

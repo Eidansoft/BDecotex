@@ -18,4 +18,4 @@ class ScreenDirective implements ng.IDirective {
 }
 
 bdecotexApp.directive(
-    'myCustomer', ScreenDirective.factory());
+    'directiveScreen', ScreenDirective.factory());

@@ -5,21 +5,19 @@
         <meta charset="UTF-8">
     </head>
     <body data-ng-app="bdecotex">
-        <div data-ng-controller="ControllerBDecotex">
+        <div data-ng-controller="ControllerBDecotex as data">
             <ul>
                 <li><a href="#family">Familia</a></li>
                 <li><a href="#line">L&iacute;nea</a></li>
                 <li><a href="#sex">Sexo</a></li>
                 <li><a href="#model">Modelo</a></li>
             </ul>
+            <input type="button" data-ng-click="data.test()" value="Test" />
+            <div data-directive-screen></div>
         </div>
         
         <div data-ng-view></div>
         
-        <input type="button" data-ng-click="data.togleWaiting()" value="TogleWaiting"/>
-        <input type="button" data-ng-click="data.togleMessage()" value="TogleMessage"/>
-        
-        <div data-my-customer></div>
 	<script src="node_modules/angular/angular.js"></script>
         <script src="node_modules/angular-route/angular-route.js"></script>
 	<script src="target/BDecotexApp.js"></script>
