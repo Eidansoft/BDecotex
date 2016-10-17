@@ -28,7 +28,8 @@ function routeConfig($routeProvider: ng.route.IRouteProvider): void{
 }
 
 let bdecotexApp = angular.module('bdecotex',  [
-    'ngRoute'
+    'ngRoute',
+    'PubSub'
 //        require('angular-ui-router'),
 //        require('angular-animate'),
 //        require('angular-ui-bootstrap'),

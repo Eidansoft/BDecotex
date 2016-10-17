@@ -1,18 +1,32 @@
+interface IScreenDirectiveScope extends ng.IScope{
+//    dialogStyle:any;
+//    hideModal:()=>void;
+    waitingScreen: boolean;
+}
+
 class ScreenDirective implements ng.IDirective {
-    restrict = 'A';
-//    require = 'ngModel';
-    templateUrl = 'app/directives/screenDirective.html';
-//    replace = true;
+    public restrict: string = 'A';
+    public templateUrl: string = 'app/directives/screenDirective.html';
+    link: Function = (scope: IScreenDirectiveScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
+        let showWaitingScreen = function(message, data):any{
+            scope.waitingScreen = true;
+            console.log("aqui");
+        }
+        this.pubsubHandler.subscribe('SHOW_WAITING_SCREEN', showWaitingScreen);
+    };
+    //public require = 'ngModel';
 
-    constructor() {
-    }
-
-    link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
+    private pubsubHandler: any;
+    
+    constructor(PubSub: any) {
+        this.pubsubHandler = PubSub;
     }
 
     static factory(): ng.IDirectiveFactory {
-        const directive = () => new ScreenDirective();
-        directive.$inject = [];
+        const directive = (PubSub: any) => {
+            return new ScreenDirective(PubSub);
+        };
+        directive.$inject = ['PubSub'];
         return directive;
     }
 }

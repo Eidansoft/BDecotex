@@ -1,15 +1,15 @@
 class ControllerBDecotex
 {
-    static dependencies = [ControllerBDecotex];
-    private waitingScreen;
+    static dependencies = ['PubSub', ControllerBDecotex];
+    private pubsubHandler: any;
 
-    constructor(){
-        this.waitingScreen = false;
+    constructor(PubSub: any){
+        this.pubsubHandler = PubSub;
     }
     
     public test(){
+        this.pubsubHandler.publish('SHOW_WAITING_SCREEN', true);
         console.log("TESTTT!!!!!");
-        this.waitingScreen = !this.waitingScreen;
     }
 }
 
