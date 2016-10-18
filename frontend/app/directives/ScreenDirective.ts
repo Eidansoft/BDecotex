@@ -10,9 +10,14 @@ class ScreenDirective implements ng.IDirective {
     link: Function = (scope: IScreenDirectiveScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
         let showWaitingScreen = function(message, data):any{
             scope.waitingScreen = true;
-            console.log("aqui");
         }
+        
+        let hideWaitingScreen = function(message, data):any{
+            scope.waitingScreen = false;
+        }
+        
         this.pubsubHandler.subscribe('SHOW_WAITING_SCREEN', showWaitingScreen);
+        this.pubsubHandler.subscribe('HIDE_WAITING_SCREEN', hideWaitingScreen);
     };
     //public require = 'ngModel';
 
