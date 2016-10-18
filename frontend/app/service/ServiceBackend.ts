@@ -9,6 +9,10 @@ class ServiceBackend
         this.backendPath = '/bdecotex/backend/app';
     }
     
+    private getHttpHandler(requestConf: ng.IRequestConfig): ng.IPromise<any> {
+        return this.httpHandler(requestConf);
+    }
+    
     public createNewFamily(family: ModelFamily): ng.IHttpPromise<any>
     {
         var req = {
@@ -17,7 +21,7 @@ class ServiceBackend
             data: family
         }
 
-        return this.httpHandler(req);
+        return this.getHttpHandler(req);
     }
     
     public getAllFamilies(): ng.IHttpPromise<any>
@@ -27,7 +31,7 @@ class ServiceBackend
             url: this.backendPath + '/family'
         }
 
-        return this.httpHandler(req);
+        return this.getHttpHandler(req);
     }
     
     public updateFamily(family: ModelFamily): ng.IHttpPromise<any>{
@@ -37,7 +41,7 @@ class ServiceBackend
             data: family
         }
 
-        return this.httpHandler(req);
+        return this.getHttpHandler(req);
     }
     
     public deleteFamilyById(id_family:number): ng.IHttpPromise<any>{
@@ -46,7 +50,7 @@ class ServiceBackend
             url: this.backendPath + '/family/' + id_family
         }
 
-        return this.httpHandler(req);
+        return this.getHttpHandler(req);
     }
 }
 
