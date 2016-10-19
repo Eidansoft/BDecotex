@@ -11,7 +11,7 @@ class ServiceBackend
         this.backendPath = '/bdecotex/backend/app';
     }
     
-    private getHttpHandler(requestConf: ng.IRequestConfig, onSuccessResult: Function): void {
+    private getHttpHandler(requestConf: ng.IRequestConfig, onSuccessResult: Function, onErrorResult?: Function): void {
         this.pubsubHandler.publish('SHOW_WAITING_SCREEN', true);
         this.httpHandler(requestConf).then(
             (successResponse) => {
@@ -19,12 +19,20 @@ class ServiceBackend
                 this.pubsubHandler.publish('HIDE_WAITING_SCREEN', true);
             },
             (errorResponse) => {
-                console.log("ERROR " + errorResponse.data.code + ": " + errorResponse.data.message);
+                let errorDesc = "ERROR " + errorResponse.status + ": " + errorResponse.statusText;
+                if (errorResponse.data.message != undefined){
+                    errorDesc += ". Description: " + errorResponse.data.message + " (" + errorResponse.data.code + ")";
+                }
+                console.log(errorDesc);
+                if (onErrorResult != undefined){
+                    onErrorResult(errorResponse);
+                }
+                this.pubsubHandler.publish('HIDE_WAITING_SCREEN', true);
             }
         );
     }
     
-    public createNewFamily(family: ModelFamily, onSuccessResult: Function): void
+    public createNewFamily(family: ModelFamily, onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {
             method: 'POST',
@@ -32,20 +40,20 @@ class ServiceBackend
             data: family
         }
 
-        this.getHttpHandler(req, onSuccessResult);
+        this.getHttpHandler(req, onSuccessResult, onErrorResult);
     }
     
-    public getAllFamilies(onSuccessResult: Function): void
+    public getAllFamilies(onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {
             method: 'GET',
             url: this.backendPath + '/family'
         }
 
-        this.getHttpHandler(req, onSuccessResult);
+        this.getHttpHandler(req, onSuccessResult, onErrorResult);
     }
     
-    public updateFamily(family: ModelFamily, onSuccessResult: Function): void
+    public updateFamily(family: ModelFamily, onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {
             method: 'PUT',
@@ -53,17 +61,17 @@ class ServiceBackend
             data: family
         }
 
-        this.getHttpHandler(req, onSuccessResult);
+        this.getHttpHandler(req, onSuccessResult, onErrorResult);
     }
     
-    public deleteFamilyById(id_family:number, onSuccessResult: Function): void
+    public deleteFamilyById(id_family:number, onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {
             method: 'DELETE',
             url: this.backendPath + '/family/' + id_family
         }
 
-        this.getHttpHandler(req, onSuccessResult);
+        this.getHttpHandler(req, onSuccessResult, onErrorResult);
     }
 }
 

@@ -1,5 +1,4 @@
 interface IScreenDirectiveScope extends ng.IScope{
-//    dialogStyle:any;
 //    hideModal:()=>void;
     waitingScreen: boolean;
 }
