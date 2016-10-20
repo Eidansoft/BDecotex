@@ -3,7 +3,7 @@ class ServiceBackend
     static dependencies = ['$http', 'PubSub', ServiceBackend];
     private httpHandler: ng.IHttpService;
     private pubsubHandler: any;
-    private backendPath: string;
+    protected backendPath: string;
     
     constructor($http: ng.IHttpService, pubsub: any){
         this.httpHandler = $http;
@@ -11,7 +11,7 @@ class ServiceBackend
         this.backendPath = '/bdecotex/backend/app';
     }
     
-    private getHttpHandler(requestConf: ng.IRequestConfig, onSuccessResult: Function, onErrorResult?: Function): void {
+    protected getHttpHandler(requestConf: ng.IRequestConfig, onSuccessResult: Function, onErrorResult?: Function): void {
         this.pubsubHandler.publish('SHOW_WAITING_SCREEN', true);
         this.httpHandler(requestConf).then(
             (successResponse) => {

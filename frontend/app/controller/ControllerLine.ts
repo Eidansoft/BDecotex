@@ -1,10 +1,18 @@
 class ControllerLine
 {
-    static dependencies = [ControllerLine];
+    static dependencies = ['ServiceLineBackend', ControllerLine];
+    private backendHandler: ServiceLineBackend;
+    private lineList: Array<ModelLine>;
+    private lineSelected: ModelLine;
     
-    constructor()
+    constructor(serviceBakend: ServiceLineBackend)
     {
+        this.backendHandler = serviceBakend;
         
+        this.backendHandler.getAllLines((linesArray)=>{
+            this.lineList = <Array<ModelLine>>linesArray;
+            console.log("Lineas recibidas");
+        });
     }
 
 }

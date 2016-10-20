@@ -14,7 +14,9 @@
         "app/controller/ControllerSex.ts",
         "app/controller/ControllerModel.ts",
         "app/service/ServiceBackend.ts",
+        "app/service/ServiceLineBackend.ts",
         "app/model/ModelFamily.ts",
+        "app/model/ModelLine.ts",
         "app/directives/ScreenDirective.ts"
     ]
 }
