@@ -16,7 +16,7 @@ class ServiceLineBackend extends ServiceBackend
             data: line
         }
 
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
     public getAllLines(onSuccessResult: Function, onErrorResult?: Function): void
@@ -26,7 +26,7 @@ class ServiceLineBackend extends ServiceBackend
             url: this.backendPath + this.linePath
         }
 
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
     public updateLine(line: ModelLine, onSuccessResult: Function, onErrorResult?: Function): void
@@ -37,7 +37,7 @@ class ServiceLineBackend extends ServiceBackend
             data: line
         }
 
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
     public deleteLineById(id_line:number, onSuccessResult: Function, onErrorResult?: Function): void
@@ -47,7 +47,7 @@ class ServiceLineBackend extends ServiceBackend
             url: this.backendPath + this.linePath + '/' + id_line
         }
 
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
 }
 

@@ -1,11 +1,11 @@
 class ControllerFamily
 {
-    static dependencies = ['ServiceBackend', ControllerFamily];
-    private backendHandler: ServiceBackend;
+    static dependencies = ['ServiceFamilyBackend', ControllerFamily];
+    private backendHandler: ServiceFamilyBackend;
     private familyList: Array<ModelFamily>;
     private familySelected: ModelFamily;
     
-    constructor(serviceBackend: ServiceBackend) {
+    constructor(serviceBackend: ServiceFamilyBackend) {
         this.backendHandler = serviceBackend;
         
         this.backendHandler.getAllFamilies((familiesArray)=>{

@@ -11,7 +11,7 @@ class ServiceBackend
         this.backendPath = '/bdecotex/backend/app';
     }
     
-    protected getHttpHandler(requestConf: ng.IRequestConfig, onSuccessResult: Function, onErrorResult?: Function): void {
+    protected processHttpRequest(requestConf: ng.IRequestConfig, onSuccessResult: Function, onErrorResult?: Function): void {
         this.pubsubHandler.publish('SHOW_WAITING_SCREEN', true);
         this.httpHandler(requestConf).then(
             (successResponse) => {
@@ -30,48 +30,6 @@ class ServiceBackend
                 this.pubsubHandler.publish('HIDE_WAITING_SCREEN', true);
             }
         );
-    }
-    
-    public createNewFamily(family: ModelFamily, onSuccessResult: Function, onErrorResult?: Function): void
-    {
-        var req = {
-            method: 'POST',
-            url: this.backendPath + '/family',
-            data: family
-        }
-
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
-    }
-    
-    public getAllFamilies(onSuccessResult: Function, onErrorResult?: Function): void
-    {
-        var req = {
-            method: 'GET',
-            url: this.backendPath + '/family'
-        }
-
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
-    }
-    
-    public updateFamily(family: ModelFamily, onSuccessResult: Function, onErrorResult?: Function): void
-    {
-        var req = {
-            method: 'PUT',
-            url: this.backendPath + '/family/' + family.id_family,
-            data: family
-        }
-
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
-    }
-    
-    public deleteFamilyById(id_family:number, onSuccessResult: Function, onErrorResult?: Function): void
-    {
-        var req = {
-            method: 'DELETE',
-            url: this.backendPath + '/family/' + id_family
-        }
-
-        this.getHttpHandler(req, onSuccessResult, onErrorResult);
     }
 }
 
