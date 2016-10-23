@@ -24,7 +24,8 @@ class ModelDAOImpl extends BDecotexDAOImpl {
             . $datetime1->getTimestamp()
         . ")";
         $newModelId = $this->getModifiedIdExecutingQuery($query);
-        return $this->update($newModelId, $model);
+        $this->update($newModelId, $model);
+        return $newModelId;
     }
     
     public function update($id, ModelDTO $model) {
@@ -34,17 +35,17 @@ class ModelDAOImpl extends BDecotexDAOImpl {
             . (null !== $model->getXid_line() ? " xid_line = " . $model->getXid_line() . ", " : "")
             . (null !== $model->getXid_sex() ? " xid_sex = " . $model->getXid_sex() . ", " : "")
             . (null !== $model->getVariant() ? " variant = " . $model->getVariant() . ", " : "")
-            . (null !== $model->getDescription() ? " description = " . $model->getDescription() . ", " : "")
-            . (null !== $model->getFront() ? " front = " . $model->getFront() . ", " : "")
-            . (null !== $model->getBack() ? " back = " . $model->getBack() . ", " : "")
-            . (null !== $model->getNeck() ? " neck = " . $model->getNeck() . ", " : "")
-            . (null !== $model->getArm() ? " arm = " . $model->getArm() . ", " : "")
-            . (null !== $model->getObservations() ? " observations = " . $model->getObservations() . ", " : "")
-            . (null !== $model->getModel_number_parent() ? " model_number_parent = " . $model->getModel_number_parent() . ", " : "")
+            . (null !== $model->getDescription() ? " description = '" . $model->getDescription() . "', " : "")
+            . (null !== $model->getFront() ? " front = '" . $model->getFront() . "', " : "")
+            . (null !== $model->getBack() ? " back = '" . $model->getBack() . "', " : "")
+            . (null !== $model->getNeck() ? " neck = '" . $model->getNeck() . "', " : "")
+            . (null !== $model->getArm() ? " arm = '" . $model->getArm() . "', " : "")
+            . (null !== $model->getObservations() ? " observations = '" . $model->getObservations() . "', " : "")
+            . (null !== $model->getModel_number_parent() ? " model_number_parent = '" . $model->getModel_number_parent() . "', " : "")
             . (null !== $model->getXid_model_parent() ? " xid_model_parent = " . $model->getXid_model_parent() . ", " : "")
             //. (null !== $model->getCreation_date() ? " creation_date = " . $model->getCreation_date() . ", " : "")
-            . (null !== $model->getClient() ? " client = " . $model->getClient() . ", " : "")
-            . (null !== $model->getOld_ref() ? " old_ref = " . $model->getOld_ref() . ", " : "");
+            . (null !== $model->getClient() ? " client = '" . $model->getClient() . "', " : "")
+            . (null !== $model->getOld_ref() ? " old_ref = '" . $model->getOld_ref() . "', " : "");
         $query = substr($query, 0, strlen($query)-2); //remove last coma
         $query .= " WHERE id_$this->table_name = $id";
         return $this->executeQuery($query);
