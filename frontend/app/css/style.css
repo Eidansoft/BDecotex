@@ -1,3 +1,23 @@
+/*
+Colores https://color.hailpixel.com
+Fondo oscuro #22220B
+Letra clara #FEFBFB
+Fondo cabecera #7344C1
+Errores #B43C48
+Mensajes #73D071
+
+*/
+
+#bdtx-header {
+    background-color: #7344C1;
+}
+
+#bdtx-menu {
+    height: 100%;
+    background-color: #22220B;
+    text-decoration: #FEFBFB;
+}
+
 #bdtx-screen-waiting {
     position: absolute;
     top: 0px;
