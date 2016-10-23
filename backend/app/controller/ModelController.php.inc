@@ -125,8 +125,8 @@ class ModelController extends BDecotexController {
         if ( $found ){
             // If id_model is not set means the codes are for a new item; but if id_model
             // is set means is for an update, so I check the update is for the same id
-            if (null !== $model->getId_model() || $model->getId_model() !== $found['id_model']){ //checking for a creation
-                throw new ControllerException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+            if (null === $model->getId_model() || $model->getId_model() !== $found['id_model']){ //checking for a creation
+                throw new ControllerException(4, 409, "Already exists a model at the system with family '" . $model->getXid_family() . "', line '" . $model->getXid_line() . "', sex '" . $model->getXid_sex() . "' and variant '" . $model->getVariant() . "'.");
             }
         }
         return true;
