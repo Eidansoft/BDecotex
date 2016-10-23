@@ -4,16 +4,34 @@ class ControllerFamily
     private backendHandler: ServiceFamilyBackend;
     private familyList: Array<ModelFamily>;
     private familySelected: ModelFamily;
+    private gridOptions: any;
+    private gridApi: any;
     
     constructor(serviceBackend: ServiceFamilyBackend) {
         this.backendHandler = serviceBackend;
         
+        this.gridOptions = {
+            columnDefs: [{ field: 'description' }, { field: 'code' }],
+            enableRowSelection: true,
+            multiSelect: false,
+            enableRowHeaderSelection: false //not checkbox
+        }
+        
+        this.gridOptions.onRegisterApi = this.configureGridApi;
+        
         this.backendHandler.getAllFamilies((familiesArray)=>{
             this.familyList = <Array<ModelFamily>>familiesArray;
+            this.gridOptions.data = this.familyList;
             console.log("Familias recibidas");
         });
     }
 
+    protected configureGridApi (gridApi) {
+        //set gridApi to controller property
+        this.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged(null, this.selectFamily);
+    }
+        
     protected selectFamily(family: ModelFamily){
         // Clone the object to edit to avoid modify the original
         this.familySelected = (JSON.parse(JSON.stringify(family)));

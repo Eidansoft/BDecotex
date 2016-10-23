@@ -1,6 +1,7 @@
 <div id="bdtx-family">
     <h1>Familia</h1>
     <div id="bdtx-family-list">
+        <div data-ui-grid="data.gridOptions" data-ui-grid-selection class="datatable"></div>
         <ul>
             <li data-ng-repeat="family in data.familyList" data-ng-click="data.selectFamily(family)">{{family.id_family}}: {{family.description}}</li>
         </ul>
