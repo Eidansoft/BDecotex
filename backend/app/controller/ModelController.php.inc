@@ -6,6 +6,7 @@ require_once (dirname(__FILE__).'/../model/SexDAOImpl.php.inc');
 require_once (dirname(__FILE__).'/ControllerException.php.inc');
 require_once (dirname(__FILE__).'/BDecotexController.php.inc');
 require_once (dirname(__FILE__).'/../model/DAOException.php.inc');
+require_once (dirname(__FILE__).'/../dtos/ModelDTO.php.inc');
 
 class ModelController extends BDecotexController {
 
@@ -45,93 +46,86 @@ class ModelController extends BDecotexController {
         $this->sexDao = new SexDAOImpl;
     }
 
-    function createModel($family, $line, $sex, $variant) {
-        $this->checkModelMandatoryFields($family, $line, $sex, $variant);
+    function createModel(ModelDTO $model) {
+        //$this->checkModelMandatoryFields($family, $line, $sex, $variant);
         
-        $this->checkCodeNotDuplicate($family, $line, $sex, $variant);
+        $this->checkModelDoNotExist($model);
         
-        $newId = $this->dao->create($family, $line, $sex, $variant);
-        if (!$newId) {
-            throw new ControllerException(5, 500, "Error creating the new model with family '$family', line '$line', sex '$sex' and variant '$variant'.");
+        $modelWithNewId = $this->dao->create($model);
+        if (!$modelWithNewId) {
+            throw new ControllerException(5, 500, "Error creating the new model with family '" . $model->getXid_family() . "', line '" . $model->getXid_line() . "', sex '" . $model->getXid_sex() . "' and variant '" . $model->getVariant() . "'.");
         }
-        return $this->getById($newId);
+        return $this->getById($modelWithNewId);
     }
     
-    function updateModel($id, $attribute, $value) {
-        $this->checkModelUpdateMandatoryFields($attribute, $value);
+    function updateModel($id, ModelDTO $model) {
+        //$this->checkModelUpdateMandatoryFields($attribute, $value);
         
         // Check the model with ID exists, if not it will raise exception
         $modelToUpdate = $this->getById($id);
         
-        // check mandatory fields
-        if ($attribute == "xid_family"){
-            $this->checkCodeNotDuplicate($value, $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $modelToUpdate['variant'], $modelToUpdate['id_model']);
-        } else if ($attribute == "xid_line"){
-            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $value, $modelToUpdate['xid_sex'], $modelToUpdate['variant'], $modelToUpdate['id_model']);
-        } else if ($attribute == "xid_sex"){
-            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $value, $modelToUpdate['variant'], $modelToUpdate['id_model']);
-        } else if ($attribute == "variant"){
-            $this->checkCodeNotDuplicate($modelToUpdate['xid_family'], $modelToUpdate['xid_line'], $modelToUpdate['xid_sex'], $value, $modelToUpdate['id_model']);
-        }
+        $this->checkModelDoNotExist($model);
         
         //check xid_model_parent must exist
-        if ($attribute == "xid_model_parent"){
+        if (null !== $model->getXid_model_parent()){
             // Check the model with ID exists, if not it will raise exception
             try {
-                $this->getById($value);
+                $this->getById($model->getXid_model_parent());
             } catch (DAOException $ex){
                 throw new ControllerException($ex->getCode(), $ex->getHttpCode(), "The parent model referenced with ID '$value' does not exist");
             }
         }
         
-        $res = $this->dao->update($id, $attribute, $value);
+        $res = $this->dao->update($id, $model);
         if (!$res) {
             throw new ControllerException(5, 500, "Error updating the model with ID: '$id'");
         }
         return $this->getById($id);
     }
     
-    private function checkModelMandatoryFields($family, $line, $sex, $variant){
-        if ($family == NULL || trim($family) == "") {
-            throw new ControllerException(4, 404, "The 'family' is mandatory");
-        } else if ( ! $this->familyDao->getById($family)){
-            throw new ControllerException(4, 404, "The 'family' id provided '$family' is not valid");
-        }
-        
-        if ($line == NULL || trim($line) == "") {
-            throw new ControllerException(4, 404, "The 'line' is mandatory");
-        } else if ( ! $this->lineDao->getById($line)){
-            throw new ControllerException(4, 404, "The 'line' id provided '$line' is not valid");
-        }
-        
-        if ($sex == NULL || trim($sex) == "") {
-            throw new ControllerException(4, 404, "The 'sex' is mandatory");
-        } else if ( ! $this->sexDao->getById($sex)){
-            throw new ControllerException(4, 404, "The 'sex' id provided '$sex' is not valid");
-        }
-        
-        if ($variant == NULL || trim($variant) == "") {
-            throw new ControllerException(4, 404, "The 'variant' is mandatory");
-        }
-        return true;
-    }
+//    private function checkModelMandatoryFields($family, $line, $sex, $variant){
+//        if ($family == NULL || trim($family) == "") {
+//            throw new ControllerException(4, 404, "The 'family' is mandatory");
+//        } else if ( ! $this->familyDao->getById($family)){
+//            throw new ControllerException(4, 404, "The 'family' id provided '$family' is not valid");
+//        }
+//        
+//        if ($line == NULL || trim($line) == "") {
+//            throw new ControllerException(4, 404, "The 'line' is mandatory");
+//        } else if ( ! $this->lineDao->getById($line)){
+//            throw new ControllerException(4, 404, "The 'line' id provided '$line' is not valid");
+//        }
+//        
+//        if ($sex == NULL || trim($sex) == "") {
+//            throw new ControllerException(4, 404, "The 'sex' is mandatory");
+//        } else if ( ! $this->sexDao->getById($sex)){
+//            throw new ControllerException(4, 404, "The 'sex' id provided '$sex' is not valid");
+//        }
+//        
+//        if ($variant == NULL || trim($variant) == "") {
+//            throw new ControllerException(4, 404, "The 'variant' is mandatory");
+//        }
+//        return true;
+//    }
     
-    private function checkModelUpdateMandatoryFields($attribute, $value){        
-        if ($attribute == NULL || trim($attribute) == "") {
-            throw new ControllerException(4, 404, "The 'attribute' is mandatory");
-        } else if ( ! in_array($attribute, $this->allAttributes)){
-            throw new ControllerException(4, 404, "The 'attribute' provided '$attribute' is not valid");
-        }
-        
-        if ($value == NULL || trim($value) == "") {
-            throw new ControllerException(4, 404, "The 'value' is mandatory");
-        }
-    }
+//    private function checkModelUpdateMandatoryFields($attribute, $value){        
+//        if ($attribute == NULL || trim($attribute) == "") {
+//            throw new ControllerException(4, 404, "The 'attribute' is mandatory");
+//        } else if ( ! in_array($attribute, $this->allAttributes)){
+//            throw new ControllerException(4, 404, "The 'attribute' provided '$attribute' is not valid");
+//        }
+//        
+//        if ($value == NULL || trim($value) == "") {
+//            throw new ControllerException(4, 404, "The 'value' is mandatory");
+//        }
+//    }
     
-    private function checkCodeNotDuplicate($family, $line, $sex, $variant, $id = null){
-        $found = $this->dao->getByCode($family, $line, $sex, $variant);
+    private function checkModelDoNotExist(ModelDTO $model){
+        $found = $this->dao->getByCode($model->getXid_family(), $model->getXid_line(), $model->getXid_sex(), $model->getVariant());
         if ( $found ){
-            if ($id == null || $id != $found['id_model']){ //checking for a creation
+            // If id_model is not set means the codes are for a new item; but if id_model
+            // is set means is for an update, so I check the update is for the same id
+            if (null !== $model->getId_model() || $model->getId_model() !== $found['id_model']){ //checking for a creation
                 throw new ControllerException(4, 409, "Already exists a model at the system with family '$family', line '$line', sex '$sex' and variant '$variant'.");
             }
         }

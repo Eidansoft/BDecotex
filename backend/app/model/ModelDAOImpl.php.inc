@@ -1,5 +1,6 @@
 <?php
 require_once (dirname(__FILE__).'/BDecotexDAOImpl.php.inc');
+require_once (dirname(__FILE__).'/../dtos/ModelDTO.php.inc');
 
 class ModelDAOImpl extends BDecotexDAOImpl {
     
@@ -7,65 +8,46 @@ class ModelDAOImpl extends BDecotexDAOImpl {
         parent::__construct('model');
     }
     
-    public function create($familyId, $lineId, $sexId, $variant,
-            $description = 'NULL', $front = 'NULL', $back = 'NULL', 
-            $neck = 'NULL', $arm = 'NULL', $observations = 'NULL',
-            $client = 'NULL', $idParent = 'NULL',
-            $oldRef = 'NULL', $modelNumberParent = 'NULL') {
-        
+    public function create(ModelDTO $model) {
         $datetime1 = new DateTime;
-        
-        // I check that there is no empty string, I prefer to store null
-        $description = ($description == '' ? "NULL" : "'$description'");
-        $front = ($front == '' ? "NULL" : "'$front'");
-        $back = ($back == '' ? "NULL" : "'$back'");
-        $neck = ($neck == '' ? "NULL" : "'$neck'");
-        $arm = ($arm == '' ? "NULL" : "'$arm'");
-        $observations = ($observations == '' ? "NULL" : "'$observations'");
-        $client = ($client == '' ? "NULL" : "'$client'");
-        $idParent = ($idParent == '' ? NULL : "$idParent");
-        $oldRef = ($oldRef == '' ? "NULL" : "'$oldRef'");
-        $modelNumberParent = ($modelNumberParent == '' ? "NULL" : "'$modelNumberParent'");
-        
-        return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
-                                                    . "xid_family, "
-                                                    . "xid_line, "
-                                                    . "xid_sex, "
-                                                    . "variant, "
-                                                    . "description, "
-                                                    . "front, "
-                                                    . "back, "
-                                                    . "neck, "
-                                                    . "arm, "
-                                                    . "observations, "
-                                                    . "model_number_parent, "
-                                                    . "xid_model_parent, "
-                                                    . "creation_date, "
-                                                    . "client, "
-                                                    . "old_ref "
-                                                 . ") VALUES ("
-                                                    . "$familyId, "
-                                                    . "$lineId, "
-                                                    . "$sexId, "
-                                                    . "$variant, "
-                                                    . "$description, "
-                                                    . "$front, "
-                                                    . "$back, "
-                                                    . "$neck, "
-                                                    . "$arm, "
-                                                    . "$observations, "
-                                                    . "$modelNumberParent, "
-                                                    . "$idParent, "
-                                                    . $datetime1->getTimestamp() . ", "
-                                                    . "$client, "
-                                                    . "$oldRef  "
-                                                 . ")");
+        $query = "INSERT INTO $this->table_name ("
+            . (null !== $model->getXid_family() ? " xid_family, " : "")
+            . (null !== $model->getXid_line() ? " xid_line, " : "")
+            . (null !== $model->getXid_sex() ? " xid_sex, " : "")
+            . (null !== $model->getVariant() ? " variant, " : "")
+            . "creation_date "
+        . ") VALUES ("
+            . (null !== $model->getXid_family() ? $model->getXid_family() . ", " : "")
+            . (null !== $model->getXid_line() ? $model->getXid_line() . ", " : "")
+            . (null !== $model->getXid_sex() ? $model->getXid_sex() . ", " : "")
+            . (null !== $model->getVariant() ? $model->getVariant() . ", " : "")
+            . $datetime1->getTimestamp()
+        . ")";
+        $newModelId = $this->getModifiedIdExecutingQuery($query);
+        return $this->update($newModelId, $model);
     }
     
-    public function update($id, $field, $value) {
-        return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET $field = " . (is_string($value) ? "'$value'" : "$value" ) . " "
-                                 . "WHERE id_$this->table_name = $id");
+    public function update($id, ModelDTO $model) {
+        $query = "UPDATE $this->table_name "
+        . " SET "
+            . (null !== $model->getXid_family() ? " xid_family = " . $model->getXid_family() . ", " : "")
+            . (null !== $model->getXid_line() ? " xid_line = " . $model->getXid_line() . ", " : "")
+            . (null !== $model->getXid_sex() ? " xid_sex = " . $model->getXid_sex() . ", " : "")
+            . (null !== $model->getVariant() ? " variant = " . $model->getVariant() . ", " : "")
+            . (null !== $model->getDescription() ? " description = " . $model->getDescription() . ", " : "")
+            . (null !== $model->getFront() ? " front = " . $model->getFront() . ", " : "")
+            . (null !== $model->getBack() ? " back = " . $model->getBack() . ", " : "")
+            . (null !== $model->getNeck() ? " neck = " . $model->getNeck() . ", " : "")
+            . (null !== $model->getArm() ? " arm = " . $model->getArm() . ", " : "")
+            . (null !== $model->getObservations() ? " observations = " . $model->getObservations() . ", " : "")
+            . (null !== $model->getModel_number_parent() ? " model_number_parent = " . $model->getModel_number_parent() . ", " : "")
+            . (null !== $model->getXid_model_parent() ? " xid_model_parent = " . $model->getXid_model_parent() . ", " : "")
+            //. (null !== $model->getCreation_date() ? " creation_date = " . $model->getCreation_date() . ", " : "")
+            . (null !== $model->getClient() ? " client = " . $model->getClient() . ", " : "")
+            . (null !== $model->getOld_ref() ? " old_ref = " . $model->getOld_ref() . ", " : "");
+        $query = substr($query, 0, strlen($query)-2); //remove last coma
+        $query .= " WHERE id_$this->table_name = $id";
+        return $this->executeQuery($query);
     }
     
     public function getByCode($family, $line, $sex, $variant) {

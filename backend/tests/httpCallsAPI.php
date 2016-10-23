@@ -87,5 +87,24 @@ class UrlApi {
             }
             return true;
         }
+        
+        public static function getMethodName($method) {
+            $res = "UNDEFINED";
+            switch ($method) {
+                case UrlApi::URL_METHOD_GET:
+                    $res = "GET";
+                    break;
+                case UrlApi::URL_METHOD_POST:
+                    $res = "POST";
+                    break;
+                case UrlApi::URL_METHOD_PUT:
+                    $res = "PUT";
+                    break;
+                case UrlApi::URL_METHOD_DELETE:
+                    $res = "DELETE";
+                    break;
+            }
+            return $res;
+        }
 }
 ?>

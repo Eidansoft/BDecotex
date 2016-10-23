@@ -46,14 +46,16 @@ class ModelView extends BDecotexView{
                     break;
                 case ModelView::CREATE_MODEL:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->createModel($data['family'], $data['line'], $data['sex'], $data['variant']);
+                    $model = new ModelDTO($data);
+                    $res = $this->controller->createModel($model);
                     break;
                 case ModelView::DELETE_MODEL:
                     $this->controller->delete($vars['id']);
                     break;
                 case ModelView::UPDATE_MODEL:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->updateModel($vars['id'], $data['attribute'], $data['value']);
+                    $model = new ModelDTO($data);
+                    $res = $this->controller->updateModel($vars['id'], $model);
                     break;
             }
             parent::returnSuccess($res);

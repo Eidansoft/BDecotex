@@ -88,7 +88,7 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
         
         if($this->debug){
             echo "========================================\n";
-            echo "Method: $method\n";
+            echo "Method: " . UrlApi::getMethodName($method) . "\n";
             echo "PATH: $url\n";
             echo "PARAMS: ";
             var_dump($params);

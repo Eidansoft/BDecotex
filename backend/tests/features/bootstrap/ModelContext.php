@@ -97,9 +97,9 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         if($family && $line && $sex){
             $method = UrlApi::URL_METHOD_POST;
             $url = $this->url;
-            $modelData = ["family"  => ($family=="null" ? "" : $family),
-                          "line"    => ($line=="null" ? "" : $line),
-                          "sex"     => ($sex=="null" ? "" : $sex),
+            $modelData = ["xid_family"  => ($family=="null" ? "" : $family),
+                          "xid_line"    => ($line=="null" ? "" : $line),
+                          "xid_sex"     => ($sex=="null" ? "" : $sex),
                           "variant" => ($variante=="null" ? "" : $variante)];
             $this->callUrl($method, $url, $modelData);
         } else {
