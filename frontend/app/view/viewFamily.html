@@ -2,7 +2,7 @@
     <h1>Familia</h1>
     <div id="bdtx-family-list">
         <ul>
-            <li data-ng-repeat="family in data.familyList" data-ng-click="data.selectFamily(family)">{{family.id_family}}: {{family.description}}</li>
+            <li data-ng-repeat="family in data.familyList" data-ng-click="data.selectFamily(family)">{{family.code}}: {{family.description}}</li>
         </ul>
     </div>
     <div id="bdtx-family-edit" data-ng-show="data.familySelected != undefined">
