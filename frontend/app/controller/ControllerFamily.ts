@@ -28,11 +28,17 @@ class ControllerFamily
 
     protected configureGridApi (gridApi) {
         //set gridApi to controller property
-        this.gridApi = gridApi;
-        gridApi.selection.on.rowSelectionChanged(null, this.selectFamily);
+//        this.gridApi = gridApi;
+        console.log(gridApi.selection.getSelectedRows());
+//        gridApi.selection.on.rowSelectionChanged(null, (row)=>{
+//            console.log(row.entity);
+//            this.selectFamily(row.entity);
+//            alert("selected");
+//        });
     }
         
     protected selectFamily(family: ModelFamily){
+        alert("select family");
         // Clone the object to edit to avoid modify the original
         this.familySelected = (JSON.parse(JSON.stringify(family)));
     }
