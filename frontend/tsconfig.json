@@ -7,6 +7,7 @@
     "files": [
         "typings/angularjs/angular.d.ts",
         "typings/angularjs/angular-route.d.ts",
+        "typings/ui-grid/ui-grid.d.ts",
         "app/BDecotexApp.ts",
         "app/controller/ControllerBDecotex.ts",
         "app/controller/ControllerFamily.ts",

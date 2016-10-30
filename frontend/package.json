@@ -5,7 +5,7 @@
   "main": "index.htm",
   "scripts": {
     "test": "test",
-    "preinstall": "tsd install angular && tsd install angular-route",
+    "preinstall": "tsd install angular && tsd install angular-route && tsd install ui-grid",
     "clean": "rm -rf node_modules && rm -rf typings && rm -rf target",
     "precompile": "rm -rf target",
     "compile": "tsc"
