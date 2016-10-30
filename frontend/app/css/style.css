@@ -1,3 +1,17 @@
+/*
+Colores https://color.hailpixel.com
+Fondo oscuro #22220B
+Letra clara #FEFBFB
+Fondo cabecera #7344C1
+Errores #B43C48
+Mensajes #73D071
+
+*/
+/* GLOBALS */
+html, body, #bdtx-app, .fullHeight {
+    height: 100%;
+}
+
 #bdtx-screen-waiting {
     position: absolute;
     top: 0px;
@@ -10,4 +24,30 @@
 #bdtx-family .datatable {
     width: 350px;
     height: 200px;
+}
+
+/* HEADER */
+#bdtx-header {
+    background-color: #22220B;
+}
+/* MENU */
+#bdtx-menu {
+    height: 100%;
+    /*background-color: #7344C1;*/
+    text-decoration: #FEFBFB;
+}
+
+/* WINDOW */
+#bdtx-window ul li {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+/* FOOTER */
+#bdtx-footer {
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
 }

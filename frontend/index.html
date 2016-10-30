@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="node_modules/angular-ui-grid/ui-grid.css">
         <link rel="stylesheet" type="text/css" href="./app/css/style.css">
         <title>BDecotex</title>
         <meta charset="UTF-8">
     </head>
-    <body data-ng-app="bdecotex">
-        <div data-ng-controller="ControllerBDecotex as data">
-            <ul>
-                <li><a href="#family">Familia</a></li>
-                <li><a href="#line">L&iacute;nea</a></li>
-                <li><a href="#sex">Sexo</a></li>
-                <li><a href="#model">Modelo</a></li>
-            </ul>
-            <input type="button" data-ng-click="data.test()" value="Test" />
+    <body>
+        <div id="bdtx-app" class="container-fluid" data-ng-app="bdecotex" data-ng-controller="ControllerBDecotex as bdtx">
+            <div id="bdtx-header" class="row">
+                <img src="app/imgs/logotipo-necotex.png" alt="Necotex logo"/>
+            </div>
+            <div class="row fullHeight">
+                <div id="bdtx-menu" class="col-md-2">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#family">Familia</a></li>
+                        <li><a href="#line">L&iacute;nea</a></li>
+                        <li><a href="#sex">Sexo</a></li>
+                        <li><a href="#model">Modelo</a></li>
+                    </ul>
+                </div>
+                <div id="bdtx-window" class="col-md-10 fullHeight">
+                    <div data-ng-view class="fullHeight"></div>
+                    <div id="bdtx-footer">Copyright Alejandro Lorente</div>
+                </div>
+            </div>
+            <div data-directive-screen></div>
         </div>
         
-        <div data-ng-view></div>
-        
-        <div data-directive-screen></div>
-
 	<script src="node_modules/angular/angular.js"></script>
         <script src="node_modules/angular-route/angular-route.js"></script>
         <script src="node_modules/angular-ui-grid/ui-grid.js"></script>
