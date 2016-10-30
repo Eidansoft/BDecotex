@@ -26,15 +26,11 @@ class ControllerFamily
         });
     }
 
-    protected configureGridApi(gridApi: uiGrid.IGridApi) {
+    protected configureGridApi (gridApi) {
         //set gridApi to controller property
-//        this.gridApi = gridApi;
-        console.log(gridApi.selection.getSelectedRows());
-//        gridApi.selection.on.rowSelectionChanged(null, (row)=>{
-//            console.log(row.entity);
-//            this.selectFamily(row.entity);
-//            alert("selected");
-//        });
+        gridApi.selection.on.rowSelectionChanged(null, (row)=>{
+            alert("selected:" + row.entity.description);
+        });
     }
         
     protected selectFamily(family: ModelFamily){
