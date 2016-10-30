@@ -26,7 +26,7 @@ class ControllerFamily
         });
     }
 
-    protected configureGridApi (gridApi) {
+    protected configureGridApi(gridApi: uiGrid.IGridApi) {
         //set gridApi to controller property
 //        this.gridApi = gridApi;
         console.log(gridApi.selection.getSelectedRows());
