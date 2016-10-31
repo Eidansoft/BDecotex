@@ -1,12 +1,28 @@
 <div id="bdtx-family">
     <h1>Familia</h1>
+    
     <div id="bdtx-family-list" data-ng-show="data.familySelected == undefined">
         <div data-ui-grid="data.gridOptions" data-ui-grid-selection class="datatable"></div>
     </div>
+    
     <div id="bdtx-family-edit" data-ng-show="data.familySelected != undefined">
-        <div><label for="id">ID</label><input id="id" type="text" data-ng-model="data.familySelected.id_family"/></div>
-        <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-model="data.familySelected.description"/></div>
-        <div><label for="code">C&oacute;digo</label><input id="code" type="text" data-ng-model="data.familySelected.code"/></div>
+        <div class="form-group">
+            <label for="code">C&oacute;digo</label>
+            <input id="code"
+                   class="form-control"
+                   type="text"
+                   placeholder="C&oacute;digo de la familia"
+                   data-ng-model="data.familySelected.code"/>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripci&oacute;n</label>
+            <input id="description"
+                   class="form-control"
+                   type="text"
+                   placeholder="Nombre de la familia"
+                   data-ng-model="data.familySelected.description"/>
+        </div>
+    </div>
     
     <div id="bdtx-buttons">
         <button data-ng-click="data.createNewFamily()" data-ng-show="data.familySelected == undefined" class="btn btn-primary">Nueva familia</button>
