@@ -82,6 +82,7 @@ class ControllerFamily
                 }
                 return res;
             });
+            this.gridOptions.data = this.familyList;
             console.log("Familia eliminada");
             this.familySelected = undefined;
         });
