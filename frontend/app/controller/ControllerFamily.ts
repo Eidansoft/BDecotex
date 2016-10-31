@@ -1,23 +1,24 @@
 class ControllerFamily
 {
-    static dependencies = ['ServiceFamilyBackend', ControllerFamily];
+    static dependencies = ['ServiceFamilyBackend', '$scope', ControllerFamily];
     private backendHandler: ServiceFamilyBackend;
     private familyList: Array<ModelFamily>;
     private familySelected: ModelFamily;
     private gridOptions: any;
-    private gridApi: any;
+    private gridApi: uiGrid.IGridApi;
     
-    constructor(serviceBackend: ServiceFamilyBackend) {
+    constructor(serviceBackend: ServiceFamilyBackend, scope: ng.IScope) {
         this.backendHandler = serviceBackend;
         
         this.gridOptions = {
-            columnDefs: [{ field: 'description' }, { field: 'code' }],
+            columnDefs: [{ field: 'code', width: 100 }, { field: 'description' }],
             enableRowSelection: true,
             multiSelect: false,
-            enableRowHeaderSelection: false //not checkbox
+            enableRowHeaderSelection: false, //not checkbox
+            onRegisterApi: (api: uiGrid.IGridApi) => {
+                this.gridApi = api;
+            }
         }
-        
-        this.gridOptions.onRegisterApi = this.configureGridApi;
         
         this.backendHandler.getAllFamilies((familiesArray)=>{
             this.familyList = <Array<ModelFamily>>familiesArray;
@@ -26,15 +27,22 @@ class ControllerFamily
         });
     }
 
-    protected configureGridApi (gridApi) {
-        //set gridApi to controller property
-        gridApi.selection.on.rowSelectionChanged(null, (row)=>{
-            alert("selected:" + row.entity.description);
-        });
+    protected editFamily() {
+        let selections = this.gridApi.selection.getSelectedGridRows();
+        if (selections.length === 1){
+            this.selectFamily(selections[0].entity);
+        } else {
+            alert("Por favor selecciona una familia");
+        }
     }
-        
+    
+//    protected configureGridApi(gridApi: uiGrid.IGridApi) {
+//        //set gridApi to controller property
+//        this.gridApi = gridApi;
+////        gridApi.selection.on.rowSelectionChanged(null, this.selectFamily);
+//    }
+     
     protected selectFamily(family: ModelFamily){
-        alert("select family");
         // Clone the object to edit to avoid modify the original
         this.familySelected = (JSON.parse(JSON.stringify(family)));
     }
