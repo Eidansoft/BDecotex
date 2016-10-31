@@ -44,6 +44,10 @@ html, body, #bdtx-app, .fullHeight {
     color: blue;
 }
 
+#bdtx-buttons {
+    margin-top: 20px;
+}
+
 /* FOOTER */
 #bdtx-footer {
     position: fixed;

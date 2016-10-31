@@ -7,10 +7,12 @@
         <div><label for="id">ID</label><input id="id" type="text" data-ng-model="data.familySelected.id_family"/></div>
         <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-model="data.familySelected.description"/></div>
         <div><label for="code">C&oacute;digo</label><input id="code" type="text" data-ng-model="data.familySelected.code"/></div>
+    
+    <div id="bdtx-buttons">
+        <button data-ng-click="data.createNewFamily()" data-ng-show="data.familySelected == undefined" class="btn btn-primary">Nueva familia</button>
+        <button data-ng-click="data.editFamily()" data-ng-show="data.familySelected == undefined" class="btn btn-primary">Modificar</button>
+        <button data-ng-click="data.saveFamily()" data-ng-show="data.familySelected != undefined" class="btn btn-primary">Guardar</button>
+        <button data-ng-click="data.deleteFamily()" data-ng-show="data.familySelected.id_family != undefined" class="btn btn-danger">Eliminar</button>
+        <button data-ng-click="data.familySelected = undefined" data-ng-show="data.familySelected != undefined" class="btn btn-secondary">Cancelar</button>
     </div>
-    <input type="button" value="Nueva familia" data-ng-click="data.createNewFamily()" data-ng-show="data.familySelected == undefined" class="btn btn-primary"/>
-    <input type="button" value="Modificar" data-ng-click="data.editFamily()" data-ng-show="data.familySelected == undefined"/>
-    <input type="button" value="Guardar" data-ng-click="data.saveFamily()" data-ng-show="data.familySelected != undefined" class="btn btn-primary"/>
-    <input type="button" value="Eliminar" data-ng-click="data.deleteFamily()" data-ng-show="data.familySelected.id_family != undefined" class="btn btn-danger"/>
-    <input type="button" value="Cancelar" data-ng-click="data.familySelected = undefined" data-ng-show="data.familySelected != undefined" class="btn btn-secondary"/>
 </div>
