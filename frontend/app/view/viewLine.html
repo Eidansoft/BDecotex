@@ -1,17 +1,33 @@
 <div id="bdtx-line">
     <h1>L&iacute;nea</h1>
-    <div id="bdtx-line-list">
-        <ul>
-            <li data-ng-repeat="line in data.lineList" data-ng-click="data.selectLine(line)">{{line.id_line}}: {{line.name}}</li>
-        </ul>
+    <div id="bdtx-line-list" data-ng-show="data.lineSelected == undefined">
+        <div data-ui-grid="data.gridOptions" data-ui-grid-selection class="datatable"></div>
     </div>
+    
     <div id="bdtx-line-edit" data-ng-show="data.lineSelected != undefined">
-        <div><label for="id">ID</label><input id="id" type="text" data-ng-model="data.lineSelected.id_line"/></div>
-        <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-model="data.lineSelected.name"/></div>
-        <div><label for="code">C&oacute;digo</label><input id="code" type="text" data-ng-model="data.lineSelected.code"/></div>
+        <div class="form-group">
+            <label for="code">C&oacute;digo</label>
+            <input id="code"
+                   class="form-control"
+                   type="text"
+                   placeholder="C&oacute;digo de la l&iacute;nea"
+                   data-ng-model="data.lineSelected.code"/>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripci&oacute;n</label>
+            <input id="description"
+                   class="form-control"
+                   type="text"
+                   placeholder="Nombre de la l&iacute;nea"
+                   data-ng-model="data.lineSelected.name"/>
+        </div>
     </div>
-    <input type="button" value="Nueva linea" data-ng-click="data.createNewLine()" data-ng-show="data.lineSelected == undefined"/>
-    <input type="button" value="Guardar" data-ng-click="data.saveLine()" data-ng-show="data.lineSelected != undefined"/>
-    <input type="button" value="Eliminar" data-ng-click="data.deleteLine()" data-ng-show="data.lineSelected.id_line != undefined"/>
-    <input type="button" value="Cancelar" data-ng-click="data.lineSelected = undefined" data-ng-show="data.lineSelected != undefined"/>
+    
+    <div id="bdtx-buttons">
+        <button data-ng-click="data.createNewLine()" data-ng-show="data.lineSelected == undefined" class="btn btn-primary">Nueva linea</button>
+        <button data-ng-click="data.editFamily()" data-ng-show="data.lineSelected == undefined" class="btn btn-primary">Modificar</button>
+        <button data-ng-click="data.saveLine()" data-ng-show="data.lineSelected != undefined" class="btn btn-primary">Guardar</button>
+        <button data-ng-click="data.deleteLine()" data-ng-show="data.lineSelected.id_line != undefined" class="btn btn-danger">Eliminar</button>
+        <button data-ng-click="data.lineSelected = undefined" data-ng-show="data.lineSelected != undefined" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
