@@ -1,4 +1,4 @@
-class ModelModel
+class DtoModel
 {
     public id_model: number;
     public xid_family: number;
@@ -17,7 +17,7 @@ class ModelModel
     public client: string;
     public old_ref: string;
     
-    constructor(idFamily?:number, idLine?:number, idSex?:number, variant?:number){
+    constructor(idFamily?: number, idLine?:number, idSex?:number, variant?:number){
         if (idFamily != undefined){
             this.xid_family = idFamily;
         }
@@ -34,5 +34,4 @@ class ModelModel
             this.variant = variant;
         }
     }
-    
 }
