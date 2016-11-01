@@ -1,30 +1,139 @@
 <div id="bdtx-model">
     <h1>Modelo</h1>
-    <div id="bdtx-model-list">
-        <ul>
-            <li data-ng-repeat="model in data.modelList" data-ng-click="data.selectModel(model)">{{model.id_model}}: {{model.description}}</li>
-        </ul>
+    
+    <div id="bdtx-model-list" data-ng-show="data.modelSelected == undefined">
+        <div data-ui-grid="data.gridOptions" data-ui-grid-selection class="datatable"></div>
     </div>
-    <div id="bdtx-model-edit" data-ng-show="data.modelSelected != undefined">
-        <div><label for="id">ID</label><input id="id" type="text" data-ng-model="data.modelSelected.id_model"/></div>
-        <div><label for="xid_family">ID Familia</label><input id="xid_family" type="text" data-ng-model="data.modelSelected.xid_family"/></div>
-        <div><label for="xid_line">ID Linea</label><input id="xid_line" type="text" data-ng-model="data.modelSelected.xid_line"/></div>
-        <div><label for="xid_sex">ID Sexo</label><input id="xid_sex" type="text" data-ng-model="data.modelSelected.xid_sex"/></div>
-        <div><label for="variant">Variante</label><input id="variant" type="text" data-ng-model="data.modelSelected.variant"/></div>
-        <div><label for="description">Descripci&oacute;n</label><input id="description" type="text" data-ng-model="data.modelSelected.description"/></div>
-        <div><label for="front">Frontal</label><input id="front" type="text" data-ng-model="data.modelSelected.front"/></div>
-        <div><label for="back">Trasero</label><input id="back" type="text" data-ng-model="data.modelSelected.back"/></div>
-        <div><label for="neck">Cuello</label><input id="neck" type="text" data-ng-model="data.modelSelected.neck"/></div>
-        <div><label for="arm">Brazo</label><input id="arm" type="text" data-ng-model="data.modelSelected.arm"/></div>
-        <div><label for="observations">Observaciones</label><input id="observations" type="text" data-ng-model="data.modelSelected.observations"/></div>
-        <div><label for="model_number_parent">Modelo padre</label><input id="model_number_parent" type="text" data-ng-model="data.modelSelected.model_number_parent"/></div>
-        <div><label for="xid_model_parent">ID Modelo padre</label><input id="xid_model_parent" type="text" data-ng-model="data.modelSelected.xid_model_parent"/></div>
-        <div><label for="creation_date">Fecha creacion</label><input id="creation_date" type="text" data-ng-model="data.modelSelected.creation_date"/></div>
-        <div><label for="client">Cliente</label><input id="client" type="text" data-ng-model="data.modelSelected.client"/></div>
-        <div><label for="code">C&oacute;digo antiguo</label><input id="code" type="text" data-ng-model="data.modelSelected.old_ref"/></div>
+    
+    <div id="bdtx-model-edit" class="container" data-ng-show="data.modelSelected != undefined">
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="xid_family">ID Familia</label>
+                <input id="xid_family"
+                       class="form-control"
+                       type="text"
+                       placeholder="C&oacute;digo de la familia"
+                       data-ng-model="data.modelSelected.xid_family"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="xid_line">ID Linea</label>
+                <input id="xid_line"
+                       class="form-control"
+                       type="text"
+                       placeholder="C&oacute;digo de la l&iacute;nea"
+                       data-ng-model="data.modelSelected.xid_line"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="xid_sex">ID Sexo</label>
+                <input id="xid_sex"
+                       class="form-control"
+                       type="text"
+                       placeholder="C&oacute;digo del sexo"
+                       data-ng-model="data.modelSelected.xid_sex"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="variant">Variante</label>
+                <input id="variant"
+                       class="form-control"
+                       type="text"
+                       placeholder="Variante del modelo"
+                       data-ng-model="data.modelSelected.variant"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripci&oacute;n</label>
+            <input id="description"
+                   class="form-control"
+                   type="text"
+                   placeholder="Descripci&oacute;n del modelo"
+                   data-ng-model="data.modelSelected.description"/>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="front">Frontal</label>
+                <input id="front"
+                       class="form-control"
+                       type="text"
+                       placeholder="Frontal del modelo"
+                       data-ng-model="data.modelSelected.front"/>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="back">Trasero</label>
+                <input id="back"
+                       class="form-control"
+                       type="text"
+                       placeholder="Trasero del modelo"
+                       data-ng-model="data.modelSelected.back"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="neck">Cuello</label>
+                <input id="neck"
+                       class="form-control"
+                       type="text"
+                       placeholder="Cuello del modelo"
+                       data-ng-model="data.modelSelected.neck"/>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="arm">Brazo</label>
+                <input id="arm"
+                       class="form-control"
+                       type="text"
+                       placeholder="Brazo del modelo"
+                       data-ng-model="data.modelSelected.arm"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="observations">Observaciones</label>
+            <textarea id="observations"
+                   class="form-control"
+                   type="text"
+                   placeholder="Observaciones sobre el modelo"
+                   row="4"
+                   data-ng-model="data.modelSelected.observations"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="client">Cliente</label>
+            <input id="client"
+                   class="form-control"
+                   type="text"
+                   placeholder="Cliente para el que se realiz&oacute; este modelo"
+                   data-ng-model="data.modelSelected.client"/>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label for="model_number_parent">Modelo padre</label>
+                <input id="model_number_parent"
+                       class="form-control"
+                       type="text"
+                       placeholder="Referencia al modelo padre"
+                       data-ng-model="data.modelSelected.model_number_parent"/>
+            </div>
+            <div class="col-md-4 form-group">
+                <label for="xid_model_parent">ID Modelo padre</label>
+                <input id="xid_model_parent"
+                       class="form-control"
+                       type="text"
+                       placeholder="C&oacute;digo del modelo padre"
+                       data-ng-model="data.modelSelected.xid_model_parent"/>
+            </div>
+            <div class="col-md-4 form-group">
+                <label for="code">C&oacute;digo antiguo</label>
+                <input id="code"
+                       class="form-control"
+                       type="text"
+                       placeholder="Antigua referencia"
+                       data-ng-model="data.modelSelected.old_ref"/>
+            </div>
+        </div>
     </div>
-    <input type="button" value="Nuevo modelo" data-ng-click="data.createNewModel()" data-ng-show="data.modelSelected == undefined"/>
-    <input type="button" value="Guardar" data-ng-click="data.saveModel()" data-ng-show="data.modelSelected != undefined"/>
-    <input type="button" value="Eliminar" data-ng-click="data.deleteModel()" data-ng-show="data.modelSelected.id_model != undefined"/>
-    <input type="button" value="Cancelar" data-ng-click="data.modelSelected = undefined" data-ng-show="data.modelSelected != undefined"/>
+    
+    <div id="bdtx-buttons">
+        <button data-ng-click="data.createNewModel()" data-ng-show="data.modelSelected == undefined" class="btn btn-primary">Nuevo modelo</button>
+        <button data-ng-click="data.editModel()" data-ng-show="data.modelSelected == undefined" class="btn btn-primary">Modificar</button>
+        <button data-ng-click="data.saveModel()" data-ng-show="data.modelSelected != undefined" class="btn btn-primary">Guardar</button>
+        <button data-ng-click="data.deleteModel()" data-ng-show="data.modelSelected.id_model != undefined" class="btn btn-danger">Eliminar</button>
+        <button data-ng-click="data.modelSelected = undefined" data-ng-show="data.modelSelected != undefined" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
