@@ -1,13 +1,13 @@
 class ControllerFamily
 {
-    static dependencies = ['ServiceFamilyBackend', '$scope', ControllerFamily];
+    static dependencies = ['ServiceFamilyBackend', ControllerFamily];
     private backendHandler: ServiceFamilyBackend;
     private familyList: Array<ModelFamily>;
     private familySelected: ModelFamily;
     private gridOptions: any;
     private gridApi: uiGrid.IGridApi;
     
-    constructor(serviceBackend: ServiceFamilyBackend, scope: ng.IScope) {
+    constructor(serviceBackend: ServiceFamilyBackend) {
         this.backendHandler = serviceBackend;
         
         this.gridOptions = {
@@ -35,13 +35,7 @@ class ControllerFamily
             alert("Por favor selecciona una familia");
         }
     }
-    
-//    protected configureGridApi(gridApi: uiGrid.IGridApi) {
-//        //set gridApi to controller property
-//        this.gridApi = gridApi;
-////        gridApi.selection.on.rowSelectionChanged(null, this.selectFamily);
-//    }
-     
+
     protected selectFamily(family: ModelFamily){
         // Clone the object to edit to avoid modify the original
         this.familySelected = (JSON.parse(JSON.stringify(family)));
