@@ -31,7 +31,8 @@ let bdecotexApp = angular.module('bdecotex',  [
     'ngRoute',
     'PubSub',
     'ui.grid',
-    'ui.grid.selection'
+    'ui.grid.selection',
+    'ui.select'
 //        require('angular-ui-router'),
 //        require('angular-animate'),
 //        require('angular-ui-bootstrap'),

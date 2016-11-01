@@ -15,7 +15,8 @@
     "angular-route": "1.5.8",
     "angular-PubSub": "1.0.0",
     "bootstrap": "3.3.7",
-    "angular-ui-grid": ""
+    "angular-ui-grid": "3.2.9",
+    "ui-select": "0.19.6"
   },
   "devDependencies": {
   },
