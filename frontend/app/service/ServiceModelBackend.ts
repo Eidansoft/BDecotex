@@ -13,7 +13,7 @@ class ServiceModelBackend extends ServiceBackend
         var req = {
             method: 'POST',
             url: this.backendPath + this.modelPath,
-            data: model
+            data: model.getDto()
         }
 
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
@@ -34,7 +34,7 @@ class ServiceModelBackend extends ServiceBackend
         var req = {
             method: 'PUT',
             url: this.backendPath + this.modelPath + '/' + model.id_model,
-            data: model
+            data: model.getDto()
         }
 
         this.processHttpRequest(req, onSuccessResult, onErrorResult);

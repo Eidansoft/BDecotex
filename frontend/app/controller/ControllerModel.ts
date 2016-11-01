@@ -1,15 +1,31 @@
 class ControllerModel
 {
-    static dependencies = ['ServiceModelBackend', ControllerModel];
-    private backendHandler: ServiceModelBackend;
-    private modelList: Array<ModelModel>;
+    static dependencies = ['ServiceModelBackend',
+                           'ServiceFamilyBackend',
+                           'ServiceLineBackend',
+                           'ServiceSexBackend',
+                           ControllerModel];
+    private modelHandler: ServiceModelBackend;
+    private familyHandler: ServiceFamilyBackend;
+    private lineHandler: ServiceLineBackend;
+    private sexHandler: ServiceSexBackend;
+    private modelList: Array<DtoModel>;
+    private familyList: Array<ModelFamily>;
+    private lineList: Array<ModelLine>;
+    private sexList: Array<ModelSex>;
     private modelSelected: ModelModel;
-    private gridOptions: any;
+    private gridOptions: uiGrid.IGridOptions;
     private gridApi: uiGrid.IGridApi;
     
-    constructor(serviceBakend: ServiceModelBackend)
+    constructor(modelBackend: ServiceModelBackend,
+                familyBackend: ServiceFamilyBackend,
+                lineBackend: ServiceLineBackend,
+                sexBackend: ServiceSexBackend)
     {
-        this.backendHandler = serviceBakend;
+        this.modelHandler = modelBackend;
+        this.familyHandler = familyBackend;
+        this.lineHandler = lineBackend;
+        this.sexHandler = sexBackend;
         
         this.gridOptions = {
             columnDefs: [
@@ -23,25 +39,51 @@ class ControllerModel
             }
         }
         
-        this.backendHandler.getAllModel((modelArray)=>{
-            this.modelList = <Array<ModelModel>>modelArray;
+        this.modelHandler.getAllModel((modelArray: Array<DtoModel>)=>{
+            this.modelList = modelArray;
             this.gridOptions.data = this.modelList;
             console.log("Modelos recibidos");
+        });
+        
+        this.familyHandler.getAllFamilies((familiesArray: Array<ModelFamily>)=>{
+            this.familyList = familiesArray;
+        });
+        
+        this.lineHandler.getAllLines((linesArray: Array<ModelLine>)=>{
+            this.lineList = linesArray;
+        });
+        
+        this.sexHandler.getAllSex((sexArray: Array<ModelSex>)=>{
+            this.sexList = sexArray;
         });
     }
 
     protected editModel() {
         let selections = this.gridApi.selection.getSelectedGridRows();
         if (selections.length === 1){
-            this.selectModel(selections[0].entity);
+            let dto2edit: DtoModel = selections[0].entity;
+            this.modelSelected = this.getModelModel(dto2edit);
         } else {
             alert("Por favor selecciona un modelo");
         }
     }
     
-    protected selectModel(model: ModelModel){
-        // Clone the object to edit to avoid modify the original
-        this.modelSelected = (JSON.parse(JSON.stringify(model)));
+    protected getModelModel(model: DtoModel): ModelModel{
+        // Clone the object to edit in order to avoid modify the original at the view
+        let res: ModelModel = new ModelModel(model);
+        //fulfill family
+        this.familyHandler.getFamily(model.xid_family, (family: ModelFamily)=>{
+            res.family = family;
+        });
+        //fulfill line
+        this.lineHandler.getLine(model.xid_line, (line: ModelLine)=>{
+            res.line = line;
+        });
+        //fulfill sex
+        this.sexHandler.getSex(model.xid_sex, (sex: ModelSex)=>{
+            res.sex = sex;
+        });
+        return res;
     }
     
     protected createNewModel(){
@@ -50,38 +92,19 @@ class ControllerModel
     
     protected saveModel(){
         if (this.modelSelected.id_model != undefined){
-            this.backendHandler.updateModel(this.modelSelected, ()=>{
-                this.modelList = this.modelList.map(model=>{
-                    let res = model;
-                    if (model.id_model == this.modelSelected.id_model){
-                        res = this.modelSelected;
-                    }
-                    return res;
-                });
-                console.log("Modelo editado");
-                this.modelSelected = undefined;
+            this.modelHandler.updateModel(this.modelSelected, ()=>{
+                window.location.reload();
             });
         } else {
-            this.backendHandler.createNewModel(this.modelSelected, (createdModel)=>{
-                this.modelList.push(<ModelModel>createdModel);
-                console.log("Modelo nuevo creado");
-                this.modelSelected = undefined;
+            this.modelHandler.createNewModel(this.modelSelected, (createdModel: DtoModel)=>{
+                window.location.reload();
             });
         }
     }
     
     protected deleteModel(){
-        this.backendHandler.deleteModelById(this.modelSelected.id_model, ()=>{
-            this.modelList = this.modelList.filter(model=>{
-                let res = true;
-                if (model.id_model == this.modelSelected.id_model){
-                    res = false;
-                }
-                return res;
-            });
-            this.gridOptions.data = this.modelList;
-            console.log("Modelo eliminado");
-            this.modelSelected = undefined;
+        this.modelHandler.deleteModelById(this.modelSelected.id_model, ()=>{
+                window.location.reload();
         });
     }
 }

@@ -5,31 +5,43 @@
         <div data-ui-grid="data.gridOptions" data-ui-grid-selection class="datatable"></div>
     </div>
     
-    <div id="bdtx-model-edit" class="container" data-ng-show="data.modelSelected != undefined">
+    <div id="bdtx-model-edit" class="container" data-ng-show="data.modelSelected != undefined"> 
         <div class="row">
             <div class="col-md-3 form-group">
-                <label for="xid_family">ID Familia</label>
-                <input id="xid_family"
-                       class="form-control"
-                       type="text"
-                       placeholder="C&oacute;digo de la familia"
-                       data-ng-model="data.modelSelected.xid_family"/>
+                <label for="xid_family">Familia</label>
+                <ui-select id="xid_family"
+                           ng-model="data.modelSelected.family" 
+                           theme="bootstrap" 
+                           title="Selecciona una familia ...">
+                    <ui-select-match placeholder="Seleciona una familia...">{{$select.selected.description}}</ui-select-match>
+                    <ui-select-choices repeat="family in data.familyList">
+                        <span ng-bind="family.description"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
             <div class="col-md-3 form-group">
-                <label for="xid_line">ID Linea</label>
-                <input id="xid_line"
-                       class="form-control"
-                       type="text"
-                       placeholder="C&oacute;digo de la l&iacute;nea"
-                       data-ng-model="data.modelSelected.xid_line"/>
+                <label for="xid_line">L&iacute;nea</label>
+                <ui-select id="xid_line"
+                           ng-model="data.modelSelected.line" 
+                           theme="bootstrap" 
+                           title="Selecciona una l&iacute;nea ...">
+                    <ui-select-match placeholder="Seleciona una l&iacute;nea...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="line in data.lineList">
+                        <span ng-bind="line.name"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
             <div class="col-md-3 form-group">
-                <label for="xid_sex">ID Sexo</label>
-                <input id="xid_sex"
-                       class="form-control"
-                       type="text"
-                       placeholder="C&oacute;digo del sexo"
-                       data-ng-model="data.modelSelected.xid_sex"/>
+                <label for="xid_sex">Sexo</label>
+                <ui-select id="xid_sex"
+                           ng-model="data.modelSelected.sex" 
+                           theme="bootstrap" 
+                           title="Selecciona el sexo ...">
+                    <ui-select-match placeholder="Seleciona el sexo...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="sex in data.sexList">
+                        <span ng-bind="sex.name"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
             <div class="col-md-3 form-group">
                 <label for="variant">Variante</label>
