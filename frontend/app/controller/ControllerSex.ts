@@ -77,6 +77,7 @@ class ControllerSex
                 }
                 return res;
             });
+            this.gridOptions.data = this.sexList;
             console.log("Sexo eliminado");
             this.sexSelected = undefined;
         });
