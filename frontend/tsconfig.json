@@ -23,6 +23,7 @@
         "app/model/ModelLine.ts",
         "app/model/ModelSex.ts",
         "app/model/ModelModel.ts",
-        "app/directives/ScreenDirective.ts"
+        "app/directives/ScreenDirective.ts",
+        "app/dto/DtoModel.ts"
     ]
 }
