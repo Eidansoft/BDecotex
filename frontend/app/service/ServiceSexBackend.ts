@@ -19,6 +19,16 @@ class ServiceSexBackend extends ServiceBackend
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
+    public getSex(id_sex:number, onSuccessResult: Function, onErrorResult?: Function): void
+    {
+        var req = {
+            method: 'GET',
+            url: this.backendPath + this.sexPath + '/' + id_sex
+        }
+
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
+    }
+    
     public getAllSex(onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {

@@ -19,6 +19,16 @@ class ServiceLineBackend extends ServiceBackend
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
+    public getLine(id_line:number, onSuccessResult: Function, onErrorResult?: Function): void
+    {
+        var req = {
+            method: 'GET',
+            url: this.backendPath + this.linePath + '/' + id_line
+        }
+
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
+    }
+    
     public getAllLines(onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {

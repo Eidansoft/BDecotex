@@ -19,6 +19,16 @@ class ServiceFamilyBackend extends ServiceBackend
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
+    public getFamily(id_family:number, onSuccessResult: Function, onErrorResult?: Function): void
+    {
+        var req = {
+            method: 'GET',
+            url: this.backendPath + this.familyPath + '/' + id_family
+        }
+
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
+    }
+    
     public getAllFamilies(onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {
