@@ -5,6 +5,7 @@ class DtoModel
     public xid_line: number;
     public xid_sex: number;
     public variant: number;
+    public identifier: string;
     public description: string;
     public front: string;
     public back: string;

@@ -29,7 +29,7 @@ class ControllerModel
         
         this.gridOptions = {
             columnDefs: [
-                { field: 'id_model', displayName: 'Codigo', width: 100 },
+                { field: 'identifier', displayName: 'Codigo', width: 100 },
                 { field: 'description', displayName: 'Descripcion' }],
             enableRowSelection: true,
             multiSelect: false,
