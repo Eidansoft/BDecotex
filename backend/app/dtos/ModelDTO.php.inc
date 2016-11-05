@@ -6,7 +6,6 @@ require_once (dirname(__FILE__).'/BDecotexDTO.php.inc');
  * @author alex
  */
 class ModelDTO extends BDecotexDTO {
-//    private $validationRules;
     private $id_model;
     private $xid_family;
     private $xid_line;
@@ -25,8 +24,56 @@ class ModelDTO extends BDecotexDTO {
     private $old_ref;
     
     function __construct($modelArray) {
-//        parent::__construct($this->validationRules);
-//        $this->validate();
+        $sanitizeRules = array(
+            'id_model'              => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'xid_family'            => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'xid_line'              => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'xid_sex'               => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'variant'               => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'description'           => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'front'                 => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'back'                  => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'neck'                  => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'arm'                   => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'observations'          => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'model_number_parent'   => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'xid_model_parent'      => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
+            'creation_date'         => array('filter'    => FILTER_VALIDATE_INT,
+                                             'options'   => array('min_range' => 0, 'max_range' => 4674407370955)),
+            'client'                => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'old_ref'               => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH)
+        );
+        
+        $sanitationAndValidationRules = [
+            BDecotexDTO::SANITIZE_RULE_NAME => $sanitizeRules,
+            'required'      => [['xid_family'], ['xid_line'], ['xid_sex'], ['variant']],
+            'integer'       => [['xid_family'], ['xid_line'], ['xid_sex'], ['variant'], ['xid_model_parent'], ['creation_date']],
+            'lengthMin'      => [['description', 50]],
+            'lengthMax'      => [['description', 250], ['front', 250], ['back', 250],
+                                 ['neck', 250], ['arm', 250], ['observations', 5000],
+                                 ['model_number_parent',50], ['client', 50], ['old_ref', 50]]
+            ];
+
+        parent::__construct($modelArray, $sanitationAndValidationRules);
+        
+    }
+    
+    protected function buildDto($modelArray) {
         
         if (isset($modelArray['id_model'])){
             $this->id_model = $modelArray['id_model'];

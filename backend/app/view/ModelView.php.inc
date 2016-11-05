@@ -61,6 +61,8 @@ class ModelView extends BDecotexView{
             parent::returnSuccess($res);
         } catch (ControllerException $e) {
             $e->throwToClient();
+        } catch (ValidateDtoException $e) {
+            $e->throwToClient();
         }
     }
 
