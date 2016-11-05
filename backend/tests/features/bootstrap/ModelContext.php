@@ -71,64 +71,60 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
      */
     public function elUsuarioCreaUnModeloDeLaFamiliaLineaSexoYVariante($arg1, $arg2, $arg3, $arg4)
     {
-        if ($arg1 == "null"){
-            $family = $arg1;
-        } else {
-            $this->familyContext->elUsuarioSolicitaElListadoDeTodasLasFamilias();
-            $family = $this->familyContext->findFamilyIntoJsonResponse($arg1);
-        }
+        $model = $this->modelData2Array($arg1, $arg2, $arg3, $arg4);
         
-        if ($arg2 == "null"){
-            $line = $arg2;
-        } else {
-            $this->lineContext->elUsuarioSolicitaElListadoDeTodasLasLineas();
-            $line = $this->lineContext->findFamilyIntoJsonResponse($arg2);
-        }
-        
-        if ($arg3 == "null"){
-            $sex = $arg3;
-        } else {
-            $this->sexContext->elUsuarioSolicitaElListadoDeTodosLosSexos();
-            $sex = $this->sexContext->findSexIntoJsonResponse($arg3);
-        }
-        
-        $variante = $arg4;
-        
-        if($family && $line && $sex){
-            $method = UrlApi::URL_METHOD_POST;
-            $url = $this->url;
-            $modelData = ["xid_family"  => ($family=="null" ? "" : $family),
-                          "xid_line"    => ($line=="null" ? "" : $line),
-                          "xid_sex"     => ($sex=="null" ? "" : $sex),
-                          "variant" => ($variante=="null" ? "" : $variante)];
-            $this->callUrl($method, $url, $modelData);
-        } else {
-            throw new Exception("Error at Cucumber Feature Definition. One of provided data (family=$family, line=$line or sex=$sex) is not valid because was not previously created at the system.");
-        }
+        $method = UrlApi::URL_METHOD_POST;
+        $url = $this->url;
+        $modelData = ["xid_family"  => ($model['family']=="null" ? "" : $model['family']),
+                      "xid_line"    => ($model['line']=="null" ? "" : $model['line']),
+                      "xid_sex"     => ($model['sex']=="null" ? "" : $model['sex']),
+                      "variant"     => ($model['variant']=="null" ? "" : $model['variant'])];
+        $this->callUrl($method, $url, $modelData);
     }
-
+    
     /**
-     * @When el usuario modifica el campo :arg1 al valor :arg2
+     * @Given el usuario crea un modelo con los siguientes campos:
      */
-    public function elUsuarioModificaElCampoAlValor($arg1, $arg2)
+    public function elUsuarioCreaUnModeloConLosSiguientesCampos(TableNode $table)
+    {
+        $modelData = $this->tableData2ModelArray($table);
+        
+        $method = UrlApi::URL_METHOD_POST;
+        $url = $this->url;
+        $this->callUrl($method, $url, $modelData);
+    }
+    
+    /**
+     * @When el usuario modifica el modelo previamente creado a familia :arg1, linea :arg2, sexo :arg3 y variante :arg4
+     */
+    public function elUsuarioModificaElModeloPreviamenteCreadoAFamiliaLineaSexoYVariante($arg1, $arg2, $arg3, $arg4)
     {
         $modeloPreviamenteCreado = $this->responseJson;
-        $value = $arg2;
-        if ($arg1 == "xid_family"){
-            $value = $this->familyContext->findFamilyIntoJsonResponse($arg2);
-        } else if ($arg1 == "xid_line"){
-            $value = $this->lineContext->findFamilyIntoJsonResponse($arg2);
-        } else if ($arg1 == "xid_sex"){
-            $value = $this->sexContext->findSexIntoJsonResponse($arg2);
-        }
+        $model = $this->modelData2Array($arg1, $arg2, $arg3, $arg4);
         
         $method = UrlApi::URL_METHOD_PUT;
         $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
-        $modelData = ["attribute"  => ($arg1=="null" ? "" : $arg1),
-                      "value"      => ($arg2=="null" ? "" : $value)];
+        $modelData = ["xid_family"  => ($model['family']=="null" ? "" : $model['family']),
+                      "xid_line"    => ($model['line']=="null" ? "" : $model['line']),
+                      "xid_sex"     => ($model['sex']=="null" ? "" : $model['sex']),
+                      "variant"     => ($model['variant']=="null" ? "" : $model['variant'])];
         $this->callUrl($method, $url, $modelData);
     }
 
+    /**
+     * @When el usuario modifica los siguientes campos:
+     */
+    public function elUsuarioModificaLosSiguientesCampos(TableNode $table)
+    {
+        $modeloPreviamenteCreado = $this->responseJson;
+        
+        $modelData = $this->tableData2ModelArray($table);
+        
+        $method = UrlApi::URL_METHOD_PUT;
+        $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
+        $this->callUrl($method, $url, $modelData);
+    }
+    
     /**
      * @When el usuario elimina el modelo creado
      */
@@ -138,17 +134,6 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         $method = UrlApi::URL_METHOD_DELETE;
         $url = $this->url . "/" . $modeloPreviamenteCreado->id_model;
         $this->callUrl($method, $url);
-    }
-    
-    /**
-     * @When el usuario modifica los siguientes campos:
-     */
-    public function elUsuarioModificaLosSiguientesCampos(TableNode $table)
-    {
-        $hash = $table->getHash();
-        foreach ($hash as $row) {
-            $this->elUsuarioModificaElCampoAlValor($row['ATRIBUTO'], $row['VALOR']);
-        }
     }
     
     /**
@@ -195,7 +180,7 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
             $family = $this->familyContext->findFamilyIntoJsonResponse($row['FAMILIA']);
             
             $this->lineContext->elUsuarioSolicitaElListadoDeTodasLasLineas();
-            $line = $this->lineContext->findFamilyIntoJsonResponse($row['LINEA']);
+            $line = $this->lineContext->findLineIntoJsonResponse($row['LINEA']);
             
             $this->sexContext->elUsuarioSolicitaElListadoDeTodosLosSexos();
             $sex = $this->sexContext->findSexIntoJsonResponse($row['SEXO']);
@@ -216,5 +201,68 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
             }
         }
         return FALSE;
+    }
+    
+    private function modelData2Array($familyName, $lineName, $sexName, $variant) {
+        $model = array();
+        if ($familyName == "null"){
+            $model['family'] = $familyName;
+        } else {
+            $this->familyContext->elUsuarioSolicitaElListadoDeTodasLasFamilias();
+            $model['family'] = $this->familyContext->findFamilyIntoJsonResponse($familyName);
+        }
+        
+        if ($lineName == "null"){
+            $model['line'] = $lineName;
+        } else {
+            $this->lineContext->elUsuarioSolicitaElListadoDeTodasLasLineas();
+            $model['line'] = $this->lineContext->findLineIntoJsonResponse($lineName);
+        }
+        
+        if ($sexName == "null"){
+            $model['sex'] = $sexName;
+        } else {
+            $this->sexContext->elUsuarioSolicitaElListadoDeTodosLosSexos();
+            $model['sex'] = $this->sexContext->findSexIntoJsonResponse($sexName);
+        }
+        
+        $model['variant'] = $variant;
+        
+        if( ! ($model['family'] && $model['line'] && $model['sex']) ){
+            throw new Exception("Error at Cucumber Feature Definition. One of provided data (family=".$model['family'].", line=".$model['line']." or sex=".$model['sex'].") is not valid because was not previously created at the system.");
+        }
+        
+        return $model;
+    }
+    
+    private function tableData2ModelArray(TableNode $table) {
+        $modelData = array();
+        
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            if ($row['ATRIBUTO'] == "FAMILY") {
+                $this->familyContext->elUsuarioSolicitaElListadoDeTodasLasFamilias();
+                $modelData['xid_family'] = $this->familyContext->findFamilyIntoJsonResponse($row['VALOR']);
+                if( ! $modelData['xid_family'] ){
+                    throw new Exception("Error at Cucumber Feature Definition. Provided data family=".$row['VALOR']." is not valid because was not previously created at the system.");
+                }
+            } else if ($row['ATRIBUTO'] == "LINE") {
+                $this->lineContext->elUsuarioSolicitaElListadoDeTodasLasLineas();
+                $modelData['xid_line'] = $this->lineContext->findLineIntoJsonResponse($row['VALOR']);
+                if( ! $modelData['xid_line'] ){
+                    throw new Exception("Error at Cucumber Feature Definition. Provided data line=".$row['VALOR']." is not valid because was not previously created at the system.");
+                }
+            } else if ($row['ATRIBUTO'] == "SEX") {
+                $this->sexContext->elUsuarioSolicitaElListadoDeTodosLosSexos();
+                $modelData['xid_sex'] = $this->sexContext->findSexIntoJsonResponse($row['VALOR']);
+                if( ! $modelData['xid_sex'] ){
+                    throw new Exception("Error at Cucumber Feature Definition. Provided data sex=".$row['VALOR']." is not valid because was not previously created at the system.");
+                }
+            } else {
+                $modelData[$row['ATRIBUTO']] = ($row['VALOR']=="null" ? "" : $row['VALOR']);
+            }
+        }
+        
+        return $modelData;
     }
 }
