@@ -84,7 +84,7 @@ class LineContext extends CommonContextFunctions implements Context, SnippetAcce
     {
         $hash = $table->getHash();
         foreach ($hash as $row) {
-            if ( ! $this->findFamilyIntoJsonResponse($row['NOMBRE'], $row['CODIGO']) ){
+            if ( ! $this->findLineIntoJsonResponse($row['NOMBRE'], $row['CODIGO']) ){
                 throw new Exception("Expected line '" . $row['NOMBRE'] . "' with code '" . $row['CODIGO'] . "' not found at server response");
             }
         }
