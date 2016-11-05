@@ -9,8 +9,11 @@ Add virtual host with config add enable overwrite for the project folder to apac
 		Allow from All
     </Directory>
 
-Create libs folder inside app and copy uncompressed "src" folder of fastRoute lib.
-The path for the lib must be app/libs/fastRoute/bootstrap.php
+Create libs folder inside app and copy necessary libs:
+	- Copy uncompressed "src" folder of fastRoute lib. The path for the fastRoute lib must be app/libs/fastRoute/bootstrap.php
+	- Copy unconpressed folder src/Valitron for valitron lib. The path for the valitron lib must be app/libs/valitron/Validator.php
+	- Also you need to copy lang/es.php file into Valitron folder. The path for the language file of valitron lib must be app/libs/valitron/es.php
+
 Create the database "bdecotex" at mysql
 Import at the database the tables:
 	- family
