@@ -10,7 +10,11 @@ class BDecotexController {
     }
 
     function getById($id) {
-        return $this->dao->getById($id);
+        try{
+            return $this->dao->getById($id);
+        } catch (DAOException $e) {
+            throw new ControllerException($e->code, $e->httpCode, $e->message);
+        }
     }
     
     function getAll(){
