@@ -3,6 +3,7 @@ require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 require_once (dirname(__FILE__).'/../controller/LineController.php.inc');
 require_once (dirname(__FILE__).'/../controller/ControllerException.php.inc');
+require_once (dirname(__FILE__).'/../dtos/LineDTO.php.inc');
 
 /**
  * Description of LineView
@@ -46,18 +47,22 @@ class LineView extends BDecotexView{
                     break;
                 case LineView::CREATE_LINE:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->createLine($data['name'], $data['code']);
+                    $line = new LineDTO($data);
+                    $res = $this->controller->createLine($line);
                     break;
                 case LineView::DELETE_LINE:
                     $this->controller->delete($vars['id']);
                     break;
                 case LineView::UPDATE_LINE:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->updateLine($vars['id'], $data['name'], $data['code']);
+                    $line = new LineDTO($data);
+                    $res = $this->controller->updateLine($vars['id'], $line);
                     break;
             }
             parent::returnSuccess($res);
         } catch (ControllerException $e) {
+            $e->throwToClient();
+        } catch (ValidateDtoException $e) {
             $e->throwToClient();
         }
     }
