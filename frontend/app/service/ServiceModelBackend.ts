@@ -19,6 +19,16 @@ class ServiceModelBackend extends ServiceBackend
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
     }
     
+    public getModelById(id_model:number, onSuccessResult: Function, onErrorResult?: Function): void
+    {
+        var req = {
+            method: 'GET',
+            url: this.backendPath + this.modelPath + '/' + id_model
+        }
+
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
+    }
+    
     public getAllModel(onSuccessResult: Function, onErrorResult?: Function): void
     {
         var req = {

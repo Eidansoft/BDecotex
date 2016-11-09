@@ -29,7 +29,7 @@ class ControllerModel
         
         this.gridOptions = {
             columnDefs: [
-                { field: 'identifier', displayName: 'Codigo', width: 100 },
+                { field: 'code', displayName: 'Codigo', width: 100 },
                 { field: 'description', displayName: 'Descripcion' }],
             enableRowSelection: true,
             multiSelect: false,
@@ -62,7 +62,10 @@ class ControllerModel
         let selections = this.gridApi.selection.getSelectedGridRows();
         if (selections.length === 1){
             let dto2edit: DtoModel = selections[0].entity;
-            this.modelSelected = this.getModelModel(dto2edit);
+            this.modelHandler.getModelById(dto2edit.id_model, (model: DtoModel)=>{
+                this.modelSelected = this.getModelModel(model);
+                console.log("Modelo recibido");
+            });
         } else {
             alert("Por favor selecciona un modelo");
         }
