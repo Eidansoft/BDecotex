@@ -3,10 +3,8 @@ require_once (dirname(__FILE__).'/CommonAssertions.php');
 require_once (dirname(__FILE__).'/../../httpCallsAPI.php');
 require_once (dirname(__FILE__).'/../../../app/model/BDecotexDAOImpl.php.inc');
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
 /**
