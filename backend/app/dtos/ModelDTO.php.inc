@@ -62,7 +62,7 @@ class ModelDTO extends BDecotexDTO {
         $sanitationAndValidationRules = [
             BDecotexDTO::SANITIZE_RULE_NAME => $sanitizeRules,
             'required'      => [['xid_family'], ['xid_line'], ['xid_sex'], ['variant']],
-            'integer'       => [['xid_family'], ['xid_line'], ['xid_sex'], ['variant'], ['xid_model_parent'], ['creation_date']],
+            'integer'       => [['id_model'], ['xid_family'], ['xid_line'], ['xid_sex'], ['variant'], ['xid_model_parent'], ['creation_date']],
             'lengthMin'      => [['description', 25]],
             'lengthMax'      => [['description', 250], ['front', 250], ['back', 250],
                                  ['neck', 250], ['arm', 250], ['observations', 5000],
