@@ -47,8 +47,6 @@ class ModelController extends BDecotexController {
     }
 
     function createModel(ModelDTO $model) {
-        //$this->checkModelMandatoryFields($family, $line, $sex, $variant);
-        
         $this->checkModelDoNotExist($model);
         
         $modelWithNewId = $this->dao->create($model);
@@ -61,7 +59,7 @@ class ModelController extends BDecotexController {
     function updateModel($id, ModelDTO $model) {
         
         // Check the model with ID exists, if not it will raise exception
-        $modelToUpdate = $this->getById($id);
+        $this->getById($id);
         
         $this->checkModelDoNotExist($model, $id);
         
