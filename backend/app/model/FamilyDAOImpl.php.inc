@@ -7,20 +7,20 @@ class FamilyDAOImpl extends BDecotexDAOImpl {
         parent::__construct('family');
     }
     
-    public function create($description, $code) {
+    public function create(FamilyDTO $family) {
         return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
                                                     . "description, "
                                                     . "code"
                                                  . ") VALUES ("
-                                                    . "'$description', "
-                                                    . "'$code'"
+                                                    . "'" . $family->getDescription() . "', "
+                                                    . "'" . $family->getCode() . "'"
                                                  . ")");
     }
 
-    public function update($id, $description, $code) {
+    public function update($id, FamilyDTO $family) {
         return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET description = '$description', "
-                                 . " code = '$code'"
+                                 . "SET description = '" . $family->getDescription() . "', "
+                                 . " code = '" . $family->getCode() . "'"
                                  . "WHERE id_$this->table_name = $id");
     }
     

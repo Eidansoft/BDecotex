@@ -15,9 +15,9 @@ Característica: Operaciones CRUD con las familias de productos
         Ejemplos: Tanto el nombre de la familia como el codigo son obligatorios
             |nombre             |cod   |http cod |
             |"familia prueba 1" |"F1"  |200      |
-            |"familia prueba 2" |"null"|404      |
-            |"null"             |"F1"  |404      |
-            |"null"             |"null"|404      |
+            |"familia prueba 2" |"null"|400      |
+            |"null"             |"F1"  |400      |
+            |"null"             |"null"|400      |
 
     Escenario: Al crear una nueva familia el sistema notifica el nuevo id asignado
         Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"
@@ -43,8 +43,8 @@ Característica: Operaciones CRUD con las familias de productos
             |"cambia nombre"        |"FE1" |"familia mod"           |"FE1"      |200      |
             |"cambia codigo"        |"FE2" |"cambia codigo"         |"FE22"     |200      |
             |"cambia los dos"       |"FE3" |"cambia nombre y cod"   |"FE33"     |200      |
-            |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |404      |
-            |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
+            |"cambia solo nombre"   |"FE4" |"familia mod"           |"null"     |400      |
+            |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |400      |
 
     Escenario: Al modificar una familia el sistema notifica el nuevo estado de la familia
         Cuando el usuario crea la familia "Prueba de familia" con codigo "F1"

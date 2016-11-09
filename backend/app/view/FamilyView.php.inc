@@ -3,6 +3,7 @@ require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 require_once (dirname(__FILE__).'/../controller/FamilyController.php.inc');
 require_once (dirname(__FILE__).'/../controller/ControllerException.php.inc');
+require_once (dirname(__FILE__).'/../dtos/FamilyDTO.php.inc');
 
 /**
  * Description of FamilyView
@@ -46,18 +47,22 @@ class FamilyView extends BDecotexView{
                     break;
                 case FamilyView::CREATE_FAMILY:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->createFamily($data['description'], $data['code']);
+                    $family = new FamilyDTO($data);
+                    $res = $this->controller->createFamily($family);
                     break;
                 case FamilyView::DELETE_FAMILY:
                     $this->controller->delete($vars['id']);
                     break;
                 case FamilyView::UPDATE_FAMILY:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->updateFamily($vars['id'], $data['description'], $data['code']);
+                    $family = new FamilyDTO($data);
+                    $res = $this->controller->updateFamily($vars['id'], $family);
                     break;
             }
             parent::returnSuccess($res);
         } catch (ControllerException $e) {
+            $e->throwToClient();
+        } catch (ValidateDtoException $e) {
             $e->throwToClient();
         }
     }
