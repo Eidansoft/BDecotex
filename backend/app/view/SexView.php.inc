@@ -3,6 +3,7 @@ require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 require_once (dirname(__FILE__).'/../controller/SexController.php.inc');
 require_once (dirname(__FILE__).'/../controller/ControllerException.php.inc');
+require_once (dirname(__FILE__).'/../dtos/SexDTO.php.inc');
 
 /**
  * Description of SexView
@@ -46,18 +47,22 @@ class SexView extends BDecotexView{
                     break;
                 case SexView::CREATE_SEX:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->createSex($data['name'], $data['code']);
+                    $sex = new SexDTO($data);
+                    $res = $this->controller->createSex($sex);
                     break;
                 case SexView::DELETE_SEX:
                     $this->controller->delete($vars['id']);
                     break;
                 case SexView::UPDATE_SEX:
                     $data = json_decode(file_get_contents('php://input'), true);
-                    $res = $this->controller->updateSex($vars['id'], $data['name'], $data['code']);
+                    $sex = new SexDTO($data);
+                    $res = $this->controller->updateSex($vars['id'], $sex);
                     break;
             }
             parent::returnSuccess($res);
         } catch (ControllerException $e) {
+            $e->throwToClient();
+        } catch (ValidateDtoException $e) {
             $e->throwToClient();
         }
     }

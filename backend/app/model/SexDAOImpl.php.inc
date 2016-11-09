@@ -7,20 +7,20 @@ class SexDAOImpl extends BDecotexDAOImpl {
         parent::__construct('sex');
     }
     
-    public function create($name, $code) {
+    public function create(SexDTO $sex) {
         return $this->getModifiedIdExecutingQuery("INSERT INTO $this->table_name ("
                                                     . "name, "
                                                     . "code"
                                                  . ") VALUES ("
-                                                    . "'$name', "
-                                                    . "'$code'"
+                                                    . "'" . $sex->getName() . "', "
+                                                    . "'" . $sex->getCode() . "'"
                                                  . ")");
     }
 
-    public function update($id, $name, $code) {
+    public function update($id, SexDTO $sex) {
         return $this->executeQuery("UPDATE $this->table_name "
-                                 . "SET name = '$name', "
-                                 . "code = '$code' "
+                                 . "SET name = '" . $sex->getName() . "', "
+                                 . "code = '" . $sex->getCode() . "' "
                                  . "WHERE id_$this->table_name = $id");
     }
     

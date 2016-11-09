@@ -15,9 +15,9 @@ Característica: Operaciones CRUD con con el sexo de los productos
         Ejemplos: Tanto el nombre como el codigo son obligatorios
             |nombre     |cod    |http cod |
             |"Hombre"   |"H"    |200      |
-            |"Mujer"    |"null" |404      |
-            |"null"     |"E"    |404      |
-            |"null"     |"null" |404      |
+            |"Mujer"    |"null" |400      |
+            |"null"     |"E"    |400      |
+            |"null"     |"null" |400      |
 
     Escenario: Al crear un nuevo sexo el sistema notifica el nuevo id asignado
         Cuando el usuario crea el sexo "Embarazada" con codigo "E"
@@ -43,8 +43,8 @@ Característica: Operaciones CRUD con con el sexo de los productos
             |"cambia nombre"        |"FE1" |"sex mod"               |"FE1"      |200      |
             |"cambia codigo"        |"FE2" |"cambia codigo"         |"FE22"     |200      |
             |"cambia los dos"       |"FE3" |"cambia nombre y cod"   |"FE33"     |200      |
-            |"cambia solo nombre"   |"FE4" |"sex mod"               |"null"     |404      |
-            |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |404      |
+            |"cambia solo nombre"   |"FE4" |"sex mod"               |"null"     |400      |
+            |"cambia solo codigo"   |"FE5" |"null"                  |"FE44"     |400      |
 
     Escenario: Al modificar un sexo el sistema notifica el nuevo estado del sexo
         Cuando el usuario crea el sexo "Embarazada" con codigo "E"
