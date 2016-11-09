@@ -3,6 +3,7 @@ require_once (dirname(__FILE__).'/BDecotexView.php');
 require_once (dirname(__FILE__).'/../libs/fastRoute/bootstrap.php');
 require_once (dirname(__FILE__).'/../controller/ModelController.php.inc');
 require_once (dirname(__FILE__).'/../controller/ControllerException.php.inc');
+require_once (dirname(__FILE__).'/../dtos/ModelDTO.php.inc');
 
 /**
  * Description of ModelView
