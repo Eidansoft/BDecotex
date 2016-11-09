@@ -50,7 +50,19 @@ class ModelDAOImpl extends BDecotexDAOImpl {
         $query .= " WHERE id_$this->table_name = $id";
         return $this->executeQuery($query);
     }
-    
+    public function getAll() {
+        $sql = "SELECT m.id_model, "
+                    . "CONCAT(f.code, "
+                           . "line.code, "
+                           . "sex.code, "
+                           . "m.variant) as code, "
+                    . "m.description "
+             . "FROM model m JOIN family f ON m.xid_family = f.id_family "
+                          . "JOIN line ON m.xid_line = line.id_line "
+                          . "JOIN sex ON m.xid_sex = sex.id_sex";
+        return $this->getListResults($sql);
+    }
+
     public function getByCode($family, $line, $sex, $variant) {
         return $this->getSingleResult("SELECT * "
                                     . "FROM $this->table_name "

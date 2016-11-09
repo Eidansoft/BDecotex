@@ -90,7 +90,7 @@ Característica: Operaciones CRUD con los modelos de productos
         Y el usuario crea un modelo de la familia "Camisas", linea "Linea 1", sexo "Mujer" y variante "1"
         Y el usuario modifica el modelo previamente creado a familia "Camisas", linea "Linea 1", sexo "Mujer" y variante "0"
         Entonces el sistema devuelve un codigo http "409"
-@current
+
     Escenario: Al hacer un modelo hijo de otro, si el modelo padre no existe en el sistema, se devolvera un error
         Cuando el usuario crea un modelo de la familia "Pantalones", linea "Linea 3", sexo "Unisex" y variante "2"
         Y el usuario modifica los siguientes campos:
@@ -116,27 +116,22 @@ Característica: Operaciones CRUD con los modelos de productos
 
     Escenario: El usuario puede obtener una lista con todos los modelos existentes en el sistema
         Dado que en el sistema existen los modelos:
-            |FAMILIA         |LINEA     |SEXO        |VAR   |
-            |Pantalones      |Linea 1   |Mujer       |0     |
-            |Camisas         |Linea 2   |Mujer       |0     |
-            |Abrigos         |Linea 2   |Mujer       |0     |
-            |Camisas         |Linea 1   |Mujer       |0     |
-            |Camisas         |Linea 2   |Hombre      |0     |
-            |Camisas         |Linea 1   |Hombre      |0     |
-            |Pantalones      |Linea 2   |Hombre      |0     |
-            |Pantalones      |Linea 1   |Hombre      |0     |
+            |FAMILIA         |LINEA     |SEXO        |VAR   |DESCRIPCION                              |
+            |Pantalones      |Linea 1   |Mujer       |0     |P1M0 tiene minimo 25 caracteres          |
+            |Camisas         |Linea 2   |Mujer       |0     |C2M0 tiene minimo 25 caracteres          |
+            |Abrigos         |Linea 2   |Mujer       |0     |A2M0 tiene minimo 25 caracteres          |
+            |Camisas         |Linea 1   |Mujer       |0     |C1M0 tiene minimo 25 caracteres          |
+            |Camisas         |Linea 2   |Hombre      |0     |C2H0 tiene minimo 25 caracteres          |
+            |Camisas         |Linea 1   |Hombre      |0     |C1H0 tiene minimo 25 caracteres          |
+            |Pantalones      |Linea 2   |Hombre      |0     |P2H0 tiene minimo 25 caracteres          |
+            |Pantalones      |Linea 2   |Hombre      |1     |P2H1 tiene minimo 25 caracteres          |
         Cuando el usuario solicita el listado de todos los modelos
         Entonces el sistema devuelve un codigo http "200"
-        Y el sistema incluye el listado con los modelos:
-            |FAMILIA         |LINEA     |SEXO        |VAR   |
-            |Pantalones      |Linea 1   |Mujer       |0     |
-            |Camisas         |Linea 2   |Mujer       |0     |
-            |Abrigos         |Linea 2   |Mujer       |0     |
-            |Camisas         |Linea 1   |Mujer       |0     |
-            |Camisas         |Linea 2   |Hombre      |0     |
-            |Camisas         |Linea 1   |Hombre      |0     |
-            |Pantalones      |Linea 2   |Hombre      |0     |
-            |Pantalones      |Linea 1   |Hombre      |0     |
+        Y el sistema devuelve una lista de elementos con los siguientes atributos:
+            |ATRIBUTO               |VALOR                                  |
+            |id_model               |regex(\d+)                             |
+            |code                   |regex(....)                            |
+            |description            |regex(.... tiene minimo 25 caracteres) |
 
     Escenario: Eliminar modelo de productos existente
         Dado el usuario crea un modelo con los siguientes campos:

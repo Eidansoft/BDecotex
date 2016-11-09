@@ -49,30 +49,30 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
     }
     
     /**
+     * @Then el sistema devuelve una lista de elementos con los siguientes atributos:
+     */
+    public function elSistemaDevuelveUnaListaDeElementosConLosSiguientesAtributos(TableNode $table)
+    {
+        if ( ! sizeof($this->responseJson) > 0){
+            throw new Exception("System returns no results. Expected a list of objects.");
+        } else {
+            foreach ($this->responseJson as $singleObject) {
+                $hash = $table->getHash();
+                foreach ($hash as $row) {
+                    $this->evaluateRow($row, $singleObject);
+                }
+            }
+        }
+    }
+    
+    /**
      * @Then el sistema incluye en la respuesta los siguientes atributos:
      */
     public function elSistemaIncluyeEnLaRespuestaLosSiguientesAtributos(TableNode $table)
     {
         $hash = $table->getHash();
         foreach ($hash as $row) {
-            if ( ! array_key_exists($row['ATRIBUTO'], $this->responseJson)){
-                throw new Exception("Missing mandatory atribute '" . $row['ATRIBUTO'] . "'");
-            }
-            if (array_key_exists("VALOR", $row) && $row['VALOR'] != ""){
-                if (1 == preg_match("/^regex\((.+)\)$/", $row['VALOR'], $coincidencias)){
-                    $this->assertStringMatchesFormat(
-                    $coincidencias[1],
-                    $this->responseJson->$row['ATRIBUTO'],
-                    "Expected value for '" . $row['ATRIBUTO'] . "' attribute was the regex expression '" . $coincidencias[1] . "', but the value '" . $this->responseJson->$row['ATRIBUTO'] . "' found at the response did not match the expression"
-                );
-                } else {
-                    $this->assertSame(
-                        $row['VALOR'],
-                        $this->responseJson->$row['ATRIBUTO'],
-                        "Expected value for '" . $row['ATRIBUTO'] . "' attribute was '" . $row['VALOR'] . "', but '" . $this->responseJson->$row['ATRIBUTO'] . "' was found"
-                    );
-                }
-            }
+            $this->evaluateRow($row, $this->responseJson);
         }
     }
 
@@ -95,5 +95,26 @@ class CommonContextFunctions extends CommonAssertions implements Context, Snippe
         
         $this->responseCode = $conection->getHttpCode();
         $this->responseJson = json_decode($conection->getResponse());
+    }
+    
+    private function evaluateRow($row, $object) {
+        if ( ! array_key_exists($row['ATRIBUTO'], $object)){
+            throw new Exception("Missing mandatory atribute '" . $row['ATRIBUTO'] . "'");
+        }
+        if (array_key_exists("VALOR", $row) && $row['VALOR'] != ""){
+            if (1 == preg_match("/^regex\((.+)\)$/", $row['VALOR'], $coincidencias)){
+                $this->assertStringMatchesFormat(
+                    $coincidencias[1],
+                    $object->$row['ATRIBUTO'],
+                    "Expected value for '" . $row['ATRIBUTO'] . "' attribute was the regex expression '" . $coincidencias[1] . "', but the value '" . $object->$row['ATRIBUTO'] . "' found at the response did not match the expression"
+                );
+            } else {
+                $this->assertSame(
+                    $row['VALOR'],
+                    $object->$row['ATRIBUTO'],
+                    "Expected value for '" . $row['ATRIBUTO'] . "' attribute was '" . $row['VALOR'] . "', but '" . $object->$row['ATRIBUTO'] . "' was found"
+                );
+            }
+        }
     }
 }
