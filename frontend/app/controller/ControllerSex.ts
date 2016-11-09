@@ -49,37 +49,18 @@ class ControllerSex
     protected saveSex(){
         if (this.sexSelected.id_sex != undefined){
             this.backendHandler.updateSex(this.sexSelected, ()=>{
-                this.sexList = this.sexList.map(sex=>{
-                    let res = sex;
-                    if (sex.id_sex == this.sexSelected.id_sex){
-                        res = this.sexSelected;
-                    }
-                    return res;
-                });
-                console.log("Sexo editado");
-                this.sexSelected = undefined;
+                window.location.reload();
             });
         } else {
             this.backendHandler.createNewSex(this.sexSelected, (createdSex)=>{
-                this.sexList.push(<ModelSex>createdSex);
-                console.log("Sexo nuevo creado");
-                this.sexSelected = undefined;
+                window.location.reload();
             });
         }
     }
     
     protected deleteSex(){
         this.backendHandler.deleteSexById(this.sexSelected.id_sex, ()=>{
-            this.sexList = this.sexList.filter(sex=>{
-                let res = true;
-                if (sex.id_sex == this.sexSelected.id_sex){
-                    res = false;
-                }
-                return res;
-            });
-            this.gridOptions.data = this.sexList;
-            console.log("Sexo eliminado");
-            this.sexSelected = undefined;
+            window.location.reload();
         });
     }
 }

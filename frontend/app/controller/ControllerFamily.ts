@@ -48,37 +48,18 @@ class ControllerFamily
     protected saveFamily(){
         if (this.familySelected.id_family != undefined){
             this.backendHandler.updateFamily(this.familySelected, ()=>{
-                this.familyList = this.familyList.map(family=>{
-                    let res = family;
-                    if (family.id_family == this.familySelected.id_family){
-                        res = this.familySelected;
-                    }
-                    return res;
-                });
-                console.log("Familia editada");
-                this.familySelected = undefined;
+                window.location.reload();
             });
         } else {
             this.backendHandler.createNewFamily(this.familySelected, (createdFamily)=>{
-                this.familyList.push(<ModelFamily>createdFamily);
-                console.log("Familia nueva creada");
-                this.familySelected = undefined;
+                window.location.reload();
             });
         }
     }
     
     protected deleteFamily(){
         this.backendHandler.deleteFamilyById(this.familySelected.id_family, ()=>{
-            this.familyList = this.familyList.filter(family=>{
-                let res = true;
-                if (family.id_family == this.familySelected.id_family){
-                    res = false;
-                }
-                return res;
-            });
-            this.gridOptions.data = this.familyList;
-            console.log("Familia eliminada");
-            this.familySelected = undefined;
+            window.location.reload();
         });
     }
 }
