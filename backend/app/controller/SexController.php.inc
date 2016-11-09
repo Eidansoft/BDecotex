@@ -2,6 +2,7 @@
 require_once (dirname(__FILE__).'/../model/SexDAOImpl.php.inc');
 require_once (dirname(__FILE__).'/ControllerException.php.inc');
 require_once (dirname(__FILE__).'/BDecotexController.php.inc');
+require_once (dirname(__FILE__).'/../dtos/SexDTO.php.inc');
 
 class SexController extends BDecotexController {
 
