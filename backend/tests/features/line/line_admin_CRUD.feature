@@ -86,3 +86,39 @@ Característica: Operaciones CRUD con las lineas de productos
         Cuando el usuario crea la linea "Prueba de linea a borrar" con codigo "F1"
         Y el usuario elimina la linea creada
         Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Al crear una nueva linea el sistema acepta caracteres especiales. Este test comprueba la eñe y tilde
+        Cuando el usuario crea la linea "Prueba de línea camión en español" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_line        |regex(\d+)                             |
+            |name           |Prueba de línea camión en español      |
+            |code           |L1                                     |
+
+    Escenario: Al crear una nueva linea el sistema acepta caracteres especiales. Este test comillas simples
+        Cuando el usuario crea la linea "Prueba de 'línea' camión en español" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_line        |regex(\d+)                             |
+            |name           |Prueba de 'línea' camión en español    |
+            |code           |L1                                     |
+
+    Escenario: Al crear una nueva linea el sistema acepta caracteres especiales. Este test comprueba comillas dobles
+        Cuando el usuario crea la linea 'Prueba de "línea" camión en español' con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_line        |regex(\d+)                             |
+            |name           |Prueba de "línea" camión en español    |
+            |code           |L1                                     |
+
+    Escenario: Al crear una nueva linea el sistema acepta caracteres especiales. Este test comprueba tags
+        Cuando el usuario crea la linea "Prueba de <línea> camión en español" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_line        |regex(\d+)                             |
+            |name           |Prueba de <línea> camión en español    |
+            |code           |L1                                     |

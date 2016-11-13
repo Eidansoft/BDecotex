@@ -84,3 +84,39 @@ Característica: Operaciones CRUD con con el sexo de los productos
         Cuando el usuario crea el sexo "Embarazada" con codigo "E"
         Y el usuario elimina el sexo creado
         Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Al crear un nuevo sexo el sistema acepta caracteres especiales. Este test comprueba la eñe y tilde
+        Cuando el usuario crea el sexo "Prueba de séxo camión en español" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_sex         |regex(\d+)                              |
+            |name           |Prueba de séxo camión en español       |
+            |code           |L1                                     |
+
+    Escenario: Al crear un nuevo sexo el sistema acepta caracteres especiales. Este test comillas simples
+        Cuando el usuario crea el sexo "Prueba de 'sexo'" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_sex         |regex(\d+)                              |
+            |name           |Prueba de 'sexo'                       |
+            |code           |L1                                     |
+
+    Escenario: Al crear un nuevo sexo el sistema acepta caracteres especiales. Este test comprueba comillas dobles
+        Cuando el usuario crea el sexo 'Prueba de "sexo"' con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_sex         |regex(\d+)                              |
+            |name           |Prueba de "sexo"                       |
+            |code           |L1                                     |
+
+    Escenario: Al crear un nuevo sexo el sistema acepta caracteres especiales. Este test comprueba tags
+        Cuando el usuario crea el sexo "Prueba de <sexo>" con codigo "L1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_sex         |regex(\d+)                              |
+            |name           |Prueba de <sexo>                       |
+            |code           |L1                                     |

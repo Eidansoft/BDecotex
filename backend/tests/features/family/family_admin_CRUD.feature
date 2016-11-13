@@ -86,3 +86,39 @@ Característica: Operaciones CRUD con las familias de productos
         Cuando el usuario crea la familia "Prueba de familia a borrar" con codigo "F1"
         Y el usuario elimina la familia creada
         Entonces el sistema devuelve un codigo http "200"
+
+    Escenario: Al crear una nueva familia el sistema acepta caracteres especiales. Este test comprueba la eñe y tilde
+        Cuando el usuario crea la familia "Prueba de familia camión en español" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                  |
+            |id_family      |regex(\d+)                             |
+            |description    |Prueba de familia camión en español    |
+            |code           |F1                                     |
+
+    Escenario: Al crear una nueva familia el sistema acepta caracteres especiales. Este test comprueba las tildes simples
+        Cuando el usuario crea la familia "Prueba de 'familia' con tildes" con codigo "F1"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                             |
+            |id_family      |regex(\d+)                        |
+            |description    |Prueba de 'familia' con tildes    |
+            |code           |F1                                |
+
+    Escenario: Al crear una nueva familia el sistema acepta caracteres especiales. Este test comprueba las comillas dobles
+        Cuando el usuario crea la familia 'Prueba de "familia" con comillas dobles' con codigo 'F"1'
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                                      |
+            |id_family      |regex(\d+)                                 |
+            |description    |Prueba de "familia" con comillas dobles    |
+            |code           |F"1                                        |
+
+    Escenario: Al crear una nueva familia el sistema acepta caracteres especiales. Este test comprueba los tags
+        Cuando el usuario crea la familia "Prueba de <familia> con tags" con codigo "F<1>"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema incluye en la respuesta los siguientes atributos:
+            |ATRIBUTO       |VALOR                             |
+            |id_family      |regex(\d+)                        |
+            |description    |Prueba de <familia> con tags      |
+            |code           |F<1>                              |
