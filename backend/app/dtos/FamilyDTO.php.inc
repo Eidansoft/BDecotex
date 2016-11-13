@@ -14,10 +14,10 @@ class FamilyDTO extends BDecotexDTO {
         $sanitizeRules = array(
             'id_family'             => array('filter'    => FILTER_VALIDATE_INT,
                                              'options'   => array('min_range' => 0, 'max_range' => 2147483648)),
-            'description'           => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
-                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
-            'code'                  => array('filter'    => FILTER_SANITIZE_SPECIAL_CHARS,
-                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH),
+            'description'           => array('filter'    => FILTER_UNSAFE_RAW,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_BACKTICK),
+            'code'                  => array('filter'    => FILTER_UNSAFE_RAW,
+                                             'flags'     => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_BACKTICK),
             );
         
         $sanitationAndValidationRules = [
