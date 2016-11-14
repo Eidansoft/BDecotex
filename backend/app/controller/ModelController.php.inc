@@ -9,32 +9,6 @@ require_once (dirname(__FILE__).'/../model/DAOException.php.inc');
 require_once (dirname(__FILE__).'/../dtos/ModelDTO.php.inc');
 
 class ModelController extends BDecotexController {
-
-    const ATTR_FAMILY = 0;
-    const ATTR_LINE = 1;
-    const ATTR_SEX = 2;
-    const ATTR_VARIANT = 3;
-    
-    public $mandatoryAttributes = array("xid_family",
-                                 "xid_line",
-                                 "xid_sex",
-                                 "variant");
-    public $allAttributes = array("xid_family",
-                                 "xid_line",
-                                 "xid_sex",
-                                 "variant",
-                                 "description",
-                                 "front",
-                                 "back",
-                                 "neck",
-                                 "arm",
-                                 "observations",
-                                 "model_number_parent",
-                                 "xid_model_parent",
-                                 "creation_date",
-                                 "client",
-                                 "old_ref");
-    
     private $familyDao;
     private $lineDao;
     private $sexDao;
