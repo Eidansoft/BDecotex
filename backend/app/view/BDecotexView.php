@@ -51,7 +51,7 @@ class BDecotexView {
     
     protected function returnSuccess($res = NULL) {
         header($_SERVER['SERVER_PROTOCOL'] . ' 200 Success', true, 200);
-        header("Content-Type: application/json");
+        header('Content-Type: application/json; Charset="UTF-8"');
         if ($res != NULL){
             echo json_encode($res);
         }
