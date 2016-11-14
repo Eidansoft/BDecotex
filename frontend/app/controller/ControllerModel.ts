@@ -4,6 +4,7 @@ class ControllerModel
                            'ServiceFamilyBackend',
                            'ServiceLineBackend',
                            'ServiceSexBackend',
+                           '$scope',
                            ControllerModel];
     private modelHandler: ServiceModelBackend;
     private familyHandler: ServiceFamilyBackend;
@@ -14,13 +15,15 @@ class ControllerModel
     private lineList: Array<ModelLine>;
     private sexList: Array<ModelSex>;
     private modelSelected: ModelModel;
+    private modelSelectedCopy2VariantChanges: ModelModel;
     private gridOptions: uiGrid.IGridOptions;
     private gridApi: uiGrid.IGridApi;
     
     constructor(modelBackend: ServiceModelBackend,
                 familyBackend: ServiceFamilyBackend,
                 lineBackend: ServiceLineBackend,
-                sexBackend: ServiceSexBackend)
+                sexBackend: ServiceSexBackend,
+                scope: ng.IScope)
     {
         this.modelHandler = modelBackend;
         this.familyHandler = familyBackend;
@@ -56,6 +59,31 @@ class ControllerModel
         this.sexHandler.getAllSex((sexArray: Array<ModelSex>)=>{
             this.sexList = sexArray;
         });
+        
+        scope.$watch(
+            () => {return (this.modelSelected !== undefined ? this.modelSelected.family : false);}, 
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getVariant();
+                }
+            }
+        );
+        scope.$watch(
+            () => { return (this.modelSelected !== undefined ? this.modelSelected.line : false);}, 
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getVariant();
+                }
+            }
+        );
+        scope.$watch(
+            () => {return (this.modelSelected !== undefined ? this.modelSelected.sex : false);}, 
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getVariant();
+                }
+            }
+        );
     }
 
     protected editModel() {
@@ -109,6 +137,40 @@ class ControllerModel
         this.modelHandler.deleteModelById(this.modelSelected.id_model, ()=>{
                 window.location.reload();
         });
+    }
+    
+    protected getVariant(){
+        if (this.modelSelected !== undefined){
+            if (this.modelSelected.family !== undefined
+                && this.modelSelected.line !== undefined
+                && this.modelSelected.sex !== undefined){
+                // if id_model is undefined means we are creating a new model
+                if (this.modelSelected.id_model == undefined){
+                    this.modelSelected.variant = 0;
+                    this.modelHandler.getFreeModelVariants(this.modelSelected, (arrayFreeVariants: Array<any>)=>{
+                        this.modelSelected.variant = arrayFreeVariants[0].num;
+                    });
+                } else {
+                    //if not, means we are editing a model so I need to know if
+                    // there is a change on family, line or sex
+                    if (this.modelSelectedCopy2VariantChanges == undefined){
+                        //The first time we save the original values
+                        this.modelSelectedCopy2VariantChanges = JSON.parse(JSON.stringify(this.modelSelected));
+                    } else {
+                        // the rest of times we check if something has changed
+                        if (this.modelSelected.family.id_family != this.modelSelectedCopy2VariantChanges.family.id_family
+                            || this.modelSelected.line.id_line != this.modelSelectedCopy2VariantChanges.line.id_line
+                            || this.modelSelected.sex.id_sex != this.modelSelectedCopy2VariantChanges.sex.id_sex){
+                            this.modelHandler.getFreeModelVariants(this.modelSelected, (arrayFreeVariants: Array<any>)=>{
+                                this.modelSelected.variant = arrayFreeVariants[0].num;
+                            });
+                        } else {
+                            this.modelSelected.variant = this.modelSelectedCopy2VariantChanges.variant;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

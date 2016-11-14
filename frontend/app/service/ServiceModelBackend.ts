@@ -2,10 +2,12 @@ class ServiceModelBackend extends ServiceBackend
 {
     static dependencies = ['$http', 'PubSub', ServiceModelBackend];
     private modelPath: string;
+    private getFreeVariantsPath: string;
     
     constructor($http: ng.IHttpService, pubsub: any){
         super($http, pubsub);
         this.modelPath = "/model";
+        this.getFreeVariantsPath = "/getFreeVariants";
     }
         
     public createNewModel(model: ModelModel, onSuccessResult: Function, onErrorResult?: Function): void
@@ -55,6 +57,17 @@ class ServiceModelBackend extends ServiceBackend
         var req = {
             method: 'DELETE',
             url: this.backendPath + this.modelPath + '/' + id_model
+        }
+
+        this.processHttpRequest(req, onSuccessResult, onErrorResult);
+    }
+        
+    public getFreeModelVariants(model: ModelModel, onSuccessResult: Function, onErrorResult?: Function): void
+    {
+        var req = {
+            method: 'POST',
+            url: this.backendPath + this.modelPath + this.getFreeVariantsPath,
+            data: model.getDto()
         }
 
         this.processHttpRequest(req, onSuccessResult, onErrorResult);
