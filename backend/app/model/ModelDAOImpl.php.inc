@@ -71,5 +71,22 @@ class ModelDAOImpl extends BDecotexDAOImpl {
                                     . "AND xid_sex = $sex "
                                     . "AND variant = $variant");
     }
+    
+    public function getFreeVariantsForModel(ModelDTO $model) {
+        $sql = "select (10*d + u) num FROM "
+             . "(select 0 u union select 1 union select 2 union select 3 union select 4 union "
+             . "select 5 union select 6 union select 7 union select 8 union select 9) U, "
+             . "(select 0 d union select 1 union select 2 union select 3 union select 4 union "
+             . "select 5 union select 6 union select 7 union select 8 union select 9) D "
+             . "WHERE (10*d + u) NOT in ( "
+             . "        SELECT variant FROM model "
+             . "    WHERE xid_family = " . $model->getXid_family() . " "
+             . "    AND xid_line = " . $model->getXid_line() . " "
+             . "    AND xid_sex = " . $model->getXid_sex() . " "
+             . ") "
+             . "ORDER BY num "
+             . "LIMIT 5";
+        return $this->getListResults($sql);
+    }
 }
 ?>

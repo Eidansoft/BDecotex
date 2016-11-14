@@ -17,6 +17,7 @@ class ModelView extends BDecotexView{
     const CREATE_MODEL = 2;
     const DELETE_MODEL = 3;
     const UPDATE_MODEL = 4;
+    const GET_MODEL_VARIANTS_FREE = 5;
 
     protected $controller;
     
@@ -31,6 +32,7 @@ class ModelView extends BDecotexView{
             $r->addRoute('POST', $this->model_url, ModelView::CREATE_MODEL);
             $r->addRoute('DELETE', $this->model_url.'/{id:\d+}', ModelView::DELETE_MODEL);
             $r->addRoute('PUT', $this->model_url.'/{id:\d+}', ModelView::UPDATE_MODEL);
+            $r->addRoute('POST', $this->model_url.$this->model_url_part_getFreeVariant, ModelView::GET_MODEL_VARIANTS_FREE);
         });
         parent::setDispatcher($dispatcher);
     }
@@ -57,6 +59,11 @@ class ModelView extends BDecotexView{
                     $data = json_decode(file_get_contents('php://input'), true);
                     $model = new ModelDTO($data);
                     $res = $this->controller->updateModel($vars['id'], $model);
+                    break;
+                case ModelView::GET_MODEL_VARIANTS_FREE:
+                    $data = json_decode(file_get_contents('php://input'), true);
+                    $model = new ModelDTO($data);
+                    $res = $this->controller->getModelFreeVariants($model);
                     break;
             }
             parent::returnSuccess($res);

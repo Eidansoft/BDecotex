@@ -54,6 +54,10 @@ class ModelController extends BDecotexController {
         return $this->getById($id);
     }
     
+    public function getModelFreeVariants(ModelDTO $model) {
+        return $this->dao->getFreeVariantsForModel($model);
+    }
+    
     private function checkModelDoNotExist(ModelDTO $model, $idModel = null){
         $found = $this->dao->getByCode($model->getXid_family(), $model->getXid_line(), $model->getXid_sex(), $model->getVariant());
         if ( $found ){

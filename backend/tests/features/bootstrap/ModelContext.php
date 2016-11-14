@@ -18,10 +18,13 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
     private $lineContext;
     private $sexContext;
     protected $url;
+    protected $url_getFreeVariants;
+    
     
     public function __construct()
     {
         $this->url = "http://".BDECOTEX_SERVER.BDECOTEX_MAIN_URL."/model";
+        $this->url_getFreeVariants = "/getFreeVariants";
         
         $this->familyContext = new FamilyContext;
         $this->lineContext = new LineContext;
@@ -162,6 +165,9 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
                           "variant"     => ($model['variant']=="null" ? "" : $model['variant']),
                           "description" => ($row['DESCRIPCION']=="null" ? "" : $row['DESCRIPCION'])];
             $this->callUrl($method, $url, $modelData);
+            if ($this->responseCode != 200){
+                throw new Exception("Error creating the model with family ID '" . $model['family'] . "', line ID '" . $model['line'] . "', sex ID '" . $model['sex'] . "', and variant '" . $model['variant'] . "'.");
+            }
         }
     }
 
@@ -173,6 +179,22 @@ class ModelContext extends CommonContextFunctions implements Context, SnippetAcc
         $method = UrlApi::URL_METHOD_GET;
         $url = $this->url;
         $this->callUrl($method, $url);
+    }
+    
+    /**
+     * @When el usuario solicita las variantes libres para el modelo de la familia :arg1, linea :arg2, sexo :arg3 y variante :arg4
+     */
+    public function elUsuarioSolicitaLasVariantesLibresParaElModeloDeLaFamiliaLineaSexoYVariante($arg1, $arg2, $arg3, $arg4)
+    {
+        $model = $this->modelData2Array($arg1, $arg2, $arg3, $arg4);
+        
+        $method = UrlApi::URL_METHOD_POST;
+        $url = $this->url.$this->url_getFreeVariants;
+        $modelData = ["xid_family"  => $model['family'],
+                      "xid_line"    => $model['line'],
+                      "xid_sex"     => $model['sex'],
+                      "variant"     => $model['variant']];
+        $this->callUrl($method, $url, $modelData);
     }
     
     public function findModelIntoJsonResponse($arg1, $arg2, $arg3, $arg4) {

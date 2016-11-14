@@ -15,12 +15,16 @@ class BDecotexView {
     protected $line_url;
     protected $sex_url;
     protected $model_url;
-    
+    protected $model_url_getFreeVariant;
+
+
     public function __construct() {
         $this->family_url = BDECOTEX_MAIN_URL . "/family";
         $this->line_url = BDECOTEX_MAIN_URL . "/line";
         $this->sex_url = BDECOTEX_MAIN_URL . "/sex";
         $this->model_url = BDECOTEX_MAIN_URL . "/model";
+        
+        $this->model_url_part_getFreeVariant = '/getFreeVariants';
     }
     
     public function setDispatcher($dispatcher) {

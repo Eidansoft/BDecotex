@@ -149,7 +149,7 @@ Característica: Operaciones CRUD con los modelos de productos
         Cuando el usuario elimina el modelo creado
         Entonces el sistema devuelve un codigo http "200"
 
-    Escenario: Es posible obtener los datos de un modelo por identificandolo por su ID
+    Escenario: Es posible obtener los datos de un modelo identificandolo por su ID
         Dado el usuario crea un modelo con los siguientes campos:
             |ATRIBUTO               |VALOR                        |
             |FAMILY                 |Pantalones                   |
@@ -226,3 +226,15 @@ Característica: Operaciones CRUD con los modelos de productos
             |creation_date          |regex(\d+)                   |
             |client                 |Nombre del cliente           |
             |old_ref                |Anterior referencia          |
+@current
+    Escenario: El usuario puede obtener una lista con las variantes disponibles para un modelo
+        Dado que en el sistema existen los modelos:
+            |FAMILIA         |LINEA     |SEXO        |VAR   |DESCRIPCION                             |
+            |Pantalones      |Linea 1   |Mujer       |2     |P1M2 con 25 caracteres minimo           |
+            |Pantalones      |Linea 1   |Mujer       |3     |P1M3 con 25 caracteres minimo           |
+            |Pantalones      |Linea 1   |Mujer       |5     |P1M5 con 25 caracteres minimo           |
+        Cuando el usuario solicita las variantes libres para el modelo de la familia "Pantalones", linea "Linea 1", sexo "Mujer" y variante "0"
+        Entonces el sistema devuelve un codigo http "200"
+        Y el sistema devuelve una lista de elementos con los siguientes atributos:
+            |ATRIBUTO               |VALOR                  |
+            |num                    |regex([0,1,4,6,7])     |
