@@ -21,11 +21,7 @@ class ControllerSex
             }
         }
         
-        this.backendHandler.getAllSex((sexArray)=>{
-            this.sexList = <Array<ModelSex>>sexArray;
-            this.gridOptions.data = this.sexList;
-            console.log("Sexos recibidos");
-        });
+        this.updateSexTableResults();
     }
 
     protected editSex() {
@@ -49,18 +45,28 @@ class ControllerSex
     protected saveSex(){
         if (this.sexSelected.id_sex != undefined){
             this.backendHandler.updateSex(this.sexSelected, ()=>{
-                window.location.reload();
+                this.updateSexTableResults();
             });
         } else {
             this.backendHandler.createNewSex(this.sexSelected, (createdSex)=>{
-                window.location.reload();
+                this.updateSexTableResults();
             });
         }
     }
     
     protected deleteSex(){
         this.backendHandler.deleteSexById(this.sexSelected.id_sex, ()=>{
-            window.location.reload();
+            this.updateSexTableResults();
+        });
+    }
+    
+    protected updateSexTableResults(){
+        this.sexSelected = undefined;
+	this.backendHandler.getAllSex((sexArray)=>{
+            this.sexList = <Array<ModelSex>>sexArray;
+            this.gridOptions.data = this.sexList;
+	    this.gridApi.core.refresh();
+            console.log("Sexos recibidos");
         });
     }
 }

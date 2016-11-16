@@ -20,11 +20,7 @@ class ControllerFamily
             }
         }
         
-        this.backendHandler.getAllFamilies((familiesArray)=>{
-            this.familyList = <Array<ModelFamily>>familiesArray;
-            this.gridOptions.data = this.familyList;
-            console.log("Familias recibidas");
-        });
+        this.updateFamilyTableResults();
     }
 
     protected editFamily() {
@@ -48,18 +44,28 @@ class ControllerFamily
     protected saveFamily(){
         if (this.familySelected.id_family != undefined){
             this.backendHandler.updateFamily(this.familySelected, ()=>{
-                window.location.reload();
+                this.updateFamilyTableResults();
             });
         } else {
             this.backendHandler.createNewFamily(this.familySelected, (createdFamily)=>{
-                window.location.reload();
+                this.updateFamilyTableResults();
             });
         }
     }
     
     protected deleteFamily(){
         this.backendHandler.deleteFamilyById(this.familySelected.id_family, ()=>{
-            window.location.reload();
+            this.updateFamilyTableResults();
+        });
+    }
+    
+    protected updateFamilyTableResults(){
+        this.familySelected = undefined;
+        this.backendHandler.getAllFamilies((familiesArray)=>{
+            this.familyList = <Array<ModelFamily>>familiesArray;
+            this.gridOptions.data = this.familyList;
+            this.gridApi.core.refresh();
+            console.log("Familias recibidas");
         });
     }
 }

@@ -20,11 +20,7 @@ class ControllerLine
             }
         }
         
-        this.backendHandler.getAllLines((linesArray)=>{
-            this.lineList = <Array<ModelLine>>linesArray;
-            this.gridOptions.data = this.lineList;
-            console.log("Lineas recibidas");
-        });
+        this.updateLineTableResults();
     }
 
     protected editFamily() {
@@ -48,18 +44,28 @@ class ControllerLine
     protected saveLine(){
         if (this.lineSelected.id_line != undefined){
             this.backendHandler.updateLine(this.lineSelected, ()=>{
-                window.location.reload();
+                this.updateLineTableResults();
             });
         } else {
             this.backendHandler.createNewLine(this.lineSelected, (createdLine)=>{
-                window.location.reload();
+                this.updateLineTableResults();
             });
         }
     }
     
     protected deleteLine(){
         this.backendHandler.deleteLineById(this.lineSelected.id_line, ()=>{
-            window.location.reload();
+            this.updateLineTableResults();
+        });
+    }
+    
+    protected updateLineTableResults(){
+        this.lineSelected = undefined;
+        this.backendHandler.getAllLines((linesArray)=>{
+            this.lineList = <Array<ModelLine>>linesArray;
+            this.gridOptions.data = this.lineList;
+	    this.gridApi.core.refresh();
+            console.log("Lineas recibidas");
         });
     }
 }
