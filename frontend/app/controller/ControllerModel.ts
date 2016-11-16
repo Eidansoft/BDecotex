@@ -42,11 +42,7 @@ class ControllerModel
             }
         }
         
-        this.modelHandler.getAllModel((modelArray: Array<DtoModel>)=>{
-            this.modelList = modelArray;
-            this.gridOptions.data = this.modelList;
-            console.log("Modelos recibidos");
-        });
+        this.updateModelTableResults();
         
         this.familyHandler.getAllFamilies((familiesArray: Array<ModelFamily>)=>{
             this.familyList = familiesArray;
@@ -124,21 +120,31 @@ class ControllerModel
     protected saveModel(){
         if (this.modelSelected.id_model != undefined){
             this.modelHandler.updateModel(this.modelSelected, ()=>{
-                window.location.reload();
+                this.updateModelTableResults();
             });
         } else {
             this.modelHandler.createNewModel(this.modelSelected, (createdModel: DtoModel)=>{
-                window.location.reload();
+                this.updateModelTableResults();
             });
         }
     }
     
     protected deleteModel(){
         this.modelHandler.deleteModelById(this.modelSelected.id_model, ()=>{
-                window.location.reload();
+             this.updateModelTableResults();
         });
     }
     
+    protected updateModelTableResults(){
+        this.modelSelected = undefined;
+	this.modelHandler.getAllModel((modelArray: Array<DtoModel>)=>{
+            this.modelList = modelArray;
+            this.gridOptions.data = this.modelList;
+	    this.gridApi.core.refresh();
+            console.log("Modelos recibidos");
+        });
+    }
+
     protected getVariant(){
         if (this.modelSelected !== undefined){
             if (this.modelSelected.family !== undefined
