@@ -3,15 +3,16 @@
         <img src="./app/imgs/loading.gif" alt="Loading..." />
     </div>
     <div id="bdtx-screen-messages" class="container-fluid">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <div uib-alert data-ng-repeat="msg in messages" ng-class="'alert alert-' + msg.level" close="closeAlert($index)">
+        <div class="row" data-ng-repeat="msg in messages">
+            <div class="col-md-3">&nbsp;</div>
+            <div uib-alert 
+                 ng-class="'alert alert-' + msg.level"
+                 close="closeAlert($index)"
+                 class="col-md-6">
                     <strong>{{msg.title}}</strong>
                     <span>{{msg.msg}}</span>
-                </div>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-3">&nbsp;</div>
         </div>
     </div>
 </div>
