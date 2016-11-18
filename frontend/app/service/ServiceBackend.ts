@@ -28,6 +28,7 @@ class ServiceBackend
                     onErrorResult(errorResponse);
                 }
                 this.pubsubHandler.publish('HIDE_WAITING_SCREEN', true);
+                this.pubsubHandler.publish('SHOW_MESSAGE', new MessageScreen(errorResponse.data.message, 'danger', 'ERROR ('+errorResponse.data.code+'): '));
             }
         );
     }

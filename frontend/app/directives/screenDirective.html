@@ -2,7 +2,16 @@
     <div id="bdtx-screen-waiting" data-ng-show="waitingScreen">
         <img src="./app/imgs/loading.gif" alt="Loading..." />
     </div>
-    <div id="bdtx-screen-message" data-ng-show="data.messageScreen">
-        Y este otro el de MESSAGE SCREEN
+    <div id="bdtx-screen-messages" class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div uib-alert data-ng-repeat="msg in messages" ng-class="'alert alert-' + msg.level" close="closeAlert($index)">
+                    <strong>{{msg.title}}</strong>
+                    <span>{{msg.msg}}</span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </div>
 </div>
