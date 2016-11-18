@@ -54,9 +54,11 @@ class ControllerLine
     }
     
     protected deleteLine(){
-        this.backendHandler.deleteLineById(this.lineSelected.id_line, ()=>{
-            this.updateLineTableResults();
-        });
+        if (confirm("¿Seguro que quieres eliminar esta línea?")){
+            this.backendHandler.deleteLineById(this.lineSelected.id_line, ()=>{
+                this.updateLineTableResults();
+            });
+        }
     }
     
     protected updateLineTableResults(){

@@ -54,9 +54,11 @@ class ControllerFamily
     }
     
     protected deleteFamily(){
-        this.backendHandler.deleteFamilyById(this.familySelected.id_family, ()=>{
-            this.updateFamilyTableResults();
-        });
+        if (confirm("¿Seguro que quieres eliminar esta familia?")){
+            this.backendHandler.deleteFamilyById(this.familySelected.id_family, ()=>{
+                this.updateFamilyTableResults();
+            });
+        }
     }
     
     protected updateFamilyTableResults(){

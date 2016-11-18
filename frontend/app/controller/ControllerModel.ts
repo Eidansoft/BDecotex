@@ -130,9 +130,11 @@ class ControllerModel
     }
     
     protected deleteModel(){
-        this.modelHandler.deleteModelById(this.modelSelected.id_model, ()=>{
-             this.updateModelTableResults();
-        });
+        if (confirm("¿Seguro que quieres eliminar este modelo?")){
+            this.modelHandler.deleteModelById(this.modelSelected.id_model, ()=>{
+                 this.updateModelTableResults();
+            });
+        }
     }
     
     protected updateModelTableResults(){

@@ -55,9 +55,11 @@ class ControllerSex
     }
     
     protected deleteSex(){
-        this.backendHandler.deleteSexById(this.sexSelected.id_sex, ()=>{
-            this.updateSexTableResults();
-        });
+        if (confirm("¿Seguro que quieres eliminar este sexo?")){
+            this.backendHandler.deleteSexById(this.sexSelected.id_sex, ()=>{
+                this.updateSexTableResults();
+            });
+        }
     }
     
     protected updateSexTableResults(){
