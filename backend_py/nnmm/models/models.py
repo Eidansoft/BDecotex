@@ -32,7 +32,11 @@ class Model(models.Model):
     sex = models.ForeignKey(Sex, on_delete=models.PROTECT)
     line = models.ForeignKey(Line, on_delete=models.PROTECT)
     family = models.ForeignKey(Family, on_delete=models.PROTECT)
+    # Variant is a automatically caltulated value
     variant = models.PositiveSmallIntegerField()
+    # model_code is calculated field, but I sotre it because
+    # we need to index it in order to search for it
+    model_code = models.CharField(max_length=10)
 
     description = models.CharField(max_length=100)
     front = models.CharField(max_length=100, null= True, blank=True, default='')
@@ -44,11 +48,8 @@ class Model(models.Model):
     parent = models.ForeignKey('self', on_delete=models.PROTECT, null= True, blank=True, default='')
     old_code_parent = models.CharField(max_length=10, null= True, blank=True, default='')
 
-    def model_code(self):
-        return "{}{}{}{}".format(self.family.code, self.line.code, self.sex.code, self.variant)
-
     def __str__(self):
-        return self.description
+        return self.model_code
 
     @staticmethod
     def generate_next_free_variant(family, line, sex):
