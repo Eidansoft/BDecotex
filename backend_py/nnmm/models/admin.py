@@ -22,7 +22,6 @@ class ModelAdministration(admin.ModelAdmin):
     search_fields = ['model_code', 'description', 'notes']
 
     def save_model(self, request, obj, form, change):
-        import ipdb; ipdb.set_trace()
         # To add a new model, we need to calculate the new variant
         if form.is_valid() and (
                 (not change) or
