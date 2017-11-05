@@ -2,3 +2,5 @@ originales/
 /backend/nbproject
 /backend/app/libs
 phpinfo.php
+*.pyc
+*.py~
