@@ -4,3 +4,4 @@ originales/
 phpinfo.php
 *.pyc
 *.py~
+db.sqlite3
