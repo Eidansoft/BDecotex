@@ -5,3 +5,5 @@ phpinfo.php
 *.pyc
 *.py~
 db.sqlite3
+*.mdb
+.DS_Store
