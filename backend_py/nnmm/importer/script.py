@@ -1,31 +1,12 @@
-# -*- coding: utf-8 -*-
 import sys, subprocess, unicodedata
 from backports import csv
 from io import StringIO
  
-# DATABASE = sys.argv[1]
- 
-# Get the list of table names with "mdb-tables"
-# table_names = subprocess.Popen(["mdb-tables", "-1", DATABASE], 
-                               # stdout=subprocess.PIPE).communicate()[0]
-# tables = table_names.split('\n')
- 
-# Dump each table as a CSV file using "mdb-export",
-# converting " " in table names to "_" for the CSV filenames.
-# for table in tables:
-    # if table != '':
-        # filename = table.replace(" ","_") + ".csv"
-        # file = open(filename, 'w')
-        # print("Dumping " + table)
-        # contents = subprocess.Popen(["mdb-export", DATABASE, table],
-                                    # stdout=subprocess.PIPE).communicate()[0]
-        # file.write(contents)
-        # file.close()
 
 class necotexDbImporter:
     '''This class is to import data from an old *.mdb file.
-       There is a dependency on mdbtools external library, that dependency must be installed
-       in the system.'''
+       There is a dependency on mdbtools external library, 
+       that dependency must be installed in the system.'''
 
     @staticmethod
     def get_tables(mdb_file):
