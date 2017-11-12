@@ -3,7 +3,7 @@ from backports import csv
 from io import StringIO
  
 
-class necotexDbImporter:
+class MdbAccessReader:
     '''This class is to import data from an old *.mdb file.
        There is a dependency on mdbtools external library, 
        that dependency must be installed in the system.'''
