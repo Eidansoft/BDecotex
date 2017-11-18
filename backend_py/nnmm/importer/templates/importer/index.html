@@ -1,0 +1,11 @@
+{% extends "admin/app_index.html" %}
+{% block title %}Access MDB importation utility{% endblock %}
+
+{% block content %}
+<h1>prueba</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message" />
+</form>
+{% endblock %}
