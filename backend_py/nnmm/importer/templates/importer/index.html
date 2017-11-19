@@ -2,10 +2,10 @@
 {% block title %}Access MDB importation utility{% endblock %}
 
 {% block content %}
-<h1>prueba</h1>
-<form action="" method="post">
+<h1>Importaci&oacute;n de archivo Access (*.mdb)</h1>
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Send message" />
+    <input type="submit" value="Aplicar" />
 </form>
 {% endblock %}
