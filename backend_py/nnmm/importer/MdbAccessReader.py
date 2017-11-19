@@ -49,7 +49,7 @@ class MdbAccessReader:
 
            Returns:
            An array of dictionaries'''
-        csv_content = necotexDbImporter.get_content_table(mdb_file, table_name)
+        csv_content = MdbAccessReader.get_content_table(mdb_file, table_name)
 
         res = []
         virtual_file = StringIO(csv_content)
