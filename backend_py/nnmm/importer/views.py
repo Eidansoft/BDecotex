@@ -6,7 +6,7 @@ from django.shortcuts import render
 # Create your views here.
 from forms import ImportForm
 from MdbAccessReader import MdbAccessReader
-from nnmm.models.models import Family
+# from nnmm.models.models import Family
 
 
 def mdbimport(request):
@@ -46,10 +46,10 @@ def handle_uploaded_file(f):
 
 def save_families(families):
     for fam in families:
-        f= Family.objects.create(code=fam.get('Cod'),
-                              name=fam.get('Desc'))
-        f.save()
-
+        # f= Family.objects.create(code=fam.get('Cod'),
+                              # name=fam.get('Desc'))
+        # f.save()
+        pass
 
 
 
