@@ -1,5 +1,5 @@
 import MdbAccessReader
-from nnmm.models.models import Line
+from nnmm.modelo.models import Line
 
 DB_FILE = '../../../NNMM.mdb'
 

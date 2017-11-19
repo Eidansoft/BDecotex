@@ -28,7 +28,7 @@ class Family(models.Model):
         return self.name
 
 
-class Model(models.Model):
+class Modelo(models.Model):
     sex = models.ForeignKey(Sex, on_delete=models.PROTECT)
     line = models.ForeignKey(Line, on_delete=models.PROTECT)
     family = models.ForeignKey(Family, on_delete=models.PROTECT)
@@ -59,7 +59,7 @@ class Model(models.Model):
         '''
         res = 0
 
-        models = Model.objects.filter(family=family, line=line, sex=sex)
+        models = Modelo.objects.filter(family=family, line=line, sex=sex)
         if models:
             already_existent_variants = [
                 model.variant for model in models

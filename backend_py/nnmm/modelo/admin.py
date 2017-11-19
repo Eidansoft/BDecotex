@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Sex, Line, Family, Model
+from .models import Sex, Line, Family, Modelo
 
 # Register your models here.
 admin.site.register(Sex)
@@ -47,4 +47,4 @@ class ModelAdministration(admin.ModelAdmin):
 
         super(ModelAdministration, self).save_model(request, obj, form, change)
 
-admin.site.register(Model, ModelAdministration)
+admin.site.register(Modelo, ModelAdministration)
