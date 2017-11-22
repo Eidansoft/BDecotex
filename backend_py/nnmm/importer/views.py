@@ -62,10 +62,28 @@ def save_sex(sexs):
 
 
 def save_models(lista_modelos):
-    import ipdb; ipdb.set_trace(context=21)
     for modelo in lista_modelos:
-        m = Modelo.objects.create(code=modelo.get(u'Línea'),
-                              name=modelo.get(u'Descripción'))
+        family=Family.objects.filter(code=modelo.get(u'Tipo_prenda')).first()
+        line=Line.objects.filter(code=modelo.get(u'Lineas')).first()
+        sex=Sex.objects.filter(code=modelo.get(u'Sexo')).first()
+        m = Modelo.objects.create(description=modelo.get(u'D_basica'),
+                                  back=modelo.get(u'Espalda_Traser'),
+                                  line=line,
+                                  #modelo.get(u'Fecha_alta'),
+                                  #modelo.get(u'P_base'),
+                                  front=modelo.get(u'Delantero'),
+                                  notes=modelo.get(u'Observaciones'),
+                                  #modelo.get(u'tp'),
+                                  sex=sex,
+                                  arm=modelo.get(u'Manga'),
+                                  #modelo.get(u'Ant_mod'),
+                                  variant=Modelo.generate_next_free_variant(family, line, sex),
+                                  family=family,
+                                  #raiz,
+                                  #li,
+                                  neck=modelo.get(u'Cuello'),
+                                  #se
+        )
         m.save()
 
 

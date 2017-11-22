@@ -8,7 +8,7 @@ class Sex(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -16,7 +16,7 @@ class Line(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -24,7 +24,7 @@ class Family(models.Model):
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -34,7 +34,7 @@ class Modelo(models.Model):
     family = models.ForeignKey(Family, on_delete=models.PROTECT)
     # Variant is a automatically caltulated value
     variant = models.PositiveSmallIntegerField()
-    # model_code is calculated field, but I sotre it because
+    # model_code is calculated field, but I store it because
     # we need to index it in order to search for it
     model_code = models.CharField(max_length=10)
 
@@ -48,8 +48,20 @@ class Modelo(models.Model):
     parent = models.ForeignKey('self', on_delete=models.PROTECT, null= True, blank=True, default='')
     old_code_parent = models.CharField(max_length=10, null= True, blank=True, default='')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.model_code
+
+    def save(self, *args, **kwargs):
+        '''I override the save method in order to
+        calculate properly the model_code, because
+        model_code is a calculated field but I need
+        store it in order to index it at DB and search
+        for it'''
+        self.model_code = '{}{}{}{}'.format(
+                self.family.code, self.line.code,
+                self.sex.code, self.variant
+            )
+        super(Modelo, self).save(*args, **kwargs)
 
     @staticmethod
     def generate_next_free_variant(family, line, sex):

@@ -35,14 +35,8 @@ class ModelAdministration(admin.ModelAdmin):
             line = form.cleaned_data['line']
             sex = form.cleaned_data['sex']
             
-            obj.variant = Model.generate_next_free_variant(
+            obj.variant = Modelo.generate_next_free_variant(
                 family, line, sex
-            )
-
-            # And also generate the model_code
-            obj.model_code = '{}{}{}{}'.format(
-                family.code, line.code,
-                sex.code, obj.variant
             )
 
         super(ModelAdministration, self).save_model(request, obj, form, change)
