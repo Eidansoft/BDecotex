@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from forms import ImportForm
-from MdbAccessReader import MdbAccessReader
+from .forms import ImportForm
+from .MdbAccessReader import MdbAccessReader
 from modelo.models import Family, Line, Sex, Modelo
 
 
