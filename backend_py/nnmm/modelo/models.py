@@ -11,6 +11,9 @@ class Sex(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class Line(models.Model):
     code = models.CharField(max_length=2, unique=True)
@@ -19,6 +22,8 @@ class Line(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
 
 class Family(models.Model):
     code = models.CharField(max_length=2, unique=True)
@@ -27,6 +32,8 @@ class Family(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
 
 class Modelo(models.Model):
     sex = models.ForeignKey(Sex, on_delete=models.PROTECT)
@@ -49,6 +56,9 @@ class Modelo(models.Model):
     old_code_parent = models.CharField(max_length=10, null= True, blank=True, default='')
 
     def __unicode__(self):
+        return self.model_code
+
+    def __str__(self):
         return self.model_code
 
     def save(self, *args, **kwargs):
