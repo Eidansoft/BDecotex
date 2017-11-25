@@ -9,6 +9,14 @@ function start(){
     docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm python /mnt/nnmm/manage.py runserver 0.0.0.0:8000
 }
 
+function initialize(){
+    docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm /mnt/scripts/init_db.sh
+}
+
+function bash(){
+    docker container exec -it nnmm /bin/bash
+}
+
 function __init__() {
     case "$1" in
         create)
@@ -16,6 +24,12 @@ function __init__() {
             ;;
         start)
             start
+            ;;
+        bash)
+            bash
+            ;;
+        initialize)
+            initialize
             ;;
         *)
             echo "Debes indicar: create o start."
