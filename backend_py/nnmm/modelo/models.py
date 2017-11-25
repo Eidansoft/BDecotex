@@ -88,7 +88,7 @@ class Modelo(models.Model):
             ]
             res = [
                 n
-                for n in xrange(len(already_existent_variants)+1)
+                for n in range(len(already_existent_variants)+1)
                 if n not in already_existent_variants
             ][0]
         
