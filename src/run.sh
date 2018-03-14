@@ -2,19 +2,18 @@
 # author: eidansoft
 
 function create(){
-    docker build . -t nnmm
+    cp requirements.txt docker-nnmm-prod/requirements.txt
+    cp requirements.txt docker-nnmm-dev/requirements.txt
+    docker build docker-nnmm-prod -t nnmm-prod
+    docker build docker-nnmm-dev -t nnmm-dev
 }
 
-function start(){
-    docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm python /mnt/nnmm/manage.py runserver 0.0.0.0:8000
+function run(){
+    docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm-prod python /mnt/nnmm/manage.py runserver 0.0.0.0:8000
 }
 
-function initialize(){
-    docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm /mnt/scripts/init_db.sh
-}
-
-function bash(){
-    docker container exec -it nnmm /bin/bash
+function devel(){
+    docker run -it -v $(pwd):/mnt --rm -p 8000:8000 --name nnmm nnmm-dev /bin/bash
 }
 
 function __init__() {
@@ -22,17 +21,14 @@ function __init__() {
         create)
             create
             ;;
-        start)
-            start
+        run)
+            run
             ;;
-        bash)
-            bash
-            ;;
-        initialize)
-            initialize
+        devel)
+            devel
             ;;
         *)
-            echo "Debes indicar: create o start."
+            echo "Debes indicar: <create> para crear las imagenes del docker, <run> para lanzar el servidor, o <devel> para lanzar el servidor en modo de desarrollo."
             ;;
      esac
 }
