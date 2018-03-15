@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^admin/importer/mdb/', include('importer.urls')),
     
     url(r'^admin/', admin.site.urls),
+
+    url(r'^$', admin.site.urls),
 ]
