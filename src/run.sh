@@ -28,7 +28,11 @@ function __init__() {
             devel
             ;;
         *)
-            echo "Debes indicar: <create> para crear las imagenes del docker, <run> para lanzar el servidor, o <devel> para lanzar el servidor en modo de desarrollo."
+            echo "Debes indicar: "
+            echo "    - <create> para crear las imagenes del docker"
+            echo "    - <run> para lanzar el servidor"
+            echo "    - <devel> para lanzar el servidor en modo de desarrollo"
+            echo ""
             ;;
      esac
 }
